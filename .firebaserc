@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "checkpoint-webadmin"
+  },
+  "targets": {
+    "checkpoint-a9": {
+      "hosting": {
+        "production": [
+          "checkpoint-webadmin"
+        ],
+        "staging": [
+          "checkpoint-webadmin-test"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}
