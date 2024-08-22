@@ -6,11 +6,12 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "deploy:staging": "firebase deploy --only hosting:staging",
-    "deploy:prod": "firebase deploy --only hosting:production"
+    "deploy:test": "npm run build && firebase deploy --only hosting:staging",
+    "deploy:prod": "npm run build && firebase deploy --only hosting:production"
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
+    "@vueuse/core": "^11.0.1",
     "core-js": "^3.37.1",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
@@ -30,6 +31,7 @@
     "eslint-plugin-promise": "^6.4.0",
     "eslint-plugin-vue": "^9.27.0",
     "pinia": "^2.1.7",
+    "prettier": "^3.3.3",
     "sass": "1.77.6",
     "typescript": "^5.4.2",
     "unplugin-auto-import": "^0.17.6",

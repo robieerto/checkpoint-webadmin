@@ -1,0 +1,29 @@
+<script setup lang="ts">
+const { drawer } = storeToRefs(useAppStore())
+const route = useRoute()
+const breadcrumbs = computed<any>(() => {
+  return route!.matched
+    .slice(1)
+    .filter((item) => item.meta && item.meta.title && !(item.meta?.breadcrumb === 'hidden'))
+    .map((r) => ({
+      title: r.meta.title!,
+      disabled: r.meta?.breadcrumb === 'disabled' || r.path === route.path || false,
+      to: r.path,
+    }))
+})
+</script>
+
+<template>
+  <v-app-bar flat>
+    <v-app-bar-nav-icon @click="drawer = !drawer" />
+    <v-breadcrumbs :items="breadcrumbs" />
+    <v-spacer />
+    <div id="app-bar" />
+  </v-app-bar>
+</template>
+
+<style scoped>
+:deep(.v-switch__thumb .v-icon) {
+  --v-icon-size-multiplier: 1.2 !important;
+}
+</style>
