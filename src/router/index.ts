@@ -33,4 +33,18 @@ router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
 
+// router.beforeEach(async (to, from) => {
+//   const store = useAppStore()
+//   console.log('isAuthenticated', store.isAuthenticated)
+//   if (
+//     // make sure the user is authenticated
+//     !store.isAuthenticated &&
+//     // ❗️ Avoid an infinite redirect
+//     to.name !== '/login'
+//   ) {
+//     // redirect the user to the login page
+//     return '/login'
+//   }
+// })
+
 export default router

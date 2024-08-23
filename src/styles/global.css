@@ -1,3 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   overflow-y: auto;
   &.dark {
@@ -20,8 +35,14 @@ html {
 
 .v-app-bar,
 .v-navigation-drawer,
-.v-footer {
-  background-color: rgb(var(--v-theme-navigation)) !important;
+.v-footer,
+.v-list,
+.v-card {
+  background-color: rgb(var(--v-theme-secondary)) !important;
+}
+
+.v-list-item {
+  background-color: rgb(var(--v-theme-secondary)) !important;
 }
 
 .v-container {

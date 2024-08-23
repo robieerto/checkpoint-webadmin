@@ -16,7 +16,7 @@ const checkpointTheme: ThemeDefinition = {
   dark: false,
   colors: {
     primary: '#0d3b66',
-    navigation: '#fff8ef',
+    secondary: '#fff8ef',
     background: '#efe2bb',
     text: '#000000',
     button: '#fce186',
