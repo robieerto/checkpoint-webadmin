@@ -10,6 +10,7 @@ declare module 'vue' {
     AppBar: typeof import('./components/layout/AppBar.vue')['default']
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']
     AppDrawerItem: typeof import('./components/layout/AppDrawerItem.vue')['default']
+    ButtonUser: typeof import('./components/layout/ButtonUser.vue')['default']
     Detail: typeof import('./components/detail/Detail.vue')['default']
     CheckpointsPreview: typeof import('./components/checkpoint/CheckpointsPreview.vue')['default']
     PreviewItem: typeof import('./components/preview/PreviewItem.vue')['default']

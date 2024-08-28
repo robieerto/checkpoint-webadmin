@@ -19,6 +19,7 @@ const breadcrumbs = computed<any>(() => {
     <v-breadcrumbs :items="breadcrumbs" />
     <v-spacer />
     <div id="app-bar" />
+    <ButtonUser />
   </v-app-bar>
 </template>
 
