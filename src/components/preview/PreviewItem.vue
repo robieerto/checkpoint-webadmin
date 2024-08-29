@@ -7,12 +7,12 @@
 <script setup lang="ts">
 const props = defineProps<{
   title: string
-  id: number
+  id: string
 }>()
 
 const emit = defineEmits<{
   //   (e: 'select', id: number): void
-  select: [id: number]
+  select: [id: string]
 }>()
 
 const selectItem = () => {

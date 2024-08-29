@@ -10,33 +10,36 @@
         <v-card>
           <v-list height="80vh" :rounded="true">
             <PreviewItem
-              v-for="item in items"
-              :key="item.id"
-              :title="item.title"
-              :id="item.id"
+              v-for="checkpoint in checkpoints"
+              :key="checkpoint.id"
+              :title="checkpoint.name"
+              :id="checkpoint.id"
               @select="selectItem"
             />
           </v-list>
         </v-card>
       </v-col>
       <v-col>
-        <Detail v-if="selectedItemId !== null" :itemId="selectedItemId" @close="closeDetail" />
+        <Detail
+          v-if="selectedItemId !== null"
+          :itemComponent="CheckpointDetail"
+          :itemId="selectedItemId"
+          @close="closeDetail"
+        />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import CheckpointDetail from './CheckpointDetail.vue'
 
-const items = ref(
-  Array.from({ length: 30 }, (k, v) => ({ id: v + 1, title: `Checkpoint ${v + 1}` }))
-)
+const { checkpoints } = storeToRefs(useAppStore())
 
-const selectedItemId = ref<number | null>(null)
+const selectedItemId = ref<string | null>(null)
 const detailVisible = ref(false)
 
-const selectItem = (id: number) => {
+const selectItem = (id: string) => {
   selectedItemId.value = id
   detailVisible.value = true
 }

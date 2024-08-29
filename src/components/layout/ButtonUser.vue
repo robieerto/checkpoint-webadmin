@@ -8,8 +8,6 @@ const user = useCurrentUser()
 
 const router = useRouter()
 
-console.log(user)
-
 const logOut = () => {
   signOut(auth)
   router.push('/login')
@@ -17,7 +15,7 @@ const logOut = () => {
 </script>
 <template>
   <v-btn size="large" class="mx-10">
-    <v-icon class="mx-3">mdi-account</v-icon>
+    <v-icon class="mr-3">mdi-account</v-icon>
     {{ user?.displayName }}
     <v-menu activator="parent">
       <v-list>

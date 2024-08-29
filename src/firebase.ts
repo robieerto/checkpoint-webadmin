@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore'
 import {
   getAuth,
   setPersistence,
@@ -33,8 +33,5 @@ export const firebaseAuth = getAuth(firebaseApp)
 // Set the persistence of the auth state
 setPersistence(firebaseAuth, indexedDBLocalPersistence)
 
-// used for the firestore refs
-const db = getFirestore(firebaseApp)
-
-// here we can export reusable database references
-// export const usersRef = collection(db, 'Users')
+// Initialize Firestore and get a reference to the service
+export const db = getFirestore(firebaseApp)

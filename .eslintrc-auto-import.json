@@ -86,6 +86,8 @@
     "useLocale": true,
     "useRtl": true,
     "useTheme": true,
-    "useAuthStore": true
+    "useAuthStore": true,
+    "getCurrentUser": true,
+    "useCurrentUser": true
   }
 }

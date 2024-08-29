@@ -7,14 +7,15 @@
     </v-card-title>
     <v-card-text>
       <!-- Detail content goes here -->
-      <h2>Detail for item with ID: {{ props.itemId }}</h2>
+      <component :is="props.itemComponent" :itemId="props.itemId" />
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  itemId: number
+  itemComponent?: Object
+  itemId: string
 }>()
 
 const emit = defineEmits<{
