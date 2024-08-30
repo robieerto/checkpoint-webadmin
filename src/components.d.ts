@@ -15,6 +15,7 @@ declare module 'vue' {
     CheckpointDetail: typeof import('./components/checkpoint/CheckpointDetail.vue')['default']
     CheckpointPreviewItem: typeof import('./components/checkpoint/CheckpointPreviewItem.vue')['default']
     CheckpointsPreview: typeof import('./components/checkpoint/CheckpointsPreview.vue')['default']
+    OccurencePreviewItem: typeof import('./components/occurence/OccurencePreviewItem.vue')['default']
     PreviewItem: typeof import('./components/preview/PreviewItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

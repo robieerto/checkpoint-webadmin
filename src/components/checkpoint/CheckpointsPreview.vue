@@ -12,10 +12,12 @@
             v-for="checkpoint in checkpoints"
             :id="checkpoint.id"
             :key="checkpoint.id"
+            :imgPath="'@/assets/checkpoint-icon.png'"
+            :title="checkpoint.name"
+            :subtitle="checkpoint.floor.name"
+            :state="checkpoint.state"
             @click="selectItem(checkpoint)"
-          >
-            <CheckpointPreviewItem :data="checkpoint" />
-          </PreviewItem>
+          />
         </v-list>
       </v-col>
       <v-col>
@@ -44,7 +46,7 @@ const closeDetail = () => {
 </script>
 
 <style scoped>
-:deep(.v-list) {
+.v-list {
   background-color: rgb(var(--v-theme-background)) !important;
 }
 </style>

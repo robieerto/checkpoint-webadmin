@@ -37,7 +37,6 @@ html {
 .v-navigation-drawer,
 .v-footer,
 .v-card,
-.v-list,
 .v-list-item {
   background-color: rgb(var(--v-theme-secondary)) !important;
 }
