@@ -18,7 +18,7 @@ const logOut = () => {
     <v-icon class="mr-3">mdi-account</v-icon>
     {{ user?.displayName }}
     <v-menu activator="parent">
-      <v-list>
+      <v-list class="py-0">
         <v-list-item prepend-icon="mdi-logout" @click="logOut">
           <v-list-item-title link>Odhlásiť sa</v-list-item-title>
         </v-list-item>

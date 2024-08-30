@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { useCurrentUser } from 'vuefire'
 import { getUser, getUserBuildings, getUserServices } from '@/api/user'
-import { attachCheckpointsListener } from './api/collections'
+import { attachCheckpointsListener, stopAllListeners } from './api/collections'
 
 const user = useCurrentUser()
 const appStore = useAppStore()
@@ -27,13 +27,12 @@ watch(user, async (currentUser) => {
       selectedBuilding.value = buildings.value?.length && buildings.value?.[0]
     }
   } else {
-    console.log('User logged out')
+    stopAllListeners()
   }
 })
 
 watch(selectedBuilding, (building) => {
   if (building) {
-    console.log('Selected building:', building)
     attachCheckpointsListener(building.id)
   }
 })

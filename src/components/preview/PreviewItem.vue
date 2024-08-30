@@ -1,25 +1,25 @@
 <template>
-  <v-list-item @click="selectItem">
-    <v-list-item-title>{{ title }}</v-list-item-title>
+  <v-list-item rounded="lg" class="mb-2">
+    <slot></slot>
   </v-list-item>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  title: string
-  id: string
-}>()
+// const props = defineProps<{
+//   id: string
+// }>()
 
-const emit = defineEmits<{
-  //   (e: 'select', id: number): void
-  select: [id: string]
-}>()
+// const emit = defineEmits<{
+//   select: [id: string]
+// }>()
 
-const selectItem = () => {
-  emit('select', props.id)
-}
+// const selectItem = () => {
+//   emit('select', props.id)
+// }
 </script>
 
 <style scoped>
-/* Add any custom styles here */
+:deep(.v-list-item__overlay) {
+  background: none !important;
+}
 </style>

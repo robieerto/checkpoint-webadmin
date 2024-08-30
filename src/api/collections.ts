@@ -6,6 +6,12 @@ const collectionRefs = {
   checkpoints: null as _RefFirestore<DocumentData | undefined> | null,
 }
 
+export const stopAllListeners = () => {
+  Object.values(collectionRefs).forEach((ref) => {
+    ref?.stop()
+  })
+}
+
 export const attachCheckpointsListener = (buildingId: string) => {
   const appStore = useAppStore()
   const path = `Buildings/${buildingId}/checkpoints`

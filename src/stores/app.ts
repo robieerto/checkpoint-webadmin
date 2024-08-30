@@ -1,5 +1,4 @@
 import { _RefFirestore } from 'vuefire'
-import { DocumentData } from 'firebase/firestore'
 
 export const useAppStore = defineStore('app', {
   state: () => ({

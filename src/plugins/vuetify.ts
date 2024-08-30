@@ -32,4 +32,7 @@ export default createVuetify({
       checkpointTheme,
     },
   },
+  display: {
+    mobileBreakpoint: 'md',
+  },
 })

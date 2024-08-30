@@ -36,17 +36,10 @@ html {
 .v-app-bar,
 .v-navigation-drawer,
 .v-footer,
+.v-card,
 .v-list,
-.v-card {
-  background-color: rgb(var(--v-theme-secondary)) !important;
-}
-
 .v-list-item {
   background-color: rgb(var(--v-theme-secondary)) !important;
-}
-
-.v-container {
-  background-color: rgb(var(--v-theme-background)) !important;
 }
 
 .v-overlay__content > .v-card {

@@ -33,7 +33,7 @@
             <v-btn
               :disabled="!form"
               :loading="loading"
-              color="success"
+              color="primary"
               size="large"
               type="submit"
               variant="elevated"
@@ -96,5 +96,7 @@ const onSubmit = async () => {
 </script>
 
 <style scoped>
-/* Add any custom styles here */
+:deep(.v-icon--size-default) {
+  margin-left: 12px;
+}
 </style>

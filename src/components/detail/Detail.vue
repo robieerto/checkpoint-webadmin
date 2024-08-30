@@ -6,20 +6,14 @@
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <!-- Detail content goes here -->
-      <component :is="props.itemComponent" :itemId="props.itemId" />
+      <slot></slot>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  itemComponent?: Object
-  itemId: string
-}>()
-
 const emit = defineEmits<{
-  (e: 'close'): void
+  close: []
 }>()
 
 const closeDetail = () => {
