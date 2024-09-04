@@ -1,5 +1,5 @@
 <template>
-  <v-list-item rounded="lg" class="mb-2">
+  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="lg" class="mb-2">
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
@@ -27,6 +27,7 @@ defineProps<{
   title?: string
   subtitle?: string
   state?: string
+  secondaryColor?: boolean
 }>()
 
 // const emit = defineEmits<{
@@ -41,5 +42,9 @@ defineProps<{
 <style scoped>
 :deep(.v-list-item__overlay) {
   background: none !important;
+}
+
+.v-list-item.secondary-color {
+  background-color: rgb(var(--v-theme-background)) !important;
 }
 </style>

@@ -24,12 +24,12 @@ export const getUserServices = async () => {
       services.push(serviceData)
     }
   }
-  appStore.services = services
+  appStore.userServices = services
 }
 
 export const getUserBuildings = async () => {
   const appStore = useAppStore()
-  const buildingsIds = new Set(appStore.services.map((service: any) => service.building.id))
+  const buildingsIds = new Set(appStore.userServices.map((service: any) => service.building.id))
   const buildings = []
   for (const buildingId of buildingsIds) {
     const buildingDocRef = doc(db, 'Buildings', buildingId as string)

@@ -11,13 +11,16 @@ declare module 'vue' {
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']
     AppDrawerItem: typeof import('./components/layout/AppDrawerItem.vue')['default']
     ButtonUser: typeof import('./components/layout/ButtonUser.vue')['default']
+    copy: typeof import('./components/preview/PreviewItem copy.vue')['default']
     Detail: typeof import('./components/detail/Detail.vue')['default']
     CheckpointDetail: typeof import('./components/checkpoint/CheckpointDetail.vue')['default']
-    CheckpointPreviewItem: typeof import('./components/checkpoint/CheckpointPreviewItem.vue')['default']
     CheckpointsPreview: typeof import('./components/checkpoint/CheckpointsPreview.vue')['default']
-    OccurencePreviewItem: typeof import('./components/occurence/OccurencePreviewItem.vue')['default']
+    ChipState: typeof import('./components/ChipState.vue')['default']
     PreviewItem: typeof import('./components/preview/PreviewItem.vue')['default']
+    PreviewList: typeof import('./components/preview/PreviewList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SmallPreviewItem: typeof import('./components/preview/SmallPreviewItem.vue')['default']
+    SmallPreviewList: typeof import('./components/preview/SmallPreviewList.vue')['default']
   }
 }
