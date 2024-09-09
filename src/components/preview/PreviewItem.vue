@@ -7,7 +7,7 @@
         </v-col>
         <v-col>
           <v-row>
-            <v-col class="py-1 pr-0">
+            <v-col class="py-1 pl-1 pr-0">
               <v-list-item-title class="text-h6">{{ title }}</v-list-item-title>
               <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
               <div class="mt-2 text-right">

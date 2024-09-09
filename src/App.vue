@@ -31,11 +31,17 @@ watch(user, async (currentUser) => {
       await getUserBuildings()
       // Set selected building
       selectedBuilding.value = buildings.value?.length && buildings.value?.[0]
-      // Set user service types for selected building
-      userServicesForSelectedBuilding.value = userServices.value
-        .filter((service: any) => service.building.id === selectedBuilding.value.id)
-        .map((service: any) => service.type)
     }
   }
+})
+
+watch(selectedBuilding, async () => {
+  // Set user service types for selected building
+  userServicesForSelectedBuilding.value = userServices.value
+    .filter((service: any) => {
+      console.log(service.building.id, selectedBuilding.value.id)
+      return service.building.id === selectedBuilding.value.id
+    })
+    .map((service: any) => service.type)
 })
 </script>
