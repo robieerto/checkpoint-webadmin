@@ -8,14 +8,11 @@
     <v-row>
       <v-col style="max-width: 360px">
         <v-list height="80vh" class="py-0" :border="false" :rounded="true">
-          <PreviewItem
+          <CheckpointPreviewItem
             v-for="checkpoint in checkpoints"
             :id="checkpoint.id"
             :key="checkpoint.id"
-            :imgPath="'@/assets/checkpoint-icon.png'"
-            :title="checkpoint.name"
-            :subtitle="checkpoint.floor.name"
-            :state="checkpoint.state"
+            :checkpoint="checkpoint"
             @click="selectItem(checkpoint)"
           />
         </v-list>

@@ -1,17 +1,20 @@
 <template>
-  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="lg" class="mb-2">
+  <v-list-item rounded="lg" class="mb-2">
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-          <v-img v-if="imgPath" src="@/assets/checkpoint-icon.png" width="45"></v-img>
+          <v-img src="@/assets/checkpoint-icon.png" width="45"></v-img>
         </v-col>
         <v-col>
           <v-row>
             <v-col class="py-1 pr-0">
-              <v-list-item-title class="text-h6">{{ title }}</v-list-item-title>
-              <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
-              <div class="mt-2 text-right">
-                <ChipState :serviceType="serviceType" :entityState="state"></ChipState>
+              <v-list-item-title class="text-h6">{{ checkpoint.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{ checkpoint.floor.name }}</v-list-item-subtitle>
+              <div v-if="checkpoint.states" class="text-right">
+                <CheckpointChipStates :checkpointStates="checkpoint.states"></CheckpointChipStates>
+              </div>
+              <div v-else class="text-right">
+                <ChipState :serviceType="'cleaning'" :entityState="checkpoint.state"></ChipState>
               </div>
             </v-col>
           </v-row>
@@ -23,12 +26,7 @@
 
 <script setup lang="ts">
 defineProps<{
-  imgPath?: string
-  title?: string
-  subtitle?: string
-  state?: string
-  serviceType?: string
-  secondaryColor?: boolean
+  checkpoint?: any
 }>()
 
 // const emit = defineEmits<{

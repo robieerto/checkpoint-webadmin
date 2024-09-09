@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 import {
   getAuth,
   setPersistence,
@@ -35,3 +35,8 @@ setPersistence(firebaseAuth, indexedDBLocalPersistence)
 
 // Initialize Firestore and get a reference to the service
 export const db = getFirestore(firebaseApp)
+
+// Connect to Firestore emulator only in development mode
+if (import.meta.env.DEV) {
+  connectFirestoreEmulator(db, '127.0.0.1', 8080)
+}

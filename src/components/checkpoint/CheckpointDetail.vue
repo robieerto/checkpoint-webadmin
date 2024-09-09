@@ -25,7 +25,7 @@
 
         <v-tabs-window v-model="tab" class="pt-1">
           <v-tabs-window-item value="occurrences">
-            <PreviewList :loading="occurrencesLoading">
+            <PreviewList v-if="occurrencesLoading || !noOccurrences" :loading="occurrencesLoading">
               <PreviewItem
                 v-for="occurrence in occurrences"
                 :id="occurrence.id"
@@ -34,14 +34,18 @@
                 :title="occurrence.name"
                 :subtitle="formatTimestamp(occurrence.dateTime.seconds)"
                 :state="occurrence.state"
+                :serviceType="occurrence.service.type"
                 :secondaryColor="true"
                 @click=""
               />
             </PreviewList>
+            <div v-else>
+              <p class="mt-5">Na tomto checkpointe nie sú žiadne udalosti</p>
+            </div>
           </v-tabs-window-item>
 
           <v-tabs-window-item value="history">
-            <SmallPreviewList :loading="occurrencesLoading">
+            <SmallPreviewList v-if="historyLoading || !noHistory" :loading="historyLoading">
               <SmallPreviewItem
                 v-for="historyAction in historyActions"
                 :id="historyAction.action.id"
@@ -55,6 +59,9 @@
                 <v-icon class="mr-3">mdi-account</v-icon>
               </SmallPreviewItem>
             </SmallPreviewList>
+            <div v-else>
+              <p class="mt-5">Na tomto checkpointe nie sú žiadne úkony</p>
+            </div>
           </v-tabs-window-item>
         </v-tabs-window>
       </v-col>
@@ -82,9 +89,14 @@ const checkpointPath = computed(
 const occurrencesPath = computed(() => `${checkpointPath.value}/occurrences`)
 
 const occurrencesLoading = ref(true)
+const historyLoading = ref(true)
+
 const occurrences = useCollection(() => collection(db, occurrencesPath.value))
 var occurrenceActionsRefs = [] as Array<_RefFirestore<DocumentData[]> | null>
 var historyActions = ref([] as any) // { action: Ref<DocumentData>; occurrence: any }[]
+
+const noOccurrences = computed(() => occurrences.value.length === 0)
+const noHistory = computed(() => historyActions.value.length === 0)
 
 watch(
   () => props.checkpoint,
@@ -99,6 +111,7 @@ watch(occurrences, () => {
 })
 
 const getHistory = async () => {
+  historyLoading.value = true
   historyActions.value = []
   occurrenceActionsRefs.forEach((occurrenceActionsRef) => {
     occurrenceActionsRef?.stop()
@@ -115,16 +128,33 @@ const getHistory = async () => {
     const occurrenceRef = ref(occurrence)
 
     // Wait for the actions to load
-    await occurrenceActions.promise.value.then(() => {
+    occurrenceActions.promise.value.then(() => {
+      // If the last occurrence and no actions
+      if (
+        occurrence.id === occurrences.value[occurrences.value.length - 1].id &&
+        occurrenceActions.value.length === 0
+      ) {
+        historyLoading.value = false
+      }
+
       // For each action
       occurrenceActions.value.forEach(async (action: any) => {
+        // historyActions.value.push({ action: action, occurrence: occurrenceRef })
         const actionDoc = useDocument(
           doc(db, `${occurrencesPath.value}/${occurrence.id}/actions/${action.id}`)
         )
-        await actionDoc.promise.value.then(() => {
+        actionDoc.promise.value.then(() => {
           // Add it to the history
           historyActions.value.push({ action: actionDoc, occurrence: occurrenceRef })
         })
+
+        // If the last occurrence and the last action
+        if (
+          occurrence.id === occurrences.value[occurrences.value.length - 1].id &&
+          action.id === occurrenceActions.value[occurrenceActions.value.length - 1].id
+        ) {
+          historyLoading.value = false
+        }
       })
 
       var previousOccurrenceActions = [...occurrenceActions.value]
@@ -132,7 +162,7 @@ const getHistory = async () => {
       // Watch for changes in actions
       watch(
         occurrenceActions,
-        (newOccurrenceActions, oldOccurrenceActions) => {
+        (newOccurrenceActions) => {
           if (newOccurrenceActions.length > previousOccurrenceActions.length) {
             const newActions = newOccurrenceActions.filter(
               (action: any) =>

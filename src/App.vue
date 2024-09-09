@@ -14,13 +14,8 @@ import { getUser, getUserBuildings, getUserServices } from '@/api/user'
 
 const user = useCurrentUser()
 const appStore = useAppStore()
-const {
-  buildings,
-  userServices,
-  selectedBuilding,
-  userServiceTypesForSelectedBuilding,
-  checkpoints,
-} = storeToRefs(appStore)
+const { buildings, userServices, selectedBuilding, userServicesForSelectedBuilding, checkpoints } =
+  storeToRefs(appStore)
 
 const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
 
@@ -37,7 +32,7 @@ watch(user, async (currentUser) => {
       // Set selected building
       selectedBuilding.value = buildings.value?.length && buildings.value?.[0]
       // Set user service types for selected building
-      userServiceTypesForSelectedBuilding.value = userServices.value
+      userServicesForSelectedBuilding.value = userServices.value
         .filter((service: any) => service.building.id === selectedBuilding.value.id)
         .map((service: any) => service.type)
     }
