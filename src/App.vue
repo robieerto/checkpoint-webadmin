@@ -38,10 +38,7 @@ watch(user, async (currentUser) => {
 watch(selectedBuilding, async () => {
   // Set user service types for selected building
   userServicesForSelectedBuilding.value = userServices.value
-    .filter((service: any) => {
-      console.log(service.building.id, selectedBuilding.value.id)
-      return service.building.id === selectedBuilding.value.id
-    })
+    .filter((service: any) => service.building.id === selectedBuilding.value.id)
     .map((service: any) => service.type)
 })
 </script>
