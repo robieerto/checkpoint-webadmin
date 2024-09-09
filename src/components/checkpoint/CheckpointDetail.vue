@@ -4,14 +4,17 @@
       <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
         <v-img src="@/assets/checkpoint-icon.png" width="45"></v-img>
       </v-col>
-      <v-col style="max-width: 246px">
+      <v-col style="max-width: 270px">
         <v-row>
           <v-col class="py-1">
             <v-list-item-title class="text-h6">{{ checkpoint?.name }}</v-list-item-title>
             <v-list-item-subtitle>{{ checkpoint?.floor?.name }}</v-list-item-subtitle>
-            <v-list-item-subtitle class="text-right"
-              >Stav: {{ checkpoint?.state }}</v-list-item-subtitle
-            >
+            <div v-if="checkpoint.states" class="text-right">
+              <CheckpointChipStates :checkpointStates="checkpoint.states"></CheckpointChipStates>
+            </div>
+            <div v-else class="text-right">
+              <ChipState :serviceType="'cleaning'" :entityState="checkpoint.state"></ChipState>
+            </div>
           </v-col>
         </v-row>
       </v-col>
