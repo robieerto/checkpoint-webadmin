@@ -4,7 +4,7 @@
       <v-col cols="6">
         <v-row>
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-            <v-img src="@/assets/checkpoint-icon.png" width="45"></v-img>
+            <v-img src="@/assets/checkpoint-logo.png" width="45"></v-img>
           </v-col>
           <v-col>
             <v-row>
@@ -40,7 +40,6 @@
                     v-for="occurrence in occurrences"
                     :id="occurrence.id"
                     :key="occurrence.id"
-                    :imgPath="'@/assets/checkpoint-icon.png'"
                     :title="occurrence.name"
                     :subtitle="formatTimestamp(occurrence.dateTime.seconds)"
                     :state="occurrence.state"
@@ -60,7 +59,6 @@
                     v-for="historyAction in historyActions"
                     :id="historyAction.action.id"
                     :key="historyAction.action.id"
-                    :imgPath="'@/assets/checkpoint-icon.png'"
                     :title="historyAction.occurrence.name + ' - ' + historyAction.action.type"
                     :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
                     :note="historyAction.action.description"
@@ -160,6 +158,11 @@ const getHistory = async () => {
   occurrencesRefs.forEach((occurrenceActionsRef) => {
     occurrenceActionsRef?.actions?.stop()
   })
+
+  if (occurrences.value.length === 0) {
+    historyLoading.value = false
+    return
+  }
 
   // For each occurrence
   for (const occurrence of occurrences.value) {

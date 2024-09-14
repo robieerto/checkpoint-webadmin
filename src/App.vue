@@ -10,7 +10,13 @@
 import { useCurrentUser, useCollection } from 'vuefire'
 import { collection } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { getUser, getUserBuildings, getUserServices } from '@/api/user'
+import {
+  getSelectedBuildingEmployees,
+  getSelectedBuildingServices,
+  getUser,
+  getUserBuildings,
+  getUserServices,
+} from '@/api/get'
 
 const user = useCurrentUser()
 const appStore = useAppStore()
@@ -20,6 +26,10 @@ const { buildings, userServices, selectedBuilding, userServicesForSelectedBuildi
 const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
 
 checkpoints.value = useCollection(() => collection(db, checkpointsPath.value))
+
+// employees.value = useCollection(() =>
+//   query(collection(db, 'Users'), where('services', 'array-contains-any', appStore.selectedBuildingServices.value))
+// )
 
 watch(user, async (currentUser) => {
   if (currentUser) {
@@ -40,5 +50,10 @@ watch(selectedBuilding, async () => {
   userServicesForSelectedBuilding.value = userServices.value
     .filter((service: any) => service.building.id === selectedBuilding.value.id)
     .map((service: any) => service.type)
+
+  // Get services for selected building
+  await getSelectedBuildingServices()
+  // Get employees for selected building
+  await getSelectedBuildingEmployees()
 })
 </script>

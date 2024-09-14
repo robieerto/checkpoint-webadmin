@@ -1,5 +1,6 @@
-import { doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, query, where } from 'firebase/firestore'
 import { db } from '@/firebase'
+import { useCollection } from 'vuefire'
 
 export const getUser = async (id: string) => {
   const appStore = useAppStore()
@@ -40,4 +41,35 @@ export const getUserBuildings = async () => {
     }
   }
   appStore.buildings = buildings
+}
+
+export const getSelectedBuildingServices = async () => {
+  const appStore = useAppStore()
+  const selectedBuildingRef = doc(db, 'Buildings', appStore.selectedBuilding.id)
+  const selectedBuildingServices = useCollection(
+    query(collection(db, 'Services'), where('building', '==', selectedBuildingRef)),
+    {
+      once: true,
+    }
+  )
+  // await for the data to be fetched
+  await selectedBuildingServices.promise.value
+  appStore.selectedBuildingServices = selectedBuildingServices.value
+}
+
+export const getSelectedBuildingEmployees = async () => {
+  const appStore = useAppStore()
+  const buildingServiceRefs = [] as any[]
+  appStore.selectedBuildingServices.forEach((service: any) => {
+    buildingServiceRefs.push(doc(db, 'Services', service.id))
+  })
+  const selectedBuildingEmployees = useCollection(
+    query(collection(db, 'Users'), where('services', 'array-contains-any', buildingServiceRefs)),
+    {
+      once: true,
+    }
+  )
+  // await for the data to be fetched
+  await selectedBuildingEmployees.promise.value
+  appStore.employees = selectedBuildingEmployees.value
 }

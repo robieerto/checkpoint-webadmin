@@ -23,6 +23,7 @@ const checkpointTheme: ThemeDefinition = {
     green: '#45664d',
     red: '#ba1a1a',
     orange: '#ee964a',
+    brown: '#705d0d',
   },
 }
 

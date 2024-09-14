@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-          <v-img v-if="imgPath" src="@/assets/checkpoint-icon.png" width="45"></v-img>
+          <v-img src="@/assets/occurrence-logo.png" width="45"></v-img>
         </v-col>
         <v-col>
           <v-row>

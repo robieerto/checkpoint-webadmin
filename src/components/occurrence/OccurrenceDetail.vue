@@ -7,7 +7,7 @@
         </v-row>
         <v-row>
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-            <v-img src="@/assets/checkpoint-icon.png" width="45"></v-img>
+            <v-img src="@/assets/occurrence-logo.png" width="45"></v-img>
           </v-col>
           <v-col>
             <v-row>
@@ -34,7 +34,6 @@
                 v-for="historyAction in actions"
                 :id="historyAction.id"
                 :key="historyAction.id"
-                :imgPath="'@/assets/checkpoint-icon.png'"
                 :title="occurrence.name + ' - ' + historyAction.type"
                 :subtitle="formatTimestamp(historyAction.dateTime?.seconds)"
                 :note="historyAction.description"
@@ -60,7 +59,6 @@ const props = defineProps<{
 
 const occurrence = ref(props.occurrenceRef.occurrence)
 const actions = ref(props.occurrenceRef.actions)
-const tab = ref(null)
 
 watch(
   () => props.occurrenceRef.occurrence,

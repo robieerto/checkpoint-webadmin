@@ -51,10 +51,6 @@
     </v-snackbar>
   </v-container>
 </template>
-<route lang="yaml">
-meta:
-  layout: empty
-</route>
 
 <script setup lang="ts">
 definePage({
@@ -100,3 +96,8 @@ const onSubmit = async () => {
   margin-left: 12px;
 }
 </style>
+
+<route lang="yaml">
+meta:
+  layout: empty
+</route>
