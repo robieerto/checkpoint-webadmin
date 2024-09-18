@@ -36,14 +36,11 @@
                   v-if="occurrencesLoading || !noOccurrences"
                   :loading="occurrencesLoading"
                 >
-                  <PreviewItem
+                  <OccurrencePreviewItem
                     v-for="occurrence in occurrences"
                     :id="occurrence.id"
                     :key="occurrence.id"
-                    :title="occurrence.name"
-                    :subtitle="formatTimestamp(occurrence.dateTime.seconds)"
-                    :state="occurrence.state"
-                    :serviceType="occurrence.service.type"
+                    :occurrence="occurrence"
                     :secondaryColor="true"
                     @click="selectOccurrence(occurrence)"
                   />

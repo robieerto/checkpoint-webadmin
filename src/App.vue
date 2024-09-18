@@ -20,16 +20,18 @@ import {
 
 const user = useCurrentUser()
 const appStore = useAppStore()
-const { buildings, userServices, selectedBuilding, userServicesForSelectedBuilding, checkpoints } =
-  storeToRefs(appStore)
+const {
+  buildings,
+  userServices,
+  selectedBuilding,
+  userServicesForSelectedBuilding,
+  checkpoints,
+  buildingActions,
+} = storeToRefs(appStore)
 
 const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
 
 checkpoints.value = useCollection(() => collection(db, checkpointsPath.value))
-
-// employees.value = useCollection(() =>
-//   query(collection(db, 'Users'), where('services', 'array-contains-any', appStore.selectedBuildingServices.value))
-// )
 
 watch(user, async (currentUser) => {
   if (currentUser) {
@@ -45,15 +47,65 @@ watch(user, async (currentUser) => {
   }
 })
 
-watch(selectedBuilding, async () => {
-  // Set user service types for selected building
-  userServicesForSelectedBuilding.value = userServices.value
-    .filter((service: any) => service.building.id === selectedBuilding.value.id)
-    .map((service: any) => service.type)
+watch(selectedBuilding, async (currentBuilding) => {
+  if (currentBuilding) {
+    // Set user service types for selected building
+    userServicesForSelectedBuilding.value = userServices.value
+      .filter((service: any) => service.building.id === currentBuilding.id)
+      .map((service: any) => service.type)
 
-  // Get services for selected building
-  await getSelectedBuildingServices()
-  // Get employees for selected building
-  await getSelectedBuildingEmployees()
+    // Get services for selected building
+    await getSelectedBuildingServices()
+
+    // Get employees for selected building
+    await getSelectedBuildingEmployees()
+  }
 })
+
+watch(checkpoints, async (buildingCheckpoints) => {
+  if (buildingCheckpoints) {
+    const buildingHistory = [] as any
+    appStore.isLoadingBuildingActions = true
+
+    buildingCheckpoints.forEach(async (checkpoint: any) => {
+      // Get checkpoint occurrences
+      const occurrencePath = `${checkpointsPath.value}/${checkpoint.id}/occurrences`
+      const checkpointOccurrences = useCollection(collection(db, occurrencePath), { once: true })
+
+      // Get actions for each occurrence
+      checkpointOccurrences.promise.value.then((occurrences: any) => {
+        // If last checkpoint has no occurrences
+        if (checkpoint.id == buildingCheckpoints.at(-1).id && !occurrences.length) {
+          sortAndAssignActions(buildingHistory)
+        }
+
+        occurrences.forEach(async (occurrence: any) => {
+          const actionsPath = `${occurrencePath}/${occurrence.id}/actions`
+          const actions = useCollection(collection(db, actionsPath), { once: true })
+
+          // Save actions
+          actions.promise.value.then((actions: any) => {
+            actions.forEach((action: any) => {
+              buildingHistory.push({ action, occurrence })
+            })
+
+            // If last checkpoint and last occurrence
+            if (
+              checkpoint.id == buildingCheckpoints.at(-1).id &&
+              occurrence.id == occurrences.at(-1).id
+            ) {
+              sortAndAssignActions(buildingHistory)
+            }
+          })
+        })
+      })
+    })
+  }
+})
+
+const sortAndAssignActions = (buildingHistory: any) => {
+  buildingHistory.sort((a: any, b: any) => b.action.dateTime.seconds - a.action.dateTime.seconds)
+  buildingActions.value = buildingHistory
+  appStore.isLoadingBuildingActions = false
+}
 </script>

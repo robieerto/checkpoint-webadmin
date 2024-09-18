@@ -8,10 +8,24 @@
         <v-col>
           <v-row>
             <v-col class="py-1 pl-1 pr-0">
-              <v-list-item-title class="text-h6">{{ title }}</v-list-item-title>
-              <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
+              <v-list-item-title class="text-h6">{{ occurrence.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{
+                formatTimestamp(occurrence.dateTime.seconds)
+              }}</v-list-item-subtitle>
               <div class="mt-2 text-right">
-                <ChipState :serviceType="serviceType" :entityState="state"></ChipState>
+                <v-chip
+                  v-if="occurrence.assignedTo"
+                  variant="outlined"
+                  rounded="xl"
+                  class="mr-1"
+                  prepend-icon="mdi-account"
+                >
+                  {{ occurrence.assignedTo?.username }}
+                </v-chip>
+                <ChipState
+                  :serviceType="occurrence.service.type"
+                  :entityState="occurrence.state"
+                ></ChipState>
               </div>
             </v-col>
           </v-row>
@@ -22,12 +36,10 @@
 </template>
 
 <script setup lang="ts">
+import { formatTimestamp } from '@/utils'
+
 defineProps<{
-  imgPath?: string
-  title?: string
-  subtitle?: string
-  state?: string
-  serviceType?: string
+  occurrence?: any
   secondaryColor?: boolean
 }>()
 

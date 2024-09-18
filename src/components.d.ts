@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionDetail: typeof import('./components/action/ActionDetail.vue')['default']
+    ActionsPreview: typeof import('./components/action/ActionsPreview.vue')['default']
     AppBar: typeof import('./components/layout/AppBar.vue')['default']
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']
     AppDrawerItem: typeof import('./components/layout/AppDrawerItem.vue')['default']
@@ -22,6 +23,8 @@ declare module 'vue' {
     CheckpointsPreview: typeof import('./components/checkpoint/CheckpointsPreview.vue')['default']
     ChipState: typeof import('./components/ChipState.vue')['default']
     OccurrenceDetail: typeof import('./components/occurrence/OccurrenceDetail.vue')['default']
+    OccurrencePreview: typeof import('./components/occurrence/OccurrencePreview.vue')['default']
+    OccurrencePreviewItem: typeof import('./components/occurrence/OccurrencePreviewItem.vue')['default']
     PreviewItem: typeof import('./components/preview/PreviewItem.vue')['default']
     PreviewList: typeof import('./components/preview/PreviewList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -24,6 +24,28 @@
         </v-row>
         <v-row>
           <v-col class="py-1">
+            <h3>Úkon vytvoril užívateľ</h3>
+            <v-chip
+              v-if="action.createdBy?.username"
+              variant="flat"
+              rounded="lg"
+              color="button"
+              prepend-icon="mdi-account"
+              class="mr-1 mt-1 py-6"
+            >
+              <div class="ml-1">
+                <v-list-item-title class="font-weight-medium">
+                  {{ action.createdBy?.username }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ action.createdBy?.services?.[0].name }}
+                </v-list-item-subtitle>
+              </div>
+            </v-chip>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="py-1">
             <h3>Popis</h3>
             <p class="mt-1">{{ action.description }}</p>
           </v-col>

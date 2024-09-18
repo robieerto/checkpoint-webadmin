@@ -1,9 +1,12 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col class="pb-0 ml-5">
-        <h2>Dashboard</h2>
+      <v-col cols="4">
+        <ActionsPreview />
       </v-col>
+      <!-- <v-col cols="4">
+        <CheckpointsPreview />
+      </v-col> -->
     </v-row>
   </v-container>
 </template>

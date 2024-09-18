@@ -28,6 +28,29 @@
         </v-row>
         <v-row>
           <v-col class="py-1">
+            <h3>Zodpovedná osoba</h3>
+            <v-chip
+              v-if="occurrence.assignedTo?.username"
+              variant="flat"
+              rounded="lg"
+              color="button"
+              prepend-icon="mdi-account"
+              class="mr-1 mt-1 py-6"
+            >
+              <div class="ml-1">
+                <v-list-item-title class="font-weight-medium">
+                  {{ occurrence.assignedTo?.username }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ occurrence.assignedTo?.services?.[0].name }}
+                </v-list-item-subtitle>
+              </div>
+            </v-chip>
+            <p v-else class="mt-1">nepriradená</p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="py-1">
             <h3>Priebeh</h3>
             <SmallPreviewList :secondaryColor="true" height="53vh">
               <SmallPreviewItem

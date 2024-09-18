@@ -40,15 +40,41 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="6" class="py-1">
+        <h3>Úkony</h3>
+        <SmallPreviewList :loading="isLoadingBuildingActions" height="65vh">
+          <SmallPreviewItem
+            v-for="historyAction in userActions"
+            :id="historyAction.action.id"
+            :key="historyAction.action.id"
+            :title="historyAction.occurrence.name + ' - ' + historyAction.action.type"
+            :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
+            :note="historyAction.action.description"
+            @click=""
+          >
+            <v-icon class="mr-3">mdi-circle</v-icon>
+          </SmallPreviewItem>
+        </SmallPreviewList>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import { formatTimestamp } from '@/utils'
+
 const props = defineProps<{
   employee?: any
 }>()
 
+const appStore = useAppStore()
+const { buildingActions, isLoadingBuildingActions } = storeToRefs(appStore)
+
 const serviceTypes = computed(
   () => new Set(props.employee.services.map((service: any) => service.type))
+)
+const userActions = computed(() =>
+  buildingActions.value.filter((action: any) => action.action.createdBy?.id === props.employee.id)
 )
 </script>

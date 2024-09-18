@@ -1,6 +1,6 @@
 <template>
   <v-list
-    :class="secondaryColor && 'secondary-color'"
+    :class="[secondaryColor && 'secondary-color', 'w-95']"
     :height="height ?? '60vh'"
     class="py-0"
     :border="false"
@@ -28,5 +28,9 @@ defineProps<{
 
 .v-list.secondary-color {
   background-color: rgb(var(--v-theme-background)) !important;
+}
+
+.w-95 {
+  width: 95%;
 }
 </style>

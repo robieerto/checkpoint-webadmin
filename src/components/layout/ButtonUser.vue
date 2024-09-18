@@ -11,6 +11,7 @@ const router = useRouter()
 const logOut = () => {
   signOut(auth)
   router.push('/login')
+  useAppStore().$reset()
 }
 </script>
 <template>
