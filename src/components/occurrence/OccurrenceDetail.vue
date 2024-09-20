@@ -33,7 +33,7 @@
               v-if="occurrence.assignedTo?.username"
               variant="flat"
               rounded="lg"
-              color="button"
+              color="yellow"
               prepend-icon="mdi-account"
               class="mr-1 mt-1 py-6"
             >
@@ -52,7 +52,7 @@
         <v-row>
           <v-col class="py-1">
             <h3>Priebeh</h3>
-            <SmallPreviewList :secondaryColor="true" height="53vh">
+            <SmallPreviewList :secondaryColor="true" height="30vh">
               <SmallPreviewItem
                 v-for="historyAction in actions"
                 :id="historyAction.id"

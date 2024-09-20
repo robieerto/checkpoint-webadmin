@@ -8,6 +8,7 @@ export const useAppStore = defineStore('app', {
     selectedBuildingServices: null as any,
     userServicesForSelectedBuilding: null as any,
     checkpoints: null as any,
+    selectedCheckpoint: null as any,
     employees: null as any,
     buildingActions: null as any,
     isLoadingBuildingActions: true,

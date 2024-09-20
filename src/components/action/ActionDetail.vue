@@ -29,7 +29,7 @@
               v-if="action.createdBy?.username"
               variant="flat"
               rounded="lg"
-              color="button"
+              color="yellow"
               prepend-icon="mdi-account"
               class="mr-1 mt-1 py-6"
             >

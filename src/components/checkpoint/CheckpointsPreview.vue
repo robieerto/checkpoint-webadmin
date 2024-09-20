@@ -18,8 +18,8 @@
         </v-list>
       </v-col>
       <v-col>
-        <Detail v-if="selectedItem !== null" @close="closeDetail">
-          <CheckpointDetail :checkpoint="selectedItem" />
+        <Detail v-if="selectedCheckpoint !== null" @close="closeDetail">
+          <CheckpointDetail :checkpoint="selectedCheckpoint" />
         </Detail>
       </v-col>
     </v-row>
@@ -27,18 +27,17 @@
 </template>
 
 <script setup lang="ts">
-const { checkpoints } = storeToRefs(useAppStore())
+const { checkpoints, selectedCheckpoint } = storeToRefs(useAppStore())
 
-const selectedItem = ref(null)
 const detailVisible = ref(false)
 
 const selectItem = (item: any) => {
-  selectedItem.value = item
+  selectedCheckpoint.value = item
   detailVisible.value = true
 }
 
 const closeDetail = () => {
-  selectedItem.value = null
+  selectedCheckpoint.value = null
 }
 </script>
 

@@ -19,7 +19,7 @@ const checkpointTheme: ThemeDefinition = {
     secondary: '#fff8ef',
     background: '#efe2bb',
     text: '#000000',
-    button: '#fce186',
+    yellow: '#fce186',
     green: '#45664d',
     red: '#ba1a1a',
     orange: '#ee964a',

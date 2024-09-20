@@ -46,7 +46,11 @@ html {
 }
 
 .v-btn {
-  text-transform: initial;
+  text-transform: none !important;
+}
+
+.v-btn.secondary-btn > .v-btn__content {
+  font-weight: bold;
 }
 
 .v-tab {
@@ -67,4 +71,26 @@ html {
 
 .v-breadcrumbs {
   color: #000000;
+}
+
+.speed-dial {
+  position: fixed;
+  bottom: 34px;
+  right: 80px;
+}
+
+.v-speed-dial__content {
+  position: fixed;
+  bottom: 82px;
+  right: 28px;
+}
+
+.checkpoint-form {
+  position: fixed;
+  bottom: 34px;
+  right: 28px;
+}
+
+.v-btn-group {
+  border-width: 2px !important;
 }

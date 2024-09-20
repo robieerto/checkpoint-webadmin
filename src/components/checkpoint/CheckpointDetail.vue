@@ -237,6 +237,11 @@ const getHistory = async () => {
     })
   }
 }
+
+// on unmount
+onUnmounted(() => {
+  appStore.selectedCheckpoint = null
+})
 </script>
 
 <style scoped></style>

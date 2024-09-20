@@ -4,6 +4,7 @@
     <AppBar />
     <v-main>
       <router-view />
+      <FAB />
     </v-main>
   </v-app>
 </template>

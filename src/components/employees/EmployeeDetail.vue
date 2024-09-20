@@ -21,7 +21,7 @@
               v-if="employee.phone"
               variant="flat"
               rounded="lg"
-              color="button"
+              color="yellow"
               prepend-icon="mdi-phone-outline"
               class="mr-1"
             >
@@ -43,7 +43,11 @@
     <v-row>
       <v-col cols="6" class="py-1">
         <h3>Úkony</h3>
-        <SmallPreviewList :loading="isLoadingBuildingActions" height="65vh">
+        <SmallPreviewList
+          v-if="isLoadingBuildingActions || userActions.length"
+          :loading="isLoadingBuildingActions"
+          height="65vh"
+        >
           <SmallPreviewItem
             v-for="historyAction in userActions"
             :id="historyAction.action.id"
@@ -56,6 +60,9 @@
             <v-icon class="mr-3">mdi-circle</v-icon>
           </SmallPreviewItem>
         </SmallPreviewList>
+        <div v-else>
+          <p class="mt-5">Užívateľ nemá žiadne úkony</p>
+        </div>
       </v-col>
     </v-row>
   </v-container>
