@@ -1,5 +1,28 @@
 <template>
-  <v-chip variant="flat" rounded="lg" :color="state.color" :prepend-icon="state.icon">{{
+  <v-chip
+    v-if="props.serviceType === 'cleaning' && props.entityState === 'todo'"
+    class="pl-1"
+    variant="flat"
+    rounded="lg"
+    :color="state.color"
+  >
+    <span class="material-symbols-outlined mx-1">concierge</span>
+    {{ state.label }}
+  </v-chip>
+  <v-chip
+    v-else-if="
+      props.serviceType === 'cleaning' &&
+      (props.entityState === 'workInProgress' || props.entityState === 'toCheck')
+    "
+    class="pl-1"
+    variant="flat"
+    rounded="lg"
+    :color="state.color"
+  >
+    <span class="material-symbols-outlined mx-1">cleaning_services</span>
+    {{ state.label }}
+  </v-chip>
+  <v-chip v-else variant="flat" rounded="lg" :color="state.color" :prepend-icon="state.icon">{{
     state.label
   }}</v-chip>
 </template>

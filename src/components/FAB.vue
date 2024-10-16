@@ -22,12 +22,9 @@
         icon="mdi-alert-decagram-outline"
         @click="isErrorReportFormOpen = true"
       ></v-btn> -->
-      <v-btn
-        key="cleaning"
-        size="default"
-        icon="mdi-room-service-outline"
-        @click="isCleaningRequestFormOpen = true"
-      ></v-btn>
+      <v-btn key="cleaning" class="v-button-fab" @click="isCleaningRequestFormOpen = true">
+        <v-img src="@/assets/concierge-icon.png" width="25"></v-img>
+      </v-btn>
     </v-speed-dial>
   </div>
   <CleaningRequestForm

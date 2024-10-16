@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 definePage({
   meta: {
-    icon: 'mdi-bathtub-outline',
+    icon: 'mdi-hot-tub',
     title: 'Hostia',
     drawerIndex: 4,
   },

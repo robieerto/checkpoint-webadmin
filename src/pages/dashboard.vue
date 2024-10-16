@@ -18,7 +18,7 @@
 definePage({
   meta: {
     icon: 'mdi-monitor-dashboard',
-    title: 'Dashboard',
+    title: 'Aktuálny prehľad',
     drawerIndex: 1,
   },
 })

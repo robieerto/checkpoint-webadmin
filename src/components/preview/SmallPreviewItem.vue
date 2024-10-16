@@ -2,10 +2,10 @@
   <v-list-item :class="secondaryColor && 'secondary-color'" rounded="none" class="mb-2">
     <v-container>
       <v-row>
-        <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
+        <v-col cols="1" style="max-width: 50px" class="pl-0 py-3" align-self="center">
           <slot></slot>
         </v-col>
-        <v-col>
+        <v-col cols="9">
           <v-row>
             <v-col class="py-1">
               <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>

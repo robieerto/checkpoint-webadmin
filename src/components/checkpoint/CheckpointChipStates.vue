@@ -2,7 +2,7 @@
   <div class="mt-2 text-right">
     <ChipState
       v-for="state in states"
-      class="mr-1"
+      class="mr-1 mb-1"
       :isCheckpoint="true"
       :serviceType="state.serviceType"
       :entityState="state.entityState"

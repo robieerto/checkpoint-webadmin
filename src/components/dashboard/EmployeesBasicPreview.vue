@@ -1,8 +1,8 @@
 <template>
-  <v-card class="px-5">
+  <v-card class="px-5" rounded="xl">
     <v-row>
-      <v-col class="pb-0 ml-5 mt-2">
-        <h3>Zamestnanci</h3>
+      <v-col class="pb-0 ml-5 mt-5">
+        <h2>Zamestnanci</h2>
       </v-col>
     </v-row>
     <v-row>

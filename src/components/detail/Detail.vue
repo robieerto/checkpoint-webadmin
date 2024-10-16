@@ -1,5 +1,5 @@
 <template>
-  <v-card height="80vh">
+  <v-card height="80vh" rounded="xl">
     <v-card-title class="pb-0 d-flex justify-end">
       <v-btn color="secondary" density="compact" icon flat slim>
         <v-icon color="text" @click="closeDetail">mdi-close</v-icon>
