@@ -1,12 +1,12 @@
 <template>
   <v-container class="py-0">
     <v-row>
-      <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
+      <v-col style="max-width: 50px" class="pl-0 py-3" align-self="start">
         <v-img src="@/assets/order-logo.png" width="45"></v-img>
       </v-col>
       <v-col cols="5">
         <v-row>
-          <v-col class="py-1 pl-1 pr-0">
+          <v-col class="py-1 pl-1">
             <v-list-item-title class="text-h6">Raňajky na zajtra</v-list-item-title>
             <div class="d-flex justify-space-between align-center">
               <v-list-item-subtitle class="my-1">{{

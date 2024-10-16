@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col style="max-width: 360px">
+      <v-col style="max-width: 370px">
         <v-list height="80vh" class="py-0" :border="false" :rounded="true">
           <ExtUserActionPreviewItem
             v-for="extUserAction in extUserActions"

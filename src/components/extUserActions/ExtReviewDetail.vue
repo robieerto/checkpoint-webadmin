@@ -1,12 +1,12 @@
 <template>
   <v-container class="py-0">
     <v-row>
-      <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
+      <v-col style="max-width: 50px" class="pl-0 py-3" align-self="start">
         <v-img src="@/assets/review-logo.png" width="45"></v-img>
       </v-col>
       <v-col cols="5">
         <v-row>
-          <v-col class="py-1 pl-1 pr-0">
+          <v-col class="py-1 pl-1">
             <v-list-item-title class="text-h6">Spätná väzba</v-list-item-title>
             <v-rating v-model="extUserAction.score" density="compact" readonly></v-rating>
             <div class="d-flex justify-space-between align-center">

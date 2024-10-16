@@ -15,7 +15,7 @@
                 <v-list-item-subtitle class="my-1">{{
                   formatTimestamp(extUserAction?.dateTime.seconds)
                 }}</v-list-item-subtitle>
-                <div>
+                <div class="text-right">
                   <ChipState
                     :serviceType="extUserAction?.occurrence?.service.type"
                     :entityState="extUserAction?.occurrence?.state"
@@ -78,6 +78,10 @@
 
 <script setup lang="ts">
 import { formatTimestamp } from '@/utils'
+import OccurrenceLogo from '@/assets/occurrence-logo.png'
+import OrderLogo from '@/assets/order-logo.png'
+import QuestionLogo from '@/assets/question-logo.png'
+import ReviewLogo from '@/assets/review-logo.png'
 
 const props = defineProps<{
   extUserAction?: any
@@ -86,13 +90,13 @@ const props = defineProps<{
 
 const logo = computed(() => {
   if (props.extUserAction.type === 'occurrence') {
-    return '/src/assets/occurrence-logo.png'
+    return OccurrenceLogo
   } else if (props.extUserAction.type === 'order') {
-    return '/src/assets/order-logo.png'
+    return OrderLogo
   } else if (props.extUserAction.type === 'question') {
-    return '/src/assets/question-logo.png'
+    return QuestionLogo
   } else if (props.extUserAction.type === 'review') {
-    return '/src/assets/review-logo.png'
+    return ReviewLogo
   }
 })
 </script>
