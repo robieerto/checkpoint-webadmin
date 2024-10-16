@@ -11,6 +11,7 @@ export const useAppStore = defineStore('app', {
     selectedCheckpoint: null as any,
     employees: null as any,
     buildingActions: null as any,
+    extUserActions: null as any,
     isLoadingBuildingActions: true,
   }),
 })

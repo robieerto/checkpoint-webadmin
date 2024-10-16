@@ -13,6 +13,7 @@
             :id="employee.id"
             :key="employee.id"
             :employee="employee"
+            :secondaryColor="true"
             @click=""
           />
         </v-list>

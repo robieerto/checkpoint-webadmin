@@ -10,7 +10,7 @@
         <v-fab v-bind="activatorProps" size="large" icon="mdi-square-rounded-badge-outline"></v-fab>
       </template>
 
-      <v-btn
+      <!-- <v-btn
         key="quickAction"
         size="default"
         icon="mdi-plus"
@@ -21,7 +21,7 @@
         size="default"
         icon="mdi-alert-decagram-outline"
         @click="isErrorReportFormOpen = true"
-      ></v-btn>
+      ></v-btn> -->
       <v-btn
         key="cleaning"
         size="default"

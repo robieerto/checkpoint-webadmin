@@ -94,3 +94,13 @@ html {
 .v-btn-group {
   border-width: 2px !important;
 }
+
+.v-list-item-title.list {
+  line-height: 1.2 !important;
+  max-width: 242px;
+  white-space: normal !important;
+}
+
+.v-rating {
+  display: initial !important;
+}

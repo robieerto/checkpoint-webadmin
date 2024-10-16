@@ -8,7 +8,7 @@
         <v-col>
           <v-row>
             <v-col class="py-1 pl-1 pr-0">
-              <v-list-item-title class="text-h6">{{ occurrence.name }}</v-list-item-title>
+              <v-list-item-title class="list text-h6">{{ occurrence.name }}</v-list-item-title>
               <v-list-item-subtitle>{{
                 formatTimestamp(occurrence.dateTime.seconds)
               }}</v-list-item-subtitle>

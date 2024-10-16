@@ -1,5 +1,5 @@
 <template>
-  <v-list-item rounded="lg" class="mb-2">
+  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="lg" class="mb-2">
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
@@ -28,6 +28,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   employee?: any
+  secondaryColor?: boolean
 }>()
 
 const serviceTypes = computed(

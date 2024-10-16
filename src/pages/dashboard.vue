@@ -2,10 +2,10 @@
   <v-container fluid>
     <v-row>
       <v-col cols="4">
-        <CheckpointsBasicPreview />
+        <ActionsPreview />
       </v-col>
       <v-col cols="4">
-        <ActionsPreview />
+        <CheckpointsBasicPreview />
       </v-col>
       <v-col cols="4">
         <EmployeesBasicPreview />

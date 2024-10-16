@@ -1,5 +1,5 @@
 <template>
-  <v-list-item rounded="lg" class="mb-2">
+  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="lg" class="mb-2">
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
@@ -8,7 +8,7 @@
         <v-col>
           <v-row>
             <v-col class="py-1 pl-1 pr-0">
-              <v-list-item-title class="text-h6">{{ checkpoint.name }}</v-list-item-title>
+              <v-list-item-title class="list text-h6">{{ checkpoint.name }}</v-list-item-title>
               <v-list-item-subtitle>{{ checkpoint.floor.name }}</v-list-item-subtitle>
               <div v-if="checkpoint.states" class="text-right">
                 <CheckpointChipStates :checkpointStates="checkpoint.states"></CheckpointChipStates>
@@ -27,6 +27,7 @@
 <script setup lang="ts">
 defineProps<{
   checkpoint?: any
+  secondaryColor?: boolean
 }>()
 
 // const emit = defineEmits<{

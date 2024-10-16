@@ -13,6 +13,7 @@
             :id="checkpoint.id"
             :key="checkpoint.id"
             :checkpoint="checkpoint"
+            :secondaryColor="true"
             @click=""
           />
         </v-list>
