@@ -1,8 +1,8 @@
 <template>
-  <v-card class="px-5" rounded="xl">
+  <v-card class="px-5" rounded="xl" style="min-width: 300px">
     <v-row>
       <v-col class="pb-0 ml-5 mt-5">
-        <h2>Všetky úkony</h2>
+        <h2>Aktuálny prehľad</h2>
       </v-col>
     </v-row>
     <v-row>

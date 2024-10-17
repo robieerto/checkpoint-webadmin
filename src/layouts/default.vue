@@ -2,8 +2,8 @@
   <v-app>
     <AppDrawer />
     <AppBar />
-    <v-main>
-      <router-view />
+    <v-main style="overflow-x: auto; overflow-y: hidden">
+      <router-view style="min-width: 900px" />
       <FAB />
     </v-main>
   </v-app>

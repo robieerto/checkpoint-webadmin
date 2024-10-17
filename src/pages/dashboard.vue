@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
     <v-row>
       <v-col cols="4">
         <ActionsPreview />
@@ -18,7 +19,7 @@
 definePage({
   meta: {
     icon: 'mdi-monitor-dashboard',
-    title: 'Aktuálny prehľad',
+    title: 'Dashboard',
     drawerIndex: 1,
   },
 })

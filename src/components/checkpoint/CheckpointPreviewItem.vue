@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   checkpoint?: any
   secondaryColor?: boolean
 }>()

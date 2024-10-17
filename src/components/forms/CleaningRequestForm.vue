@@ -1,10 +1,9 @@
 <template>
-  <v-sheet class="checkpoint-form" rounded="xl">
+  <v-sheet class="checkpoint-form h-75" rounded="xl">
     <v-card
       append-icon="$close"
-      class="mx-auto"
+      class="mx-auto h-100 d-flex flex-column"
       elevation="16"
-      max-width="600"
       rounded="xl"
       title="Žiadosť o upratanie"
     >
@@ -13,10 +12,22 @@
         <v-btn icon="$close" variant="text" @click="closeForm"></v-btn>
       </template>
 
-      <div class="px-5">
-        <v-row>
-          <v-col style="width: 400px">
-            <v-list v-if="selectedItem" class="py-0" :border="false" :rounded="true">
+      <div class="px-5 d-flex flex-column flex-grow-1" style="width: 700px">
+        <v-row class="flex-grow-0">
+          <v-col class="w-100 d-flex align-start justify-center pb-0">
+            <v-select
+              v-model="selectedItemId"
+              :items="checkpoints"
+              item-title="name"
+              item-value="id"
+              label="Vyberte Checkpoint"
+            >
+            </v-select>
+          </v-col>
+        </v-row>
+        <v-row v-if="selectedItem" class="flex-grow-1">
+          <v-col class="w-100 d-flex align-start justify-center pt-0">
+            <v-list class="w-100" :border="false" :rounded="true">
               <CheckpointPreviewItem
                 :id="selectedItem.id"
                 :key="selectedItem.id"
@@ -24,32 +35,22 @@
                 @click="checkpointDialog = true"
               />
             </v-list>
-            <div v-else class="text-center">
-              <v-btn
-                class="text-none"
-                color="brown"
-                min-width="92"
-                variant="flat"
-                rounded
-                @click="checkpointDialog = true"
-              >
-                Vybrať checkpoint
-              </v-btn>
-            </div>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
+        <v-row class="flex-grow-1">
+          <v-col class="w-100 d-flex align-end justify-start">
+            <v-textarea
               v-model="note"
               label="Poznámka"
               hint="Sem môžeš pridať poznámku"
-            ></v-text-field>
+              rows="8"
+              no-resize
+            ></v-textarea>
           </v-col>
         </v-row>
       </div>
 
-      <div class="pa-4 text-end">
+      <div class="pa-4 text-end mt-auto">
         <v-btn
           class="secondary-btn mr-2"
           color="brown"
@@ -74,19 +75,6 @@
       </div>
     </v-card>
   </v-sheet>
-  <v-dialog v-model="checkpointDialog" max-width="380">
-    <v-card>
-      <v-list class="pa-2" color="primary" elevation="12" rounded="lg">
-        <CheckpointPreviewItem
-          v-for="checkpoint in checkpoints"
-          :id="checkpoint.id"
-          :key="checkpoint.id"
-          :checkpoint="checkpoint"
-          @click="selectItem(checkpoint)"
-        />
-      </v-list>
-    </v-card>
-  </v-dialog>
   <v-snackbar v-model="error" :timeout="3000" color="error">Zatiaľ neimplementované</v-snackbar>
 </template>
 
@@ -100,8 +88,15 @@ const { checkpoints, selectedCheckpoint } = storeToRefs(useAppStore())
 const sending = ref(false)
 const checkpointDialog = ref(false)
 const selectedItem = ref(selectedCheckpoint.value)
+const selectedItemId = ref(selectedCheckpoint.value?.id)
 const note = ref('')
 const error = ref(false)
+
+watch(selectedItemId, () => {
+  selectedItem.value = checkpoints.value.find(
+    (checkpoint: any) => checkpoint.id === selectedItemId.value
+  )
+})
 
 const closeForm = () => {
   emit('close')
@@ -111,11 +106,6 @@ const saveForm = () => {
   sending.value = true
   error.value = true
   sending.value = false
-}
-
-const selectItem = (item: any) => {
-  selectedItem.value = item
-  checkpointDialog.value = false
 }
 </script>
 

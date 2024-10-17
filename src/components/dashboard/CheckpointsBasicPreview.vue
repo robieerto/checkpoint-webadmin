@@ -1,5 +1,5 @@
 <template>
-  <v-card class="px-5" rounded="xl">
+  <v-card class="px-5" rounded="xl" style="min-width: 300px">
     <v-row>
       <v-col class="pb-0 ml-5 mt-5">
         <h2>Checkpointy</h2>
