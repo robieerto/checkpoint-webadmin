@@ -7,6 +7,7 @@ import {
   indexedDBLocalPersistence,
   // browserSessionPersistence,
 } from 'firebase/auth'
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,7 +37,11 @@ setPersistence(firebaseAuth, indexedDBLocalPersistence)
 // Initialize Firestore and get a reference to the service
 export const db = getFirestore(firebaseApp)
 
-// Connect to Firestore emulator only in development mode
+// Initialize Firebase Functions
+export const functions = getFunctions(firebaseApp, 'europe-west3')
+
+// Connect to local emulators only in development mode
 if (import.meta.env.DEV) {
   connectFirestoreEmulator(db, '127.0.0.1', 8080)
+  connectFunctionsEmulator(functions, '127.0.0.1', 5001)
 }

@@ -52,12 +52,12 @@
         <v-row>
           <v-col class="py-1">
             <h3>Priebeh</h3>
-            <SmallPreviewList :secondaryColor="true" height="30vh">
+            <SmallPreviewList :secondaryColor="true" height="50vh">
               <SmallPreviewItem
                 v-for="historyAction in actions"
                 :id="historyAction.id"
                 :key="historyAction.id"
-                :title="occurrence.name + ' - ' + historyAction.type"
+                :title="occurrence.name + ' - ' + translateActionState(historyAction.type)"
                 :subtitle="formatTimestamp(historyAction.dateTime?.seconds)"
                 :note="historyAction.description"
                 :secondaryColor="true"
@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp } from '@/utils'
+import { formatTimestamp, translateActionState } from '@/utils'
 
 const props = defineProps<{
   occurrenceRef?: any

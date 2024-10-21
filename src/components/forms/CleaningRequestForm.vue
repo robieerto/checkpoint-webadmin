@@ -75,22 +75,31 @@
       </div>
     </v-card>
   </v-sheet>
-  <v-snackbar v-model="error" :timeout="3000" color="error">Zatiaľ neimplementované</v-snackbar>
+  <v-snackbar v-model="error" :timeout="3000" color="error">errorMessage</v-snackbar>
+  <v-snackbar v-model="success" :timeout="3000" color="success">Žiadosť bola vytvorená</v-snackbar>
 </template>
 
 <script setup lang="ts">
+import { useCurrentUser } from 'vuefire'
+import { functions } from '@/firebase'
+import { httpsCallable } from 'firebase/functions'
+
 const emit = defineEmits<{
   close: []
 }>()
 
-const { checkpoints, selectedCheckpoint } = storeToRefs(useAppStore())
+const user = useCurrentUser()
+const { checkpoints, selectedCheckpoint, selectedBuilding, selectedBuildingServices } =
+  storeToRefs(useAppStore())
 
 const sending = ref(false)
 const checkpointDialog = ref(false)
 const selectedItem = ref(selectedCheckpoint.value)
 const selectedItemId = ref(selectedCheckpoint.value?.id)
 const note = ref('')
+const success = ref(false)
 const error = ref(false)
+const errorMessage = ref('')
 
 watch(selectedItemId, () => {
   selectedItem.value = checkpoints.value.find(
@@ -98,13 +107,39 @@ watch(selectedItemId, () => {
   )
 })
 
+const createCleaningRequest = httpsCallable(functions, 'createCleaningRequest')
+
 const closeForm = () => {
   emit('close')
 }
 
 const saveForm = () => {
   sending.value = true
-  error.value = true
+  const cleaningService = selectedBuildingServices.value.find(
+    (service: any) => service.type === 'cleaning'
+  )
+  createCleaningRequest({
+    buildingID: selectedBuilding.value?.id,
+    checkpointID: selectedItemId.value,
+    serviceID: cleaningService?.id,
+    userID: user.value?.uid,
+    description: note.value,
+  })
+    .then((result) => {
+      success.value = true
+      // closeForm()
+      const data = result.data as any
+      const sanitizedMessage = data.text
+      console.log(sanitizedMessage)
+    })
+    .catch((error) => {
+      // Getting the Error details.
+      const code = error.code
+      const message = error.message
+      const details = error.details
+      errorMessage.value = `${code}, ${message}, ${details}`
+      error.value = true
+    })
   sending.value = false
 }
 </script>

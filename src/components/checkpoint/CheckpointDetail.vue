@@ -56,7 +56,11 @@
                     v-for="historyAction in historyActions"
                     :id="historyAction.action.id"
                     :key="historyAction.action.id"
-                    :title="historyAction.occurrence.name + ' - ' + historyAction.action.type"
+                    :title="
+                      historyAction.occurrence.name +
+                      ' - ' +
+                      translateActionState(historyAction.action.type)
+                    "
                     :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
                     :note="historyAction.action.description"
                     @click="selectAction(historyAction)"
@@ -84,7 +88,7 @@
 import { _RefFirestore, useCollection, useDocument } from 'vuefire'
 import { query, collection, doc, DocumentData, orderBy } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { formatTimestamp } from '@/utils'
+import { formatTimestamp, translateActionState } from '@/utils'
 
 const props = defineProps<{
   checkpoint: any

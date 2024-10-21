@@ -2,15 +2,15 @@
   <v-container fluid>
     <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
     <v-row>
-      <v-col cols="4">
+      <v-col cols="5">
         <ActionsPreview />
       </v-col>
-      <v-col cols="4">
+      <v-col cols="5">
         <CheckpointsBasicPreview />
       </v-col>
-      <v-col cols="4">
+      <!-- <v-col cols="4">
         <EmployeesBasicPreview />
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>

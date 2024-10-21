@@ -11,3 +11,22 @@ export function formatTimestamp(timestampInSeconds: number): string {
     })
     .replaceAll('. ', '.') // Remove space after dot
 }
+
+export function translateActionState(actionState: string): string {
+  switch (actionState) {
+    case 'created':
+      return 'žiadosť'
+    case 'workStarted':
+      return 'začatá práca'
+    case 'completelyFixed':
+      return 'dokončené'
+    case 'partiallyFixed':
+      return 'nedokončené'
+    case 'checkOk':
+      return 'kontrola v poriadku'
+    case 'checkFailed':
+      return 'nedostatok pri kontrole'
+    default:
+      return actionState
+  }
+}

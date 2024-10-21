@@ -12,7 +12,11 @@
             v-for="historyAction in buildingActions"
             :id="historyAction.action.id"
             :key="historyAction.action.id"
-            :title="historyAction.occurrence.name + ' - ' + historyAction.action.type"
+            :title="
+              historyAction.occurrence.name +
+              ' - ' +
+              translateActionState(historyAction.action.type)
+            "
             :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
             :note="historyAction.action.description"
             @click=""
@@ -27,6 +31,7 @@
 
 <script setup lang="ts">
 import { formatTimestamp } from '@/utils'
+import { translateActionState } from '@/utils'
 
 const appStore = useAppStore()
 const { buildingActions, isLoadingBuildingActions } = storeToRefs(appStore)
