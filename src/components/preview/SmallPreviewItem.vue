@@ -2,7 +2,7 @@
   <v-list-item :class="secondaryColor && 'secondary-color'" rounded="none" class="mb-2">
     <v-container>
       <v-row>
-        <v-col cols="1" style="max-width: 50px" class="pl-0 py-3" align-self="center">
+        <v-col cols="1" style="max-width: 50px" class="pl-0 py-0" align-self="center">
           <slot></slot>
         </v-col>
         <v-col cols="9">

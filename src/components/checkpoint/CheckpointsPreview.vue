@@ -9,12 +9,31 @@
       <v-col style="max-width: 360px">
         <v-list height="80vh" class="py-0" :border="false" :rounded="true">
           <CheckpointPreviewItem
-            v-for="checkpoint in checkpoints"
+            v-for="checkpoint in sortedCheckpoints?.tasks"
             :id="checkpoint.id"
             :key="checkpoint.id"
             :checkpoint="checkpoint"
+            :secondaryColor="false"
             @click="selectItem(checkpoint)"
           />
+          <div v-for="(checkpoints, floor) in sortedCheckpoints?.okByFloors">
+            <v-row class="align-center w-100 mx-0">
+              <v-col cols="auto" class="pl-0 pr-2">
+                <v-list-item-title class="text-h6 ml-5 pt-2 pb-1">{{ floor }}</v-list-item-title>
+              </v-col>
+              <v-col class="pr-1">
+                <hr class="my-0" />
+              </v-col>
+            </v-row>
+            <CheckpointPreviewItem
+              v-for="checkpoint in checkpoints"
+              :id="checkpoint.id"
+              :key="checkpoint.id"
+              :checkpoint="checkpoint"
+              :secondaryColor="false"
+              @click="selectItem(checkpoint)"
+            />
+          </div>
         </v-list>
       </v-col>
       <v-col>
@@ -27,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-const { checkpoints, selectedCheckpoint } = storeToRefs(useAppStore())
+const { sortedCheckpoints, selectedCheckpoint } = storeToRefs(useAppStore())
 
 const detailVisible = ref(false)
 
@@ -44,5 +63,10 @@ const closeDetail = () => {
 <style scoped>
 .v-list {
   background-color: rgb(var(--v-theme-background)) !important;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #705d0d;
 }
 </style>

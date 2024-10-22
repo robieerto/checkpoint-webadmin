@@ -12,6 +12,10 @@ export function formatTimestamp(timestampInSeconds: number): string {
     .replaceAll('. ', '.') // Remove space after dot
 }
 
+export const getInitial = (username: string) => {
+  return username ? username.charAt(0).toUpperCase() : ''
+}
+
 export function translateActionState(actionState: string): string {
   switch (actionState) {
     case 'created':

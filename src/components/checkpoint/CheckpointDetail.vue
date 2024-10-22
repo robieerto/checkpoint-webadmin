@@ -65,7 +65,21 @@
                     :note="historyAction.action.description"
                     @click="selectAction(historyAction)"
                   >
-                    <v-icon class="mr-3">mdi-account</v-icon>
+                    <v-avatar
+                      v-if="historyAction.action.createdBy?.username"
+                      color="#d9d9d9"
+                      variant="flat"
+                      density="default"
+                      :border="0"
+                    >
+                      <span class="text-h6">{{
+                        getInitial(historyAction.action.createdBy?.username)
+                      }}</span>
+                    </v-avatar>
+                    <span v-else class="material-symbols-outlined ml-1" style="font-size: 30px">
+                      account_circle
+                    </span>
+                    <!-- <v-icon  class="ml-2 mr-4">mdi-account</v-icon> -->
                   </SmallPreviewItem>
                 </SmallPreviewList>
                 <div v-else>
@@ -88,7 +102,7 @@
 import { _RefFirestore, useCollection, useDocument } from 'vuefire'
 import { query, collection, doc, DocumentData, orderBy } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { formatTimestamp, translateActionState } from '@/utils'
+import { formatTimestamp, getInitial, translateActionState } from '@/utils'
 
 const props = defineProps<{
   checkpoint: any
@@ -149,7 +163,7 @@ const selectAction = (action: any) => {
 
 const sortHistory = () => {
   historyActions.value = historyActions.value.sort((a: any, b: any) => {
-    return b.action.dateTime.seconds - a.action.dateTime.seconds
+    return b.action?.dateTime?.seconds - a.action?.dateTime?.seconds
   })
 }
 

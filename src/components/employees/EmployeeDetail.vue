@@ -61,7 +61,20 @@
             :note="historyAction.action.description"
             @click=""
           >
-            <v-icon class="mr-3">mdi-circle</v-icon>
+            <v-avatar
+              v-if="historyAction.action.createdBy?.username"
+              color="#d9d9d9"
+              variant="flat"
+              density="default"
+              :border="0"
+            >
+              <span class="text-h6">{{
+                getInitial(historyAction.action.createdBy?.username)
+              }}</span>
+            </v-avatar>
+            <span v-else class="material-symbols-outlined mx-1" style="font-size: 30px">
+              account_circle
+            </span>
           </SmallPreviewItem>
         </SmallPreviewList>
         <div v-else>
@@ -73,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp, translateActionState } from '@/utils'
+import { formatTimestamp, getInitial, translateActionState } from '@/utils'
 
 const props = defineProps<{
   employee?: any
@@ -88,4 +101,5 @@ const serviceTypes = computed(
 const userActions = computed(() =>
   buildingActions.value.filter((action: any) => action.action.createdBy?.id === props.employee.id)
 )
+console.log(userActions.value)
 </script>

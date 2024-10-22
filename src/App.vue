@@ -26,6 +26,7 @@ const {
   selectedBuilding,
   userServicesForSelectedBuilding,
   checkpoints,
+  sortedCheckpoints,
   buildingActions,
   extUserActions,
 } = storeToRefs(appStore)
@@ -38,6 +39,34 @@ const extUserActionsPath = computed(
 checkpoints.value = useCollection(() => collection(db, checkpointsPath.value))
 extUserActions.value = useCollection(() =>
   query(collection(db, extUserActionsPath.value), orderBy('dateTime', 'desc'))
+)
+
+watch(
+  () => checkpoints.value,
+  async (checkpoints) => {
+    if (!checkpoints || !checkpoints.length) return
+    const sortedNyName = checkpoints.sort((a: any, b: any) =>
+      a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+    )
+    const taskCheckpoints = sortedNyName
+      .filter((checkpoint: any) => checkpoint.state === 'task')
+      .sort((a: any, b: any) => {
+        const aToCheck = Object.values(a.states).some((state) => state === 'toCheck')
+        const bToCheck = Object.values(b.states).some((state) => state === 'toCheck')
+        if (aToCheck && !bToCheck) return -1
+        else if (!aToCheck && bToCheck) return 1
+        else return 0
+      })
+    const okCheckpoints = sortedNyName.filter((checkpoint: any) => checkpoint.state === 'ok')
+    // Split into groups according to name property of each checkpoint
+    const groupedOkCheckpoints = okCheckpoints.reduce((acc: any, checkpoint: any) => {
+      const key = checkpoint.floor?.name
+      if (!acc[key]) acc[key] = []
+      acc[key].push(checkpoint)
+      return acc
+    }, {})
+    sortedCheckpoints.value = { tasks: taskCheckpoints, okByFloors: groupedOkCheckpoints }
+  }
 )
 
 watch(user, async (currentUser) => {

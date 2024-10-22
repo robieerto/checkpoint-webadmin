@@ -22,9 +22,19 @@
         icon="mdi-alert-decagram-outline"
         @click="isErrorReportFormOpen = true"
       ></v-btn> -->
-      <v-btn key="cleaning" class="v-button-fab" @click="isCleaningRequestFormOpen = true">
-        <v-img src="@/assets/concierge-icon.png" width="25"></v-img>
-      </v-btn>
+
+      <v-tooltip left text="Žiadosť o upratanie">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            key="cleaning"
+            class="v-button-fab"
+            @click="isCleaningRequestFormOpen = true"
+          >
+            <v-img src="@/assets/concierge-icon.png" width="25"></v-img>
+          </v-btn>
+        </template>
+      </v-tooltip>
     </v-speed-dial>
   </div>
   <CleaningRequestForm

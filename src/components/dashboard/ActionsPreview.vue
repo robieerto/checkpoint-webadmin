@@ -21,7 +21,20 @@
             :note="historyAction.action.description"
             @click=""
           >
-            <v-icon class="mr-3">mdi-circle</v-icon>
+            <v-avatar
+              v-if="historyAction.action.createdBy?.username"
+              color="#d9d9d9"
+              variant="flat"
+              density="default"
+              :border="0"
+            >
+              <span class="text-h6">{{
+                getInitial(historyAction.action.createdBy?.username)
+              }}</span>
+            </v-avatar>
+            <span v-else class="material-symbols-outlined mx-1" style="font-size: 30px">
+              account_circle
+            </span>
           </SmallPreviewItem>
         </SmallPreviewList>
       </v-col>
@@ -30,8 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp } from '@/utils'
-import { translateActionState } from '@/utils'
+import { formatTimestamp, getInitial, translateActionState } from '@/utils'
 
 const appStore = useAppStore()
 const { buildingActions, isLoadingBuildingActions } = storeToRefs(appStore)

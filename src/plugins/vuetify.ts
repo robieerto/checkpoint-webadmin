@@ -38,6 +38,6 @@ export default createVuetify({
     },
   },
   display: {
-    mobileBreakpoint: 'md',
+    mobileBreakpoint: 'lg',
   },
 })

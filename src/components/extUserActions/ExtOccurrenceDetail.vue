@@ -34,13 +34,24 @@
                 v-for="action in occurrenceActions"
                 :id="action.id"
                 :key="action.id"
-                :title="extUserAction?.occurrence.name + ' - ' + action.type"
+                :title="extUserAction?.occurrence.name + ' - ' + translateActionState(action.type)"
                 :subtitle="formatTimestamp(action.dateTime?.seconds)"
                 :note="action.description"
                 :secondaryColor="false"
                 @click="selectAction(action)"
               >
-                <v-icon class="mr-3">mdi-account</v-icon>
+                <v-avatar
+                  v-if="action.createdBy?.username"
+                  color="#d9d9d9"
+                  variant="flat"
+                  density="default"
+                  :border="0"
+                >
+                  <span class="text-h6">{{ getInitial(action.createdBy?.username) }}</span>
+                </v-avatar>
+                <span v-else class="material-symbols-outlined mx-1" style="font-size: 30px">
+                  account_circle
+                </span>
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>
@@ -54,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp } from '@/utils'
+import { formatTimestamp, getInitial, translateActionState } from '@/utils'
 import { collection, query, orderBy } from 'firebase/firestore'
 import { useCollection } from 'vuefire'
 import { db } from '@/firebase'

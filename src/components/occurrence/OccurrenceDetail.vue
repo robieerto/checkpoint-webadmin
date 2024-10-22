@@ -63,7 +63,18 @@
                 :secondaryColor="true"
                 @click=""
               >
-                <v-icon class="mr-3">mdi-account</v-icon>
+                <v-avatar
+                  v-if="historyAction.createdBy?.username"
+                  color="#d9d9d9"
+                  variant="flat"
+                  density="default"
+                  :border="0"
+                >
+                  <span class="text-h6">{{ getInitial(historyAction.createdBy?.username) }}</span>
+                </v-avatar>
+                <span v-else class="material-symbols-outlined" style="font-size: 30px">
+                  account_circle
+                </span>
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>
@@ -74,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp, translateActionState } from '@/utils'
+import { formatTimestamp, getInitial, translateActionState } from '@/utils'
 
 const props = defineProps<{
   occurrenceRef?: any
