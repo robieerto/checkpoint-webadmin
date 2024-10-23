@@ -1,6 +1,14 @@
 export const useAppStore = defineStore('app', {
   state: () => ({
+    // app
     drawer: true,
+    isLoadingBuildingActions: true,
+    isModalDetailOpen: false,
+    isCleaningRequestFormOpen: false,
+    isErrorReportFormOpen: false,
+    isQuickActionFormOpen: false,
+
+    // data
     user: null as any,
     userServices: null as any,
     buildings: null as any,
@@ -13,6 +21,5 @@ export const useAppStore = defineStore('app', {
     employees: null as any,
     buildingActions: null as any,
     extUserActions: null as any,
-    isLoadingBuildingActions: true,
   }),
 })

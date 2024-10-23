@@ -2,10 +2,10 @@
   <v-container fluid>
     <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
     <v-row>
-      <v-col cols="5">
+      <v-col cols="auto">
         <ActionsPreview />
       </v-col>
-      <v-col cols="5">
+      <v-col cols="auto">
         <CheckpointsBasicPreview />
       </v-col>
       <!-- <v-col cols="4">

@@ -12,7 +12,7 @@
         <v-btn icon="$close" variant="text" @click="closeForm"></v-btn>
       </template>
 
-      <div class="px-5 d-flex flex-column flex-grow-1" style="width: 600px">
+      <div class="px-5 d-flex flex-column flex-grow-1" style="width: 450px">
         <v-row class="flex-grow-0">
           <v-col class="w-100 d-flex align-start justify-center pb-0">
             <v-select
@@ -27,7 +27,7 @@
         </v-row>
         <v-row v-if="selectedItem" class="flex-grow-1">
           <v-col class="w-100 d-flex align-start justify-center pt-0">
-            <v-list class="w-100" :border="false" :rounded="true">
+            <v-list class="w-100" :border="false" :rounded="true" style="max-width: 360px">
               <CheckpointPreviewItem
                 :id="selectedItem.id"
                 :key="selectedItem.id"

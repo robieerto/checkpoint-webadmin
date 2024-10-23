@@ -88,11 +88,16 @@ h2 {
   right: 80px;
 }
 
-.v-speed-dial__content {
-  position: fixed;
+.v-btn--size-small {
+  --v-btn-height: 49px !important;
+  margin-left: 54px;
+}
+
+/* .v-speed-dial__content {
+  position: relative;
   bottom: 82px;
   right: 28px;
-}
+} */
 
 .checkpoint-form {
   position: fixed;
@@ -128,8 +133,9 @@ h2 {
   box-shadow: none !important;
 }
 
-.v-button-fab {
+/* .v-button-fab {
+  position: relative !important;
   --v-btn-height: initial !important;
   min-width: initial !important;
   padding: 13px 12px !important;
-}
+} */

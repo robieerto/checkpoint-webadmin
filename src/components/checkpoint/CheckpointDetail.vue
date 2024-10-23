@@ -96,6 +96,7 @@
       </v-col>
     </v-row>
   </v-container>
+  <FAB />
 </template>
 
 <script setup lang="ts">

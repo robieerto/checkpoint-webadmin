@@ -4,7 +4,7 @@
       location="top"
       transition="fade-transition"
       :offset="40"
-      location-strategy="static"
+      location-strategy="connected"
     >
       <template v-slot:activator="{ props: activatorProps }">
         <v-fab v-bind="activatorProps" size="large" icon="mdi-square-rounded-badge-outline"></v-fab>
@@ -23,7 +23,7 @@
         @click="isErrorReportFormOpen = true"
       ></v-btn> -->
 
-      <v-tooltip left text="Žiadosť o upratanie">
+      <v-tooltip class="v-button-fab" left text="Žiadosť o upratanie">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
@@ -46,12 +46,21 @@
 </template>
 
 <script setup lang="ts">
-const isCleaningRequestFormOpen = ref(false)
-const isErrorReportFormOpen = ref(false)
-const isQuickActionFormOpen = ref(false)
+const {
+  isCleaningRequestFormOpen,
+  isErrorReportFormOpen,
+  isQuickActionFormOpen,
+  isModalDetailOpen,
+} = storeToRefs(useAppStore())
 
 const isFormOpen = computed(
   () =>
     isCleaningRequestFormOpen.value || isErrorReportFormOpen.value || isQuickActionFormOpen.value
 )
+
+watchEffect(() => {
+  if (isFormOpen.value) {
+    isModalDetailOpen.value = false
+  }
+})
 </script>

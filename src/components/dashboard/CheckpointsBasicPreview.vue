@@ -1,5 +1,5 @@
 <template>
-  <v-card class="px-5" rounded="xl" style="min-width: 300px">
+  <v-card class="px-5" rounded="xl" style="width: 450px">
     <v-row>
       <v-col class="pb-0 ml-5 mt-5">
         <h2>Checkpointy</h2>
@@ -37,7 +37,7 @@
         </v-list>
       </v-col>
     </v-row>
-    <v-dialog v-model="detailVisible" max-width="1000px" :scrollable="true">
+    <v-dialog v-model="isModalDetailOpen" max-width="1000px" :scrollable="true">
       <Detail v-if="selectedCheckpoint !== null" @close="closeDetail">
         <CheckpointDetail :checkpoint="selectedCheckpoint" />
       </Detail>
@@ -46,18 +46,16 @@
 </template>
 
 <script setup lang="ts">
-const { sortedCheckpoints, selectedCheckpoint } = storeToRefs(useAppStore())
-
-const detailVisible = ref(false)
+const { sortedCheckpoints, selectedCheckpoint, isModalDetailOpen } = storeToRefs(useAppStore())
 
 const selectItem = (item: any) => {
   selectedCheckpoint.value = item
-  detailVisible.value = true
+  isModalDetailOpen.value = true
 }
 
 const closeDetail = () => {
   selectedCheckpoint.value = null
-  detailVisible.value = false
+  isModalDetailOpen.value = false
 }
 </script>
 
