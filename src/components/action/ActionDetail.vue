@@ -13,7 +13,7 @@
             <v-row>
               <v-col class="py-1">
                 <v-list-item-title class="text-h6">{{
-                  occurrence.name + ' - ' + action.type
+                  occurrence.name + ' - ' + translateActionState(action.type)
                 }}</v-list-item-title>
                 <v-list-item-subtitle>{{
                   formatTimestamp(action.dateTime.seconds)
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp } from '@/utils'
+import { formatTimestamp, translateActionState } from '@/utils'
 
 const props = defineProps<{
   actionRef?: any

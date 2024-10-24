@@ -37,7 +37,7 @@
         </v-list>
       </v-col>
     </v-row>
-    <v-dialog v-model="isModalDetailOpen" max-width="1000px" :scrollable="true">
+    <v-dialog v-model="isModalCheckpointDetailOpen" max-width="1000px" :scrollable="true">
       <Detail v-if="selectedCheckpoint !== null" @close="closeDetail">
         <CheckpointDetail :checkpoint="selectedCheckpoint" />
       </Detail>
@@ -46,16 +46,17 @@
 </template>
 
 <script setup lang="ts">
-const { sortedCheckpoints, selectedCheckpoint, isModalDetailOpen } = storeToRefs(useAppStore())
+const { sortedCheckpoints, selectedCheckpoint, isModalCheckpointDetailOpen } =
+  storeToRefs(useAppStore())
 
 const selectItem = (item: any) => {
   selectedCheckpoint.value = item
-  isModalDetailOpen.value = true
+  isModalCheckpointDetailOpen.value = true
 }
 
 const closeDetail = () => {
   selectedCheckpoint.value = null
-  isModalDetailOpen.value = false
+  isModalCheckpointDetailOpen.value = false
 }
 </script>
 

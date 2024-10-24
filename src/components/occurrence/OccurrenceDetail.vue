@@ -52,7 +52,7 @@
         <v-row>
           <v-col class="py-1">
             <h3>Priebeh</h3>
-            <SmallPreviewList :secondaryColor="true" height="50vh">
+            <SmallPreviewList :secondaryColor="true" height="40vh">
               <SmallPreviewItem
                 v-for="historyAction in actions"
                 :id="historyAction.id"
@@ -63,18 +63,7 @@
                 :secondaryColor="true"
                 @click=""
               >
-                <v-avatar
-                  v-if="historyAction.createdBy?.username"
-                  color="#d9d9d9"
-                  variant="flat"
-                  density="default"
-                  :border="0"
-                >
-                  <span class="text-h6">{{ getInitial(historyAction.createdBy?.username) }}</span>
-                </v-avatar>
-                <span v-else class="material-symbols-outlined" style="font-size: 30px">
-                  account_circle
-                </span>
+                <Avatar :username="historyAction.createdBy?.username" />
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>
@@ -85,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp, getInitial, translateActionState } from '@/utils'
+import { formatTimestamp, translateActionState } from '@/utils'
 
 const props = defineProps<{
   occurrenceRef?: any

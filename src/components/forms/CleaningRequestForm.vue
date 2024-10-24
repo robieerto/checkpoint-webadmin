@@ -41,10 +41,11 @@
           <v-col class="w-100 d-flex align-end justify-start">
             <v-textarea
               v-model="note"
-              label="Poznámka"
-              hint="Sem môžeš pridať poznámku"
+              :label="noteText"
+              :hint="noteText"
               rows="8"
               no-resize
+              @focused="!note.length ? noteText : note"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -87,6 +88,9 @@ import { httpsCallable } from 'firebase/functions'
 const emit = defineEmits<{
   close: []
 }>()
+
+const noteText =
+  'Tu môžeš pridať poznámku. Napríklad počet hostí, špeciálne požiadavky pre upratanie.'
 
 const user = useCurrentUser()
 const { checkpoints, selectedCheckpoint, selectedBuilding, selectedBuildingServices } =

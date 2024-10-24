@@ -40,18 +40,7 @@
                 :secondaryColor="false"
                 @click="selectAction(action)"
               >
-                <v-avatar
-                  v-if="action.createdBy?.username"
-                  color="#d9d9d9"
-                  variant="flat"
-                  density="default"
-                  :border="0"
-                >
-                  <span class="text-h6">{{ getInitial(action.createdBy?.username) }}</span>
-                </v-avatar>
-                <span v-else class="material-symbols-outlined mx-1" style="font-size: 30px">
-                  account_circle
-                </span>
+                <Avatar :username="action?.createdBy?.username" />
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>
@@ -65,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatTimestamp, getInitial, translateActionState } from '@/utils'
+import { formatTimestamp, translateActionState } from '@/utils'
 import { collection, query, orderBy } from 'firebase/firestore'
 import { useCollection } from 'vuefire'
 import { db } from '@/firebase'

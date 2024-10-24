@@ -8,10 +8,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionDetail: typeof import('./components/action/ActionDetail.vue')['default']
+    ActionFullDetail: typeof import('./components/action/ActionFullDetail.vue')['default']
     ActionsPreview: typeof import('./components/dashboard/ActionsPreview.vue')['default']
     AppBar: typeof import('./components/layout/AppBar.vue')['default']
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']
     AppDrawerItem: typeof import('./components/layout/AppDrawerItem.vue')['default']
+    Avatar: typeof import('./components/Avatar.vue')['default']
     ButtonUser: typeof import('./components/layout/ButtonUser.vue')['default']
     CleaningRequestForm: typeof import('./components/forms/CleaningRequestForm.vue')['default']
     Detail: typeof import('./components/detail/Detail.vue')['default']

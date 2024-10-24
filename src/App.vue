@@ -84,6 +84,8 @@ watch(user, async (currentUser) => {
 })
 
 watch(selectedBuilding, async (currentBuilding) => {
+  buildingActions.value = null
+
   if (currentBuilding) {
     // Set user service types for selected building
     userServicesForSelectedBuilding.value = userServices.value
@@ -99,43 +101,36 @@ watch(selectedBuilding, async (currentBuilding) => {
 })
 
 watch(checkpoints, async (buildingCheckpoints) => {
-  if (buildingCheckpoints) {
+  if (buildingCheckpoints && buildingCheckpoints.length) {
     const buildingHistory = [] as any
     appStore.isLoadingBuildingActions = true
 
-    buildingCheckpoints.forEach(async (checkpoint: any) => {
-      // Get checkpoint occurrences
+    const occurrencePromises = buildingCheckpoints.map(async (checkpoint: any) => {
       const occurrencePath = `${checkpointsPath.value}/${checkpoint.id}/occurrences`
       const checkpointOccurrences = useCollection(collection(db, occurrencePath), { once: true })
 
-      // Get actions for each occurrence
-      checkpointOccurrences.promise.value.then((occurrences: any) => {
-        // If last checkpoint has no occurrences
-        if (checkpoint.id == buildingCheckpoints.at(-1).id && !occurrences.length) {
-          sortAndAssignActions(buildingHistory)
-        }
+      // Get checkpoint occurrences
+      await checkpointOccurrences.promise.value
 
-        occurrences.forEach(async (occurrence: any) => {
-          const actionsPath = `${occurrencePath}/${occurrence.id}/actions`
-          const actions = useCollection(collection(db, actionsPath), { once: true })
+      const actionPromises = checkpointOccurrences.value.map(async (occurrence: any) => {
+        const actionsPath = `${occurrencePath}/${occurrence.id}/actions`
+        const actions = useCollection(collection(db, actionsPath), { once: true })
 
-          // Save actions
-          actions.promise.value.then((actions: any) => {
-            actions.forEach((action: any) => {
-              buildingHistory.push({ action, occurrence })
-            })
+        // Get actions for each occurrence
+        await actions.promise.value
 
-            // If last checkpoint and last occurrence
-            if (
-              checkpoint.id == buildingCheckpoints.at(-1).id &&
-              occurrence.id == occurrences.at(-1).id
-            ) {
-              sortAndAssignActions(buildingHistory)
-            }
-          })
+        // Save actions
+        actions.value.forEach((action: any) => {
+          buildingHistory.push({ action, occurrence, checkpoint })
         })
       })
+
+      await Promise.all(actionPromises)
     })
+
+    await Promise.all(occurrencePromises)
+
+    sortAndAssignActions(buildingHistory)
   }
 })
 
@@ -143,5 +138,6 @@ const sortAndAssignActions = (buildingHistory: any) => {
   buildingHistory.sort((a: any, b: any) => b.action.dateTime.seconds - a.action.dateTime.seconds)
   buildingActions.value = buildingHistory
   appStore.isLoadingBuildingActions = false
+  // console.log('buildingActions', buildingActions.value)
 }
 </script>

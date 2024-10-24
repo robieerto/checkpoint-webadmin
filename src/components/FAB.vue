@@ -50,7 +50,7 @@ const {
   isCleaningRequestFormOpen,
   isErrorReportFormOpen,
   isQuickActionFormOpen,
-  isModalDetailOpen,
+  isModalCheckpointDetailOpen,
 } = storeToRefs(useAppStore())
 
 const isFormOpen = computed(
@@ -60,7 +60,7 @@ const isFormOpen = computed(
 
 watchEffect(() => {
   if (isFormOpen.value) {
-    isModalDetailOpen.value = false
+    isModalCheckpointDetailOpen.value = false
   }
 })
 </script>

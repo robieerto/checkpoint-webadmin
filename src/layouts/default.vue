@@ -4,11 +4,11 @@
     <AppBar />
     <v-main style="overflow-x: auto; overflow-y: hidden">
       <router-view style="min-width: 900px" />
-      <FAB v-if="!isModalDetailOpen" />
+      <FAB v-if="!isModalCheckpointDetailOpen" />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts" setup>
-const { isModalDetailOpen } = storeToRefs(useAppStore())
+const { isModalCheckpointDetailOpen } = storeToRefs(useAppStore())
 </script>

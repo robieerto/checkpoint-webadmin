@@ -3,7 +3,8 @@ export const useAppStore = defineStore('app', {
     // app
     drawer: true,
     isLoadingBuildingActions: true,
-    isModalDetailOpen: false,
+    isModalCheckpointDetailOpen: false,
+    isModalActionDetailOpen: false,
     isCleaningRequestFormOpen: false,
     isErrorReportFormOpen: false,
     isQuickActionFormOpen: false,
