@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="checkpoint-form h-75" rounded="xl">
+  <v-sheet class="checkpoint-form h-75 fab-form" rounded="xl">
     <v-card
       append-icon="$close"
       class="mx-auto h-100 d-flex flex-column"
@@ -41,11 +41,11 @@
           <v-col class="w-100 d-flex align-end justify-start">
             <v-textarea
               v-model="note"
-              :label="noteText"
+              :label="noteFocused ? 'Poznámka' : noteText"
               :hint="noteText"
               rows="8"
               no-resize
-              @focused="!note.length ? noteText : note"
+              @update:focused="(e) => (noteFocused = e)"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -101,6 +101,7 @@ const checkpointDialog = ref(false)
 const selectedItem = ref(selectedCheckpoint.value)
 const selectedItemId = ref(selectedCheckpoint.value?.id)
 const note = ref('')
+const noteFocused = ref(false)
 const success = ref(false)
 const error = ref(false)
 const errorMessage = ref('')

@@ -61,7 +61,7 @@
                 :subtitle="formatTimestamp(historyAction.dateTime?.seconds)"
                 :note="historyAction.description"
                 :secondaryColor="true"
-                @click=""
+                @click="selectItem(historyAction)"
               >
                 <Avatar :username="historyAction.createdBy?.username" />
               </SmallPreviewItem>
@@ -79,6 +79,14 @@ import { formatTimestamp, translateActionState } from '@/utils'
 const props = defineProps<{
   occurrenceRef?: any
 }>()
+
+const emit = defineEmits<{
+  select: [item: string]
+}>()
+
+const selectItem = (item: any) => {
+  emit('select', item)
+}
 
 const occurrence = ref(props.occurrenceRef.occurrence)
 const actions = ref(props.occurrenceRef.actions)

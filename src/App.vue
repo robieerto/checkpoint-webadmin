@@ -27,8 +27,10 @@ const {
   userServicesForSelectedBuilding,
   checkpoints,
   sortedCheckpoints,
+  sortedAndFilteredCheckpoints,
   buildingActions,
   extUserActions,
+  searchText,
 } = storeToRefs(appStore)
 
 const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
@@ -66,6 +68,7 @@ watch(
       return acc
     }, {})
     sortedCheckpoints.value = { tasks: taskCheckpoints, okByFloors: groupedOkCheckpoints }
+    filterCheckpoints()
   }
 )
 
@@ -138,6 +141,31 @@ const sortAndAssignActions = (buildingHistory: any) => {
   buildingHistory.sort((a: any, b: any) => b.action.dateTime.seconds - a.action.dateTime.seconds)
   buildingActions.value = buildingHistory
   appStore.isLoadingBuildingActions = false
-  // console.log('buildingActions', buildingActions.value)
+}
+
+watch(searchText, () => {
+  filterCheckpoints()
+})
+
+function filterCheckpoints() {
+  if (searchText.value === '') {
+    sortedAndFilteredCheckpoints.value = sortedCheckpoints.value
+    return
+  }
+
+  const filteredTasks = sortedCheckpoints.value.tasks.filter((checkpoint: any) =>
+    checkpoint.name.toLowerCase().includes(searchText.value.toLowerCase())
+  )
+  const filteredOkByFloors = Object.entries(sortedCheckpoints.value.okByFloors).reduce(
+    (acc: any, [floor, checkpoints]: Array<any>) => {
+      const filteredCheckpoints = checkpoints.filter((checkpoint: any) =>
+        checkpoint.name.toLowerCase().includes(searchText.value.toLowerCase())
+      )
+      if (filteredCheckpoints.length) acc[floor] = filteredCheckpoints
+      return acc
+    },
+    {}
+  )
+  sortedAndFilteredCheckpoints.value = { tasks: filteredTasks, okByFloors: filteredOkByFloors }
 }
 </script>

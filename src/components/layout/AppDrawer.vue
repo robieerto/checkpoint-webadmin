@@ -97,7 +97,7 @@ function updateDrawerHover(railChanged: boolean) {
         v-if="!rail || !hideTitle"
         class="drawer-footer px-0 d-flex flex-column justify-center"
       >
-        <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">v0.1</div>
+        <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">v1.1</div>
       </v-list-item>
     </template>
   </v-navigation-drawer>

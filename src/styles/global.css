@@ -139,3 +139,16 @@ h2 {
   min-width: initial !important;
   padding: 13px 12px !important;
 } */
+
+.v-field-label {
+  white-space: normal !important;
+}
+
+.fab-form {
+  position: fixed;
+  z-index: 2500;
+}
+
+.search-field .v-field__outline {
+  visibility: hidden;
+}

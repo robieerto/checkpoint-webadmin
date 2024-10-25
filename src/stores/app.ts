@@ -8,6 +8,7 @@ export const useAppStore = defineStore('app', {
     isCleaningRequestFormOpen: false,
     isErrorReportFormOpen: false,
     isQuickActionFormOpen: false,
+    searchText: '',
 
     // data
     user: null as any,
@@ -18,6 +19,7 @@ export const useAppStore = defineStore('app', {
     userServicesForSelectedBuilding: null as any,
     checkpoints: null as any,
     sortedCheckpoints: null as any,
+    sortedAndFilteredCheckpoints: null as any,
     selectedCheckpoint: null as any,
     employees: null as any,
     buildingActions: null as any,
