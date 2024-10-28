@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <v-sheet class="checkpoint-form h-75 fab-form" rounded="xl">
+    <v-sheet class="checkpoint-form h-75 fab-form" rounded="xl" style="max-height: 800px">
       <v-card
         append-icon="$close"
         class="mx-auto h-100 d-flex flex-column"

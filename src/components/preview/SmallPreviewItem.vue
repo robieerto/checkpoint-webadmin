@@ -1,49 +1,57 @@
 <template>
-  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="none" class="py-0">
+  <v-list-item :class="secondaryColor && 'secondary-color'" rounded="none" class="pa-0">
     <v-container class="pr-0 py-0">
-      <v-row style="margin-right: 0px; position: relative">
+      <v-row style="position: relative">
         <div class="vl" :class="secondaryColor && 'secondary-color'"></div>
         <v-col cols="1" style="max-width: 50px" class="pl-0 py-0" align-self="center">
           <slot></slot>
         </v-col>
-        <v-col cols="10">
+        <v-col cols="9">
           <v-row>
-            <v-card
-              class="list-card py-1 mt-6 mb-6 mb-3"
-              style="width: 300px"
-              flat
-              rounded="lg"
-              border="md"
-            >
-              <v-col class="py-1">
-                <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
-                <v-list-item-title class="font-weight-medium">{{ title }}</v-list-item-title>
-                <v-list-item-subtitle style="max-width: 246px">{{ note }}</v-list-item-subtitle>
-                <div class="text-left">
-                  <v-chip
-                    v-if="user"
-                    class="pl-1 mt-1 mr-1"
-                    variant="flat"
-                    rounded="lg"
-                    color="background"
-                  >
-                    <span class="material-symbols-outlined mx-1">account_circle</span>
-                    {{ user }}</v-chip
-                  >
-                  <v-chip v-else class="pl-1 mt-1 mr-1" variant="flat" rounded="lg" color="yellow">
-                    <span class="material-symbols-outlined mx-1">hot_tub</span> Hosť</v-chip
-                  >
-                  <v-chip
-                    v-if="checkpoint"
-                    class="mt-1 mr-1"
-                    variant="flat"
-                    rounded="lg"
-                    color="primary"
-                    >{{ checkpoint }}</v-chip
-                  >
-                </div>
-              </v-col>
-            </v-card>
+            <v-col class="ma-0 pa-0">
+              <v-card
+                class="list-card py-1 my-6"
+                style="max-width: 350px"
+                flat
+                rounded="lg"
+                border="md"
+              >
+                <v-col class="py-1">
+                  <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
+                  <v-list-item-title class="font-weight-medium">{{ title }}</v-list-item-title>
+                  <v-list-item-subtitle style="max-width: 246px">{{ note }}</v-list-item-subtitle>
+                  <div class="text-left">
+                    <v-chip
+                      v-if="user"
+                      class="pl-1 mt-1 mr-1"
+                      variant="flat"
+                      rounded="lg"
+                      color="background"
+                    >
+                      <span class="material-symbols-outlined mx-1">account_circle</span>
+                      {{ user }}</v-chip
+                    >
+                    <v-chip
+                      v-else
+                      class="pl-1 mt-1 mr-1"
+                      variant="flat"
+                      rounded="lg"
+                      color="yellow"
+                    >
+                      <span class="material-symbols-outlined mx-1">hot_tub</span> Hosť</v-chip
+                    >
+                    <v-chip
+                      v-if="checkpoint"
+                      class="mt-1 mr-1"
+                      variant="flat"
+                      rounded="lg"
+                      color="primary"
+                      >{{ checkpoint }}</v-chip
+                    >
+                  </div>
+                </v-col>
+              </v-card>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
