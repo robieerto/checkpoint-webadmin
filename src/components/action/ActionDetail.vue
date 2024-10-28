@@ -3,7 +3,7 @@
     <v-card-text>
       <v-container class="py-0">
         <v-row>
-          <v-list-item-title class="text-h6 mx-auto">Úkon</v-list-item-title>
+          <v-list-item-title class="text-h6 mx-auto mt-3 mb-1">Úkon</v-list-item-title>
         </v-row>
         <v-row>
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">

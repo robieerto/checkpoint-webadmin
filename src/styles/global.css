@@ -144,11 +144,14 @@ h2 {
   white-space: normal !important;
 }
 
-.fab-form {
-  position: fixed;
-  z-index: 2500;
-}
-
 .search-field .v-field__outline {
   visibility: hidden;
+}
+
+.fab-form {
+  z-index: 1999;
+}
+
+.v-dialog {
+  z-index: 1900 !important;
 }

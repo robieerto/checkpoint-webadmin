@@ -50,8 +50,8 @@ const {
   isCleaningRequestFormOpen,
   isErrorReportFormOpen,
   isQuickActionFormOpen,
-  isModalCheckpointDetailOpen,
-  isModalActionDetailOpen,
+  // isModalCheckpointDetailOpen,
+  // isModalActionDetailOpen,
 } = storeToRefs(useAppStore())
 
 const isFormOpen = computed(
@@ -59,13 +59,13 @@ const isFormOpen = computed(
     isCleaningRequestFormOpen.value || isErrorReportFormOpen.value || isQuickActionFormOpen.value
 )
 
-watch(
-  () => isFormOpen.value,
-  () => {
-    if (isFormOpen.value) {
-      isModalCheckpointDetailOpen.value = false
-      isModalActionDetailOpen.value = false
-    }
-  }
-)
+// watch(
+//   () => isFormOpen.value,
+//   () => {
+//     if (isFormOpen.value) {
+//       isModalCheckpointDetailOpen.value = false
+//       isModalActionDetailOpen.value = false
+//     }
+//   }
+// )
 </script>

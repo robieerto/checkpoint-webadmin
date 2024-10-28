@@ -37,11 +37,13 @@
         </v-list>
       </v-col>
     </v-row>
-    <v-dialog v-model="isModalCheckpointDetailOpen" max-width="1000px" :scrollable="true">
+    <!-- <v-dialog v-model="isModalCheckpointDetailOpen" attach=".dialog-container" :scrollable="true"> -->
+    <Modal v-if="isModalCheckpointDetailOpen" @close="closeDetail">
       <Detail v-if="selectedCheckpoint !== null" @close="closeDetail">
         <CheckpointDetail :checkpoint="selectedCheckpoint" />
       </Detail>
-    </v-dialog>
+    </Modal>
+    <!-- </v-dialog> -->
   </v-card>
 </template>
 

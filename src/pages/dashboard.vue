@@ -2,7 +2,7 @@
   <v-container fluid>
     <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
     <v-row>
-      <v-col cols="auto">
+      <v-col v-if="!searchText" cols="auto">
         <ActionsPreview />
       </v-col>
       <v-col cols="auto">
@@ -23,4 +23,7 @@ definePage({
     drawerIndex: 1,
   },
 })
+
+const appStore = useAppStore()
+const { searchText } = storeToRefs(appStore)
 </script>

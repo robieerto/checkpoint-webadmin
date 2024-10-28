@@ -15,12 +15,16 @@
                 <v-list-item-subtitle class="my-1">{{
                   formatTimestamp(extUserAction?.dateTime.seconds)
                 }}</v-list-item-subtitle>
-                <div class="text-right">
+                <div
+                  class="text-right"
+                  style="max-width: 244px; overflow-x: auto; white-space: nowrap"
+                >
                   <ChipState
+                    class="mb-1"
                     :serviceType="extUserAction?.occurrence?.service.type"
                     :entityState="extUserAction?.occurrence?.state"
                   ></ChipState>
-                  <v-chip variant="flat" rounded="lg" color="primary" class="ml-1">{{
+                  <v-chip variant="flat" rounded="lg" color="primary" class="ml-1 mb-1">{{
                     extUserAction?.checkpoint?.name
                   }}</v-chip>
                 </div>

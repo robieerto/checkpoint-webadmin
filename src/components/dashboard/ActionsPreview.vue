@@ -34,11 +34,11 @@
         </v-infinite-scroll>
       </v-col>
     </v-row>
-    <v-dialog v-model="isModalActionDetailOpen" max-width="1000px" :scrollable="true">
+    <Modal v-if="isModalActionDetailOpen" @close="closeDetail">
       <Detail v-if="selectedAction !== null" @close="closeDetail">
         <ActionFullDetail :historyAction="selectedAction" />
       </Detail>
-    </v-dialog>
+    </Modal>
   </v-card>
 </template>
 

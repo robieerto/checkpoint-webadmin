@@ -41,16 +41,19 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-dialog v-model="isModalCheckpointDetailOpen" max-width="1000px" :scrollable="true">
+  <!-- <v-dialog v-model="isModalCheckpointDetailOpen" max-width="1000px" :scrollable="true"> -->
+  <Modal v-if="isModalCheckpointDetailOpen" @close="closeModalCheckpointDetail">
     <Detail v-if="selectedCheckpoint !== null" @close="closeModalCheckpointDetail">
       <CheckpointDetail :checkpoint="selectedCheckpoint" />
     </Detail>
-  </v-dialog>
+  </Modal>
+  <!-- </v-dialog> -->
+  <FAB v-if="!appStore.isCleaningRequestFormOpen" />
 </template>
 
 <script setup lang="ts">
 import { _RefFirestore, useCollection } from 'vuefire'
-import { collection } from 'firebase/firestore'
+import { collection, query, orderBy } from 'firebase/firestore'
 import { db } from '@/firebase'
 
 const props = defineProps<{
@@ -58,8 +61,7 @@ const props = defineProps<{
 }>()
 
 const appStore = useAppStore()
-const { selectedCheckpoint, isModalCheckpointDetailOpen, isModalActionDetailOpen } =
-  storeToRefs(appStore)
+const { selectedCheckpoint, isModalCheckpointDetailOpen } = storeToRefs(appStore)
 
 const occurrenceRef = ref({ actions: [], occurrence: props.historyAction?.occurrence } as any)
 const actionRef = ref({
@@ -74,7 +76,10 @@ const checkpointPath = computed(
 const occurrencesPath = computed(() => `${checkpointPath.value}/occurrences`)
 
 const occurrenceActions = useCollection(
-  collection(db, `${occurrencesPath.value}/${props.historyAction?.occurrence?.id}/actions`)
+  query(
+    collection(db, `${occurrencesPath.value}/${props.historyAction?.occurrence?.id}/actions`),
+    orderBy('dateTime', 'asc')
+  )
 )
 
 const selectAction = (action: any) => {

@@ -26,6 +26,8 @@ defineProps<{
   subtitle?: string
   note?: string
   secondaryColor?: boolean
+  checkpoint?: string
+  user?: string
 }>()
 </script>
 

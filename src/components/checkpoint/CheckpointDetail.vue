@@ -183,7 +183,10 @@ const getHistory = async () => {
   for (const occurrence of occurrences.value) {
     // Get its actions
     const occurrenceActions = useCollection(
-      collection(db, `${occurrencesPath.value}/${occurrence.id}/actions`)
+      query(
+        collection(db, `${occurrencesPath.value}/${occurrence.id}/actions`),
+        orderBy('dateTime', 'asc')
+      )
     )
 
     // Save reference
