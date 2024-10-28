@@ -26,9 +26,11 @@
               "
               :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
               :note="historyAction.action.description"
+              :checkpoint="historyAction.checkpoint?.name"
+              :user="historyAction.action?.createdBy?.username"
               @click="selectItem(historyAction)"
             >
-              <Avatar :username="historyAction.action?.createdBy?.username" />
+              <Avatar />
             </SmallPreviewItem>
           </template>
         </v-infinite-scroll>

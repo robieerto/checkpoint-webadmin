@@ -38,9 +38,11 @@
                 :subtitle="formatTimestamp(action.dateTime?.seconds)"
                 :note="action.description"
                 :secondaryColor="false"
+                :checkpoint="extUserAction.checkpoint.name"
+                :user="extUserAction.action?.createdBy?.username"
                 @click="selectAction(action)"
               >
-                <Avatar :username="action?.createdBy?.username" />
+                <Avatar />
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>

@@ -88,6 +88,13 @@
     "useTheme": true,
     "useAuthStore": true,
     "getCurrentUser": true,
-    "useCurrentUser": true
+    "useCurrentUser": true,
+    "DirectiveBinding": true,
+    "MaybeRef": true,
+    "MaybeRefOrGetter": true,
+    "onWatcherCleanup": true,
+    "useId": true,
+    "useModel": true,
+    "useTemplateRef": true
   }
 }

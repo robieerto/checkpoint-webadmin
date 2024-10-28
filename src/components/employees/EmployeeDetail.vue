@@ -59,9 +59,11 @@
             "
             :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
             :note="historyAction.action.description"
+            :checkpoint="historyAction.checkpoint?.name"
+            :user="historyAction.action?.createdBy?.username"
             @click=""
           >
-            <Avatar :username="historyAction.action?.createdBy?.username" />
+            <Avatar />
           </SmallPreviewItem>
         </SmallPreviewList>
         <div v-else>

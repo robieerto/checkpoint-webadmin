@@ -61,9 +61,11 @@
                 :subtitle="formatTimestamp(historyAction.dateTime?.seconds)"
                 :note="historyAction.description"
                 :secondaryColor="true"
+                :checkpoint="historyAction.checkpoint?.name"
+                :user="historyAction?.createdBy?.username"
                 @click="selectItem(historyAction)"
               >
-                <Avatar :username="historyAction.createdBy?.username" />
+                <Avatar />
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>

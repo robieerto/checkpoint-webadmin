@@ -2,7 +2,7 @@
   <v-container class="py-0">
     <v-row>
       <v-col cols="6">
-        <v-row>
+        <v-row class="ml-0">
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
             <v-img src="@/assets/checkpoint-logo.png" width="45"></v-img>
           </v-col>
@@ -76,9 +76,11 @@
                     "
                     :subtitle="formatTimestamp(historyAction.action.dateTime?.seconds)"
                     :note="historyAction.action.description"
+                    :checkpoint="checkpoint?.name"
+                    :user="historyAction.action?.createdBy?.username"
                     @click="selectAction(historyAction)"
                   >
-                    <Avatar :username="historyAction.action?.createdBy?.username" />
+                    <Avatar />
                   </SmallPreviewItem>
                 </SmallPreviewList>
                 <div v-else>
