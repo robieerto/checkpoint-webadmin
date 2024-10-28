@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { useCurrentUser, useCollection } from 'vuefire'
-import { collection, query, orderBy } from 'firebase/firestore'
+import { collection } from 'firebase/firestore'
 import { db } from '@/firebase'
 import {
   getSelectedBuildingEmployees,
@@ -29,19 +29,12 @@ const {
   sortedCheckpoints,
   sortedAndFilteredCheckpoints,
   buildingActions,
-  extUserActions,
   searchText,
 } = storeToRefs(appStore)
 
 const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
-const extUserActionsPath = computed(
-  () => `Buildings/${selectedBuilding.value?.id}/externalUserActions`
-)
 
 checkpoints.value = useCollection(() => collection(db, checkpointsPath.value))
-extUserActions.value = useCollection(() =>
-  query(collection(db, extUserActionsPath.value), orderBy('dateTime', 'desc'))
-)
 
 watch(
   () => checkpoints.value,

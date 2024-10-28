@@ -5,7 +5,12 @@
         <h2>Hostia</h2>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="pending">
+      <v-col style="max-width: 370px" justify="center" align="center">
+        <v-progress-circular indeterminate :size="70" color="primary" />
+      </v-col>
+    </v-row>
+    <v-row v-else>
       <v-col style="max-width: 370px">
         <v-list height="80vh" class="py-0" :border="false" :rounded="true">
           <ExtUserActionPreviewItem
@@ -36,7 +41,21 @@
 </template>
 
 <script setup lang="ts">
-const { extUserActions } = storeToRefs(useAppStore())
+import { useCollection } from 'vuefire'
+import { collection, query, orderBy } from 'firebase/firestore'
+import { db } from '@/firebase'
+
+const { extUserActions, selectedBuilding } = storeToRefs(useAppStore())
+
+const extUserActionsPath = computed(
+  () => `Buildings/${selectedBuilding.value?.id}/externalUserActions`
+)
+
+const { data, pending } = useCollection(() =>
+  query(collection(db, extUserActionsPath.value), orderBy('dateTime', 'desc'))
+)
+
+extUserActions.value = data
 
 const selectedItem = ref(null) as any
 const detailVisible = ref(false)
