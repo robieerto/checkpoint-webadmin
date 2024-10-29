@@ -77,9 +77,6 @@
         </div>
       </v-card>
     </v-sheet>
-    <v-snackbar v-model="error" :timeout="3000" color="error">errorMessage</v-snackbar>
-    <v-snackbar v-model="success" :timeout="3000" color="success"
-      >Žiadosť bola vytvorená</v-snackbar
     >
   </Teleport>
 </template>
@@ -97,7 +94,7 @@ const noteText =
   'Tu môžeš pridať poznámku. Napríklad počet hostí, špeciálne požiadavky pre upratanie, ...'
 
 const user = useCurrentUser()
-const { checkpoints, selectedCheckpoint, selectedBuilding, selectedBuildingServices } =
+const { checkpoints, selectedCheckpoint, selectedBuilding, selectedBuildingServices, snackbar } =
   storeToRefs(useAppStore())
 
 const sending = ref(false)
@@ -106,9 +103,6 @@ const selectedItem = ref(selectedCheckpoint.value)
 const selectedItemId = ref(selectedCheckpoint.value?.id)
 const note = ref('')
 const noteFocused = ref(false)
-const success = ref(false)
-const error = ref(false)
-const errorMessage = ref('')
 
 watch(selectedItemId, () => {
   selectedItem.value = checkpoints.value.find(
@@ -127,8 +121,6 @@ const saveForm = () => {
   const cleaningService = selectedBuildingServices.value.find(
     (service: any) => service.type === 'cleaning'
   )
-  // errorMessage.value = `ERROR`
-  // error.value = true
   createCleaningRequest({
     buildingID: selectedBuilding.value?.id,
     checkpointID: selectedItemId.value,
@@ -136,22 +128,19 @@ const saveForm = () => {
     userID: user.value?.uid,
     description: note.value,
   })
-    .then((result) => {
-      success.value = true
-      // closeForm()
-      const data = result.data as any
-      const sanitizedMessage = data.text
-      console.log(sanitizedMessage)
+    .then(() => {
+      snackbar.value = { value: true, text: 'Žiadosť bola vytvorená', color: 'success' }
+      closeForm()
     })
     .catch((error) => {
-      // Getting the Error details.
-      const code = error.code
-      const message = error.message
-      const details = error.details
-      errorMessage.value = `${code}, ${message}, ${details}`
+      const errorMessage = `${error.code}, ${error.message}, ${error.details}`
+      console.log(errorMessage)
+      snackbar.value = { value: true, text: errorMessage, color: 'error' }
       error.value = true
     })
-  sending.value = false
+    .finally(() => {
+      sending.value = false
+    })
 }
 </script>
 

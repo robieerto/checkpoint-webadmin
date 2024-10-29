@@ -147,7 +147,6 @@ watch(searchText, () => {
 function filterCheckpoints() {
   if (searchText.value === '') {
     sortedAndFilteredCheckpoints.value = sortedCheckpoints.value
-    console.log(sortedAndFilteredCheckpoints.value)
     return
   }
 

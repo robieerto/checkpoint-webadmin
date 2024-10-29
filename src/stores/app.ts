@@ -2,6 +2,7 @@ export const useAppStore = defineStore('app', {
   state: () => ({
     // app
     drawer: true,
+    snackbar: { value: false, text: '', color: '' },
     isLoadingBuildingActions: true,
     isModalCheckpointDetailOpen: false,
     isModalActionDetailOpen: false,
