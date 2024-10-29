@@ -16,17 +16,19 @@
             :secondaryColor="true"
             @click="selectItem(checkpoint)"
           />
-          <div v-for="(checkpoints, floor) in sortedAndFilteredCheckpoints?.okByFloors">
+          <div v-for="checkpointFloor in sortedAndFilteredCheckpoints?.okByFloors">
             <v-row class="align-center w-100 mx-0">
               <v-col cols="auto" class="pl-0 pr-2">
-                <v-list-item-title class="text-h6 ml-5 pt-2 pb-1">{{ floor }}</v-list-item-title>
+                <v-list-item-title class="text-h6 ml-5 pt-2 pb-1">{{
+                  checkpointFloor?.name
+                }}</v-list-item-title>
               </v-col>
-              <v-col class="">
+              <v-col class="pr-1">
                 <hr class="my-0" />
               </v-col>
             </v-row>
             <CheckpointPreviewItem
-              v-for="checkpoint in checkpoints"
+              v-for="checkpoint in checkpointFloor?.checkpoints"
               :id="checkpoint.id"
               :key="checkpoint.id"
               :checkpoint="checkpoint"

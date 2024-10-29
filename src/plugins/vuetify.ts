@@ -26,6 +26,7 @@ const checkpointTheme: ThemeDefinition = {
     orange: '#ee964a',
     brown: '#705d0d',
     avatar: '#d9d9d9',
+    blue: '#39608f',
   },
 }
 

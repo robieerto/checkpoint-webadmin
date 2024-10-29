@@ -15,18 +15,16 @@
                 <v-list-item-subtitle class="my-1">{{
                   formatTimestamp(extUserAction?.dateTime.seconds)
                 }}</v-list-item-subtitle>
-                <div
-                  class="text-right"
-                  style="max-width: 244px; overflow-x: auto; white-space: nowrap"
-                >
+                <div class="text-right">
                   <ChipState
                     class="mb-1"
                     :serviceType="extUserAction?.occurrence?.service.type"
                     :entityState="extUserAction?.occurrence?.state"
                   ></ChipState>
-                  <v-chip variant="flat" rounded="lg" color="primary" class="ml-1 mb-1">{{
-                    extUserAction?.checkpoint?.name
-                  }}</v-chip>
+                  <v-chip variant="flat" rounded="lg" color="blue" class="ml-1 mb-1">
+                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    {{ extUserAction?.checkpoint?.name }}</v-chip
+                  >
                 </div>
               </div>
 
@@ -41,9 +39,10 @@
                   <v-list-item-subtitle class="my-1">{{
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
-                  <v-chip variant="flat" rounded="lg" color="primary" class="mr-1">{{
-                    extUserAction?.checkpoint?.name
-                  }}</v-chip>
+                  <v-chip variant="flat" rounded="lg" color="blue">
+                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    {{ extUserAction?.checkpoint?.name }}</v-chip
+                  >
                 </div>
               </div>
 
@@ -54,9 +53,10 @@
                   <v-list-item-subtitle class="my-1">{{
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
-                  <v-chip variant="flat" rounded="lg" color="primary" class="mr-1">{{
-                    extUserAction?.checkpoint?.name
-                  }}</v-chip>
+                  <v-chip variant="flat" rounded="lg" color="blue">
+                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    {{ extUserAction?.checkpoint?.name }}</v-chip
+                  >
                 </div>
               </div>
 
@@ -67,9 +67,10 @@
                   <v-list-item-subtitle class="my-1">{{
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
-                  <v-chip variant="flat" rounded="lg" color="primary" class="mr-1">{{
-                    extUserAction?.checkpoint?.name
-                  }}</v-chip>
+                  <v-chip variant="flat" rounded="lg" color="blue">
+                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    {{ extUserAction?.checkpoint?.name }}</v-chip
+                  >
                 </div>
               </div>
             </v-col>

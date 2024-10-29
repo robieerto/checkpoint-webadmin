@@ -11,10 +11,11 @@
             <v-col class="ma-0 pa-0">
               <v-card
                 class="list-card py-1 my-6"
+                :class="secondaryColor && 'secondary-color'"
                 style="max-width: 350px"
                 flat
                 rounded="lg"
-                border="md"
+                border="lg"
               >
                 <v-col class="py-1">
                   <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
@@ -45,8 +46,10 @@
                       class="mt-1 mr-1"
                       variant="flat"
                       rounded="lg"
-                      color="primary"
-                      >{{ checkpoint }}</v-chip
+                      color="blue"
+                    >
+                      <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                      {{ checkpoint }}</v-chip
                     >
                   </div>
                 </v-col>
@@ -83,6 +86,10 @@ defineProps<{
 .list-card {
   background: none !important;
   box-shadow: none !important;
+  border-color: #efe2bb !important;
+}
+
+.list-card.secondary-color {
   border-color: #705d0d !important;
 }
 
@@ -90,7 +97,7 @@ defineProps<{
   position: absolute;
   height: 100%;
   top: 0px;
-  left: 17px;
+  left: 17.2px;
   border-left: 6px solid #efe2bb;
 }
 

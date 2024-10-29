@@ -42,7 +42,7 @@
             <v-col class="w-100 d-flex align-end justify-start">
               <v-textarea
                 v-model="note"
-                :label="noteFocused ? 'Poznámka' : noteText"
+                :label="noteFocused || note.length ? 'Poznámka' : noteText"
                 :hint="noteText"
                 rows="8"
                 no-resize
@@ -127,6 +127,8 @@ const saveForm = () => {
   const cleaningService = selectedBuildingServices.value.find(
     (service: any) => service.type === 'cleaning'
   )
+  // errorMessage.value = `ERROR`
+  // error.value = true
   createCleaningRequest({
     buildingID: selectedBuilding.value?.id,
     checkpointID: selectedItemId.value,

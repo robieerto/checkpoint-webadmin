@@ -44,7 +44,9 @@ watch(
       a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
     )
     const taskCheckpoints = sortedNyName
-      .filter((checkpoint: any) => checkpoint.state === 'task')
+      .filter((checkpoint: any) =>
+        Object.values(checkpoint.states).some((state: any) => state !== 'done')
+      )
       .sort((a: any, b: any) => {
         const aToCheck = Object.values(a.states).some((state) => state === 'toCheck')
         const bToCheck = Object.values(b.states).some((state) => state === 'toCheck')
@@ -52,12 +54,14 @@ watch(
         else if (!aToCheck && bToCheck) return 1
         else return 0
       })
-    const okCheckpoints = sortedNyName.filter((checkpoint: any) => checkpoint.state === 'ok')
+    const okCheckpoints = sortedNyName.filter((checkpoint: any) =>
+      Object.values(checkpoint.states).every((state: any) => state === 'done')
+    )
     // Split into groups according to name property of each checkpoint
     const groupedOkCheckpoints = okCheckpoints.reduce((acc: any, checkpoint: any) => {
-      const key = checkpoint.floor?.name
-      if (!acc[key]) acc[key] = []
-      acc[key].push(checkpoint)
+      const key = checkpoint.floor?.number
+      if (!acc[key]) acc[key] = { name: checkpoint.floor?.name, checkpoints: [] }
+      acc[key].checkpoints.push(checkpoint)
       return acc
     }, {})
     sortedCheckpoints.value = { tasks: taskCheckpoints, okByFloors: groupedOkCheckpoints }
@@ -143,18 +147,27 @@ watch(searchText, () => {
 function filterCheckpoints() {
   if (searchText.value === '') {
     sortedAndFilteredCheckpoints.value = sortedCheckpoints.value
+    console.log(sortedAndFilteredCheckpoints.value)
     return
   }
 
   const filteredTasks = sortedCheckpoints.value.tasks.filter((checkpoint: any) =>
     checkpoint.name.toLowerCase().includes(searchText.value.toLowerCase())
   )
-  const filteredOkByFloors = Object.entries(sortedCheckpoints.value.okByFloors).reduce(
-    (acc: any, [floor, checkpoints]: Array<any>) => {
-      const filteredCheckpoints = checkpoints.filter((checkpoint: any) =>
+
+  // Change this, new structure is { floorNumber: { name: string, checkpoints: [] } }
+  const filteredOkByFloors = Object.keys(sortedCheckpoints.value.okByFloors).reduce(
+    (acc: any, floorNumber: any) => {
+      const checkpointFloor = sortedCheckpoints.value.okByFloors[floorNumber]
+      const filteredCheckpoints = checkpointFloor.checkpoints.filter((checkpoint: any) =>
         checkpoint.name.toLowerCase().includes(searchText.value.toLowerCase())
       )
-      if (filteredCheckpoints.length) acc[floor] = filteredCheckpoints
+      if (filteredCheckpoints.length) {
+        acc[floorNumber] = {
+          name: checkpointFloor.name,
+          checkpoints: filteredCheckpoints,
+        }
+      }
       return acc
     },
     {}
