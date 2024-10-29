@@ -8,7 +8,16 @@
 
 <script lang="ts" setup>
 import { useCurrentUser, useCollection } from 'vuefire'
-import { collection } from 'firebase/firestore'
+import { firestoreDefaultConverter } from 'vuefire'
+import {
+  collection,
+  collectionGroup,
+  orderBy,
+  startAt,
+  endAt,
+  query,
+  documentId,
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 import {
   getSelectedBuildingEmployees,
@@ -29,12 +38,34 @@ const {
   sortedCheckpoints,
   sortedAndFilteredCheckpoints,
   buildingActions,
+  occurrences,
   searchText,
 } = storeToRefs(appStore)
 
-const checkpointsPath = computed(() => `Buildings/${selectedBuilding.value?.id}/checkpoints`)
+const buildingPath = computed(() => `Buildings/${selectedBuilding.value?.id}`)
+const checkpointsPath = computed(() => `${buildingPath.value}/checkpoints`)
 
 checkpoints.value = useCollection(() => collection(db, checkpointsPath.value))
+
+const actions = useCollection(() =>
+  query(
+    collectionGroup(db, 'actions'),
+    orderBy(documentId()),
+    startAt(buildingPath.value),
+    endAt(buildingPath.value + '\uf8ff')
+  ).withConverter({
+    toFirestore: firestoreDefaultConverter.toFirestore,
+    fromFirestore: (snapshot, options) => {
+      const data = firestoreDefaultConverter.fromFirestore(snapshot, options)
+      // if the document doesn't exist, return null
+      if (!data) return null
+      // add anything custom to the returned object
+      data.occurrenceId = snapshot.ref?.parent.parent?.id
+      data.checkpointId = snapshot.ref?.parent.parent?.parent.parent?.id
+      return data
+    },
+  })
+)
 
 watch(
   () => checkpoints.value,
@@ -84,7 +115,10 @@ watch(user, async (currentUser) => {
 })
 
 watch(selectedBuilding, async (currentBuilding) => {
-  buildingActions.value = null
+  appStore.isLoadingBuildingActions = true
+
+  buildingActions.value = []
+  occurrences.value = []
 
   if (currentBuilding) {
     // Set user service types for selected building
@@ -100,42 +134,17 @@ watch(selectedBuilding, async (currentBuilding) => {
   }
 })
 
-watch(checkpoints, async (buildingCheckpoints) => {
-  if (buildingCheckpoints && buildingCheckpoints.length) {
-    const buildingHistory = [] as any
-    appStore.isLoadingBuildingActions = true
+watch(
+  () => actions.value,
+  (actions) => {
+    if (!actions || !actions.length) return
+    sortAndAssignActions(actions)
+  },
+  { deep: true }
+)
 
-    const occurrencePromises = buildingCheckpoints.map(async (checkpoint: any) => {
-      const occurrencePath = `${checkpointsPath.value}/${checkpoint.id}/occurrences`
-      const checkpointOccurrences = useCollection(collection(db, occurrencePath), { once: true })
-
-      // Get checkpoint occurrences
-      await checkpointOccurrences.promise.value
-
-      const actionPromises = checkpointOccurrences.value.map(async (occurrence: any) => {
-        const actionsPath = `${occurrencePath}/${occurrence.id}/actions`
-        const actions = useCollection(collection(db, actionsPath), { once: true })
-
-        // Get actions for each occurrence
-        await actions.promise.value
-
-        // Save actions
-        actions.value.forEach((action: any) => {
-          buildingHistory.push({ action, occurrence, checkpoint })
-        })
-      })
-
-      await Promise.all(actionPromises)
-    })
-
-    await Promise.all(occurrencePromises)
-
-    sortAndAssignActions(buildingHistory)
-  }
-})
-
-const sortAndAssignActions = (buildingHistory: any) => {
-  buildingHistory.sort((a: any, b: any) => b.action.dateTime.seconds - a.action.dateTime.seconds)
+const sortAndAssignActions = async (buildingHistory: any) => {
+  buildingHistory.sort((a: any, b: any) => b.dateTime.seconds - a.dateTime.seconds)
   buildingActions.value = buildingHistory
   appStore.isLoadingBuildingActions = false
 }
@@ -154,7 +163,6 @@ function filterCheckpoints() {
     checkpoint.name.toLowerCase().includes(searchText.value.toLowerCase())
   )
 
-  // Change this, new structure is { floorNumber: { name: string, checkpoints: [] } }
   const filteredOkByFloors = Object.keys(sortedCheckpoints.value.okByFloors).reduce(
     (acc: any, floorNumber: any) => {
       const checkpointFloor = sortedCheckpoints.value.okByFloors[floorNumber]
@@ -173,4 +181,86 @@ function filterCheckpoints() {
   )
   sortedAndFilteredCheckpoints.value = { tasks: filteredTasks, okByFloors: filteredOkByFloors }
 }
+
+// watch(checkpoints, async (buildingCheckpoints) => {
+//   if (buildingCheckpoints && buildingCheckpoints.length) {
+//     appStore.isLoadingBuildingActions = true
+
+//     const buildingHistory = [] as any
+
+//     const buildingRef = doc(db, buildingPath.value)
+//     const actions = query(
+//       collectionGroup(db, 'actions'),
+//       orderBy(documentId()),
+//       startAt(buildingPath.value),
+//       endAt(buildingPath.value + '\uf8ff')
+//     )
+
+//     // Get data
+//     const querySnapshot = await getDocs(actions)
+
+//     const promises = querySnapshot.docs.map(async (actionDoc) => {
+//       const action = { ...actionDoc.data(), id: actionDoc.id }
+
+//       // get reference to checkpoint
+//       const checkpointDoc = actionDoc?.ref.parent.parent?.parent.parent
+//       const checkpointDocId = checkpointDoc?.id
+//       const checkpoint = buildingCheckpoints.find(
+//         (checkpoint: any) => checkpoint.id === checkpointDocId
+//       )
+
+//       // get reference to occurrence
+//       const parentDoc = actionDoc.ref.parent.parent
+//       const parentDocId = parentDoc?.id
+//       var occurrence = occurrences.value.find((occurrence: any) => occurrence.id === parentDocId)
+//       if (!occurrence) {
+//         // Get occurrence
+//         const occurrenceRef = doc(
+//           db,
+//           `${buildingPath.value}/checkpoints/${checkpointDocId}/occurrences/${parentDocId}`
+//         )
+//         const occurrenceDocSnap = await getDoc(occurrenceRef)
+//         if (occurrenceDocSnap.exists()) {
+//           occurrence = { ...occurrenceDocSnap.data(), id: occurrenceDocSnap.id }
+//           occurrences.value.push(occurrence)
+//         }
+//       }
+
+//       buildingHistory.push({ action, occurrence, checkpoint })
+//     })
+
+//     await Promise.all(promises)
+//     await sortAndAssignActions(buildingHistory)
+
+//     // const buildingHistory = [] as any
+//     // appStore.isLoadingBuildingActions = true
+
+//     // const occurrencePromises = buildingCheckpoints.map(async (checkpoint: any) => {
+//     //   const occurrencePath = `${checkpointsPath.value}/${checkpoint.id}/occurrences`
+//     //   const checkpointOccurrences = useCollection(collection(db, occurrencePath), { once: true })
+
+//     //   // Get checkpoint occurrences
+//     //   await checkpointOccurrences.promise.value
+
+//     //   const actionPromises = checkpointOccurrences.value.map(async (occurrence: any) => {
+//     //     const actionsPath = `${occurrencePath}/${occurrence.id}/actions`
+//     //     const actions = useCollection(collection(db, actionsPath), { once: true })
+
+//     //     // Get actions for each occurrence
+//     //     await actions.promise.value
+
+//     //     // Save actions
+//     //     actions.value.forEach((action: any) => {
+//     //       buildingHistory.push({ action, occurrence, checkpoint })
+//     //     })
+//     //   })
+
+//     //   await Promise.all(actionPromises)
+//     // })
+
+//     // await Promise.all(occurrencePromises)
+
+//     // sortAndAssignActions(buildingHistory)
+//   }
+// })
 </script>

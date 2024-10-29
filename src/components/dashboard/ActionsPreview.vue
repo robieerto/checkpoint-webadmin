@@ -20,7 +20,7 @@
             <SmallPreviewItem
               :id="historyAction.action.id"
               :title="
-                historyAction.occurrence.name +
+                historyAction.occurrence?.name +
                 ' - ' +
                 translateActionState(historyAction.action.type)
               "
@@ -45,33 +45,79 @@
 </template>
 
 <script setup lang="ts">
+import { db } from '@/firebase'
+import { doc } from 'firebase/firestore'
+import { useDocument } from 'vuefire'
 import { formatTimestamp, translateActionState } from '@/utils'
 
 const appStore = useAppStore()
-const { buildingActions, isLoadingBuildingActions, isModalActionDetailOpen, selectedCheckpoint } =
-  storeToRefs(appStore)
+const {
+  buildingActions,
+  isLoadingBuildingActions,
+  isModalActionDetailOpen,
+  selectedBuilding,
+  selectedCheckpoint,
+  checkpoints,
+  occurrences,
+} = storeToRefs(appStore)
 
 const pageSize = 10
 const page = ref(1)
-const buildingActionsVirtual = ref(
-  !buildingActions.value?.length ? ([] as any[]) : buildingActions.value.slice(0, pageSize)
-)
+const buildingActionsVirtual = ref(null as any)
 const selectedAction = ref(null)
+
+const findCheckpoint = (checkpointId: string) => {
+  return checkpoints.value.find((c: any) => c.id === checkpointId)
+}
+
+const findOccurrence = (occurrenceId: string, checkpointId: string) => {
+  const occurrence = occurrences.value.find((o: any) => o.id === occurrenceId)
+  if (!occurrence) {
+    // Get occurrence
+    return useDocument(
+      doc(
+        db,
+        `Buildings/${selectedBuilding.value?.id}/checkpoints/${checkpointId}/occurrences/${occurrenceId}`
+      )
+    )
+  } else {
+    return occurrence
+  }
+}
 
 watch(
   () => buildingActions.value,
   () => {
     if (!buildingActions.value?.length) return
     page.value = 1
-    buildingActionsVirtual.value = buildingActions.value.slice(0, pageSize)
+    const actions = !buildingActions.value?.length
+      ? ([] as any[])
+      : buildingActions.value.slice(0, pageSize).map((action: any) => {
+          return {
+            action,
+            checkpoint: findCheckpoint(action.checkpointId),
+            occurrence: findOccurrence(action.occurrenceId, action.checkpointId),
+          }
+        })
+    buildingActionsVirtual.value = actions
   },
-  { deep: true }
+  { immediate: true, deep: true }
 )
 
 async function api(): Promise<any[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(buildingActions.value?.slice(page.value * pageSize, (page.value + 1) * pageSize))
+      resolve(
+        buildingActions.value
+          ?.slice(page.value * pageSize, (page.value + 1) * pageSize)
+          .map((action: any) => {
+            return {
+              action,
+              checkpoint: findCheckpoint(action.checkpointId),
+              occurrence: findOccurrence(action.occurrenceId, action.checkpointId),
+            }
+          })
+      )
     }, 100)
   })
 }
@@ -80,7 +126,7 @@ async function load({ done }: { done: (arg: any) => void }) {
   const res = await api()
   if (res?.length) {
     page.value++
-    buildingActionsVirtual.value.push(...res)
+    buildingActionsVirtual.value?.push(...res)
   }
   done('ok')
 }

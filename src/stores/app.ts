@@ -22,6 +22,7 @@ export const useAppStore = defineStore('app', {
     sortedCheckpoints: null as any,
     sortedAndFilteredCheckpoints: null as any,
     selectedCheckpoint: null as any,
+    occurrences: null as any,
     employees: null as any,
     buildingActions: null as any,
     extUserActions: null as any,
