@@ -41,7 +41,7 @@
           </v-row>
           <v-row>
             <v-col style="max-width: 60px" class="ml-3 pl-0" align-self="start">
-              <img src="@/assets/occurrence-logo.png" style="width: 38px"></img>
+              <img src="@/assets/occurrence-logo.png" style="width: 38px" />
             </v-col>
             <v-col>
               <v-text-field

@@ -4,7 +4,7 @@
       <v-col cols="6">
         <v-row class="ml-0 cursor-pointer" @click="openModalCheckpointDetail">
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-            <img src="@/assets/checkpoint-logo.png" style="width: 38px"></img>
+            <img src="@/assets/checkpoint-logo.png" style="width: 38px" />
           </v-col>
           <v-col>
             <v-row>

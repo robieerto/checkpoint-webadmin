@@ -22,7 +22,7 @@ export const getUserServices = async () => {
     const serviceDocSnap = await getDoc(serviceDocRef)
     if (serviceDocSnap.exists()) {
       const serviceData = serviceDocSnap.data()
-      services.push(serviceData)
+      services.push({ ...serviceData, id: service.id })
     }
   }
   appStore.userServices = services

@@ -2,7 +2,7 @@
   <v-container class="py-0">
     <v-row>
       <v-col style="max-width: 50px" class="pl-0 py-3" align-self="start">
-        <img src="@/assets/question-logo.png" style="width: 38px"></img>
+        <img src="@/assets/question-logo.png" style="width: 38px" />
       </v-col>
       <v-col cols="5">
         <v-row>

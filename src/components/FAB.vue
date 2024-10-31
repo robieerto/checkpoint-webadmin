@@ -31,7 +31,7 @@
             class="v-button-fab"
             @click="isCleaningRequestFormOpen = true"
           >
-            <img src="@/assets/concierge-icon.png" width="25"></img>
+            <img src="@/assets/concierge-icon.png" width="25" />
           </v-btn>
         </template>
       </v-tooltip>

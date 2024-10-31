@@ -4,7 +4,7 @@
       <v-col cols="6">
         <v-row class="ml-0">
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-            <img src="@/assets/checkpoint-logo.png" style="width: 38px"></img>
+            <img src="@/assets/checkpoint-logo.png" style="width: 38px" />
           </v-col>
           <v-col>
             <v-row>
@@ -70,7 +70,7 @@
                     :id="historyAction.action.id"
                     :key="historyAction.action.id"
                     :title="
-                      historyAction.occurrence.name +
+                      historyAction.occurrence?.name +
                       ' - ' +
                       translateActionState(historyAction.action.type)
                     "
@@ -101,8 +101,18 @@
 </template>
 
 <script setup lang="ts">
-import { _RefFirestore, useCollection, useDocument } from 'vuefire'
-import { query, collection, doc, DocumentData, orderBy } from 'firebase/firestore'
+import { firestoreDefaultConverter, useDocument } from 'vuefire'
+import { _RefFirestore, useCollection } from 'vuefire'
+import {
+  collection,
+  collectionGroup,
+  orderBy,
+  startAt,
+  endAt,
+  query,
+  documentId,
+  doc,
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 import { formatTimestamp, translateActionState } from '@/utils'
 
@@ -127,11 +137,28 @@ const selectedAction = ref(null as any)
 const occurrences = useCollection(() =>
   query(collection(db, occurrencesPath.value), orderBy('dateTime', 'desc'))
 )
-var occurrencesRefs = [] as Array<{
-  actions: _RefFirestore<DocumentData[]>
-  occurrence: any
-} | null>
-var historyActions = ref([] as { action: Ref<DocumentData>; occurrence: any }[])
+
+const historyActions = ref(null as any)
+
+const actions = useCollection(() =>
+  occurrences.value?.length > 0
+    ? query(
+        collectionGroup(db, 'actions'),
+        orderBy(documentId()),
+        startAt(checkpointPath.value),
+        endAt(checkpointPath.value + '\uf8ff')
+      ).withConverter({
+        toFirestore: firestoreDefaultConverter.toFirestore,
+        fromFirestore: (snapshot, options) => {
+          const data = firestoreDefaultConverter.fromFirestore(snapshot, options)
+          if (!data) return null
+          data.occurrenceId = snapshot.ref?.parent.parent?.id
+          data.checkpointId = snapshot.ref?.parent.parent?.parent.parent?.id
+          return data
+        },
+      })
+    : null
+)
 
 const noOccurrences = computed(() => !occurrences.value.length)
 const noHistory = computed(() => !historyActions.value.length)
@@ -149,18 +176,27 @@ watch(
   () => occurrences.value,
   () => {
     if (occurrences.value) {
-      // console.log(JSON.parse(JSON.stringify(occurrences.value)))
       occurrencesLoading.value = false
-      getHistory()
     }
   }
 )
+
+watch(
+  () => actions.value,
+  (actions) => {
+    if (!actions) return
+    sortAndAssignActions(actions)
+  },
+  { deep: true }
+)
+
 // Functions
 const selectOccurrence = (occurrence: any) => {
   selectedAction.value = null
-  selectedOccurrence.value = occurrencesRefs.find(
-    (ref) => ref?.occurrence.value.id === occurrence.id
+  const occurrenceActions = actions.value.filter(
+    (action: any) => action.occurrenceId === occurrence.id
   )
+  selectedOccurrence.value = { occurrence, actions: occurrenceActions }
 }
 
 const selectAction = (action: any) => {
@@ -168,102 +204,32 @@ const selectAction = (action: any) => {
   selectedAction.value = action
 }
 
-const sortHistory = () => {
-  historyActions.value = historyActions.value.sort((a: any, b: any) => {
-    return b.action?.dateTime?.seconds - a.action?.dateTime?.seconds
-  })
-}
-
-const getHistory = async () => {
-  historyLoading.value = true
-  historyActions.value = []
-  occurrencesRefs.forEach((occurrenceActionsRef) => {
-    occurrenceActionsRef?.actions?.stop()
-  })
-
-  if (occurrences.value.length === 0) {
-    historyLoading.value = false
-    return
-  }
-
-  // For each occurrence
-  for (const occurrence of occurrences.value) {
-    // Get its actions
-    const occurrenceActions = useCollection(
-      query(
-        collection(db, `${occurrencesPath.value}/${occurrence.id}/actions`),
-        orderBy('dateTime', 'asc')
+const findOccurrence = (occurrenceId: string, checkpointId: string) => {
+  const occurrence = occurrences.value.find((o: any) => o.id === occurrenceId)
+  if (!occurrence) {
+    // Get occurrence
+    console.log('fallback loading occurrence')
+    return useDocument(
+      doc(
+        db,
+        `Buildings/${appStore.selectedBuilding.id}/checkpoints/${checkpointId}/occurrences/${occurrenceId}`
       )
     )
-
-    // Save reference
-    const occurrenceRef = ref(occurrence)
-    occurrencesRefs.push({ actions: occurrenceActions, occurrence: occurrenceRef })
-
-    // Wait for the actions to load
-    occurrenceActions.promise.value.then(() => {
-      // If the last occurrence and no actions
-      if (
-        occurrence.id === occurrences.value[occurrences.value.length - 1].id &&
-        occurrenceActions.value.length === 0
-      ) {
-        sortHistory()
-        historyLoading.value = false
-      }
-
-      // For each action
-      occurrenceActions.value.forEach(async (action: any) => {
-        // historyActions.value.push({ action: action, occurrence: occurrenceRef })
-        const actionDoc = useDocument(
-          doc(db, `${occurrencesPath.value}/${occurrence.id}/actions/${action.id}`)
-        )
-        actionDoc.promise.value.then(() => {
-          // Add it to the history
-          historyActions.value.push({ action: actionDoc, occurrence: occurrenceRef })
-          // If the last occurrence and the last action
-          if (
-            occurrence.id === occurrences.value[occurrences.value.length - 1].id &&
-            action.id === occurrenceActions.value[occurrenceActions.value.length - 1].id
-          ) {
-            sortHistory()
-            historyLoading.value = false
-          }
-        })
-      })
-
-      var previousOccurrenceActions = [...occurrenceActions.value]
-
-      // Watch for changes in actions
-      watch(
-        occurrenceActions,
-        (newOccurrenceActions) => {
-          if (newOccurrenceActions.length > previousOccurrenceActions.length) {
-            const newActions = newOccurrenceActions.filter(
-              (action: any) =>
-                !previousOccurrenceActions.some((oldAction: any) => oldAction.id === action.id)
-            )
-            newActions.forEach((action: any) => {
-              const actionRef = ref(action)
-              const occurrenceRef = ref(occurrence)
-              historyActions.value.unshift({ action: actionRef, occurrence: occurrenceRef })
-            })
-          } else if (newOccurrenceActions.length < previousOccurrenceActions.length) {
-            const removedActions = previousOccurrenceActions.filter(
-              (oldAction: any) =>
-                !newOccurrenceActions.some((action: any) => action.id === oldAction.id)
-            )
-            removedActions.forEach((action: any) => {
-              historyActions.value = historyActions.value.filter(
-                (historyAction: any) => historyAction.action.id !== action.id
-              )
-            })
-          }
-          previousOccurrenceActions = [...occurrenceActions.value]
-        },
-        { deep: true }
-      )
-    })
+  } else {
+    return occurrence
   }
+}
+
+const sortAndAssignActions = async (actions: any) => {
+  actions.sort((a: any, b: any) => b.dateTime.seconds - a.dateTime.seconds)
+  historyActions.value = actions.map((action: any) => {
+    const occurrence = findOccurrence(action.occurrenceId, action.checkpointId)
+    return {
+      action,
+      occurrence,
+    }
+  })
+  historyLoading.value = false
 }
 
 // on unmount

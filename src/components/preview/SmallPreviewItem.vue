@@ -48,7 +48,7 @@
                       rounded="lg"
                       color="blue"
                     >
-                      <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
+                      <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15" />
                       {{ checkpoint }}</v-chip
                     >
                   </div>

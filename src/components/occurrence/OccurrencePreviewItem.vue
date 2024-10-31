@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-          <img src="@/assets/occurrence-logo.png" style="width: 38px"></img>
+          <img src="@/assets/occurrence-logo.png" style="width: 38px" />
         </v-col>
         <v-col>
           <v-row>
@@ -22,10 +22,7 @@
                 >
                   {{ occurrence.assignedTo?.username }}
                 </v-chip>
-                <ChipState
-                  :serviceType="occurrence.service?.type"
-                  :entityState="occurrence.state"
-                ></ChipState>
+                <ChipState :serviceType="serviceType" :entityState="occurrence.state"></ChipState>
               </div>
             </v-col>
           </v-row>
@@ -38,10 +35,21 @@
 <script setup lang="ts">
 import { formatTimestamp } from '@/utils'
 
-defineProps<{
+const { userServices } = storeToRefs(useAppStore())
+
+const props = defineProps<{
   occurrence?: any
   secondaryColor?: boolean
 }>()
+
+const service = ref(props.occurrence.service)
+const serviceType = ref(props.occurrence.service?.type)
+
+if (typeof service.value === 'string' || service.value instanceof String) {
+  const serviceId = service.value.split('/')[1]
+  service.value = userServices.value.find((s: any) => s.id === serviceId)
+  serviceType.value = service.value?.type
+}
 
 // const emit = defineEmits<{
 //   select: [id: string]

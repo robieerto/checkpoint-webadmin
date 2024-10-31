@@ -46,6 +46,7 @@
                 :hint="noteText"
                 rows="8"
                 no-resize
+                maxlength="1000"
                 @update:focused="(e: any) => (noteFocused = e)"
               ></v-textarea>
             </v-col>

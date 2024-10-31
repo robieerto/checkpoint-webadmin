@@ -66,7 +66,7 @@ const stateToLabel = () => {
       default:
         return t('undefined')
     }
-  } else {
+  } else if (props.serviceType === 'maintenance') {
     switch (props.entityState) {
       case 'done':
         if (props.isCheckpoint) {
@@ -87,6 +87,8 @@ const stateToLabel = () => {
       default:
         return t('undefined')
     }
+  } else {
+    return t('undefined')
   }
 }
 
