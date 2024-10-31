@@ -9,7 +9,7 @@ const setLang = (lang: string) => {
 </script>
 
 <template>
-  <v-btn size="large" class="mr-0">
+  <v-btn size="large" class="mr-0" style="min-width: 0">
     {{ $i18n.locale.toUpperCase() }}
     <v-menu activator="parent">
       <v-list class="py-0">

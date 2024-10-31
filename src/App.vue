@@ -95,7 +95,8 @@ watch(
     }, {})
     sortedCheckpoints.value = { tasks: taskCheckpoints, okByFloors: groupedOkCheckpoints }
     filterCheckpoints()
-  }
+  },
+  { deep: true }
 )
 
 watch(user, async (currentUser) => {

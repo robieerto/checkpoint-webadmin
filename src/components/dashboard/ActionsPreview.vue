@@ -67,6 +67,14 @@ const page = ref(1)
 const buildingActionsVirtual = ref(null as any)
 const selectedAction = ref(null)
 
+const getUser = (user: any) => {
+  if (typeof user === 'string' || user instanceof String) {
+    const userId = user.split('/')[1]
+    return appStore.employees.find((e: any) => e.id === userId)
+  }
+  return user
+}
+
 const findCheckpoint = (checkpointId: string) => {
   return checkpoints.value.find((c: any) => c.id === checkpointId)
 }
@@ -95,7 +103,7 @@ watch(
       ? ([] as any[])
       : buildingActions.value.slice(0, pageSize).map((action: any) => {
           return {
-            action,
+            action: { ...action, createdBy: getUser(action.createdBy) } as any,
             checkpoint: findCheckpoint(action.checkpointId),
             occurrence: findOccurrence(action.occurrenceId, action.checkpointId),
           }
