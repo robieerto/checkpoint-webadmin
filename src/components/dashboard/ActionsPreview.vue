@@ -33,6 +33,7 @@
               <Avatar />
             </SmallPreviewItem>
           </template>
+          <template v-slot:empty> </template>
         </v-infinite-scroll>
       </v-col>
     </v-row>
@@ -88,7 +89,7 @@ const findOccurrence = (occurrenceId: string, checkpointId: string) => {
 watch(
   () => buildingActions.value,
   () => {
-    if (!buildingActions.value?.length) return
+    if (!buildingActions.value) return
     page.value = 1
     const actions = !buildingActions.value?.length
       ? ([] as any[])
@@ -127,8 +128,10 @@ async function load({ done }: { done: (arg: any) => void }) {
   if (res?.length) {
     page.value++
     buildingActionsVirtual.value?.push(...res)
+    done('ok')
+  } else {
+    done('empty')
   }
-  done('ok')
 }
 
 const selectItem = (item: any) => {

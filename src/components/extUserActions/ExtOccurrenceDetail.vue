@@ -4,7 +4,7 @@
       <v-col cols="6">
         <v-row>
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="start">
-            <v-img src="@/assets/occurrence-logo.png" width="45"></v-img>
+            <img src="@/assets/occurrence-logo.png" style="width: 38px"></img>
           </v-col>
           <v-col>
             <v-row>

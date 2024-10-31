@@ -54,7 +54,7 @@ function updateDrawerHover(railChanged: boolean) {
           </v-list-item-title>
           <v-row v-else justify="center">
             <v-col cols="auto">
-              <v-img src="@/assets/logo.png" width="24" />
+              <img src="@/assets/logo.png" width="24" />
             </v-col>
           </v-row>
         </v-list-item>

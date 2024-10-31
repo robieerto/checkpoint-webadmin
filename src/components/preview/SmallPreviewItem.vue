@@ -48,7 +48,7 @@
                       rounded="lg"
                       color="blue"
                     >
-                      <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                      <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
                       {{ checkpoint }}</v-chip
                     >
                   </div>
@@ -64,7 +64,6 @@
 
 <script setup lang="ts">
 defineProps<{
-  imgPath?: string
   title?: string
   subtitle?: string
   note?: string

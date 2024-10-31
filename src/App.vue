@@ -57,9 +57,7 @@ const actions = useCollection(() =>
     toFirestore: firestoreDefaultConverter.toFirestore,
     fromFirestore: (snapshot, options) => {
       const data = firestoreDefaultConverter.fromFirestore(snapshot, options)
-      // if the document doesn't exist, return null
       if (!data) return null
-      // add anything custom to the returned object
       data.occurrenceId = snapshot.ref?.parent.parent?.id
       data.checkpointId = snapshot.ref?.parent.parent?.parent.parent?.id
       return data
@@ -108,8 +106,13 @@ watch(user, async (currentUser) => {
       await getUserServices()
       // Get user's buildings
       await getUserBuildings()
-      // Set selected building
-      selectedBuilding.value = buildings.value?.length && buildings.value?.[0]
+      // Get selected building from local storage, if not set, select first building
+      const selectedBuildingId = localStorage.getItem('selectedBuildingId')
+      const selectedBuildingStorage = buildings.value?.find(
+        (building: any) => building.id === selectedBuildingId
+      )
+      selectedBuilding.value =
+        selectedBuildingStorage || (buildings.value?.length && buildings.value?.[0])
     }
   }
 })
@@ -121,6 +124,9 @@ watch(selectedBuilding, async (currentBuilding) => {
   occurrences.value = []
 
   if (currentBuilding) {
+    // Save selected building to local storage
+    localStorage.setItem('selectedBuildingId', currentBuilding.id)
+
     // Set user service types for selected building
     userServicesForSelectedBuilding.value = userServices.value
       .filter((service: any) => service.building.id === currentBuilding.id)
@@ -137,7 +143,7 @@ watch(selectedBuilding, async (currentBuilding) => {
 watch(
   () => actions.value,
   (actions) => {
-    if (!actions || !actions.length) return
+    if (!actions) return
     sortAndAssignActions(actions)
   },
   { deep: true }

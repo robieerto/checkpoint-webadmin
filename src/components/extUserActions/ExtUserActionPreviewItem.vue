@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
-          <v-img :src="logo" width="45"></v-img>
+          <img :src="logo" style="width: 38px"></img>
         </v-col>
         <v-col>
           <v-row>
@@ -22,7 +22,7 @@
                     :entityState="extUserAction?.occurrence?.state"
                   ></ChipState>
                   <v-chip variant="flat" rounded="lg" color="blue" class="ml-1 mb-1">
-                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
                     {{ extUserAction?.checkpoint?.name }}</v-chip
                   >
                 </div>
@@ -42,7 +42,7 @@
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
                   <v-chip variant="flat" rounded="lg" color="blue">
-                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
                     {{ extUserAction?.checkpoint?.name }}</v-chip
                   >
                 </div>
@@ -56,7 +56,7 @@
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
                   <v-chip variant="flat" rounded="lg" color="blue">
-                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
                     {{ extUserAction?.checkpoint?.name }}</v-chip
                   >
                 </div>
@@ -70,7 +70,7 @@
                     formatTimestamp(extUserAction?.dateTime.seconds)
                   }}</v-list-item-subtitle>
                   <v-chip variant="flat" rounded="lg" color="blue">
-                    <v-img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></v-img>
+                    <img class="mr-1" src="@/assets/checkpoint-logo.png" width="15"></img>
                     {{ extUserAction?.checkpoint?.name }}</v-chip
                   >
                 </div>
