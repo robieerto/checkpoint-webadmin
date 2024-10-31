@@ -39,8 +39,8 @@
         <v-row>
           <v-col class="py-0">
             <v-tabs v-model="tab">
-              <v-tab value="occurrences">Udalosti</v-tab>
-              <v-tab value="history">História</v-tab>
+              <v-tab value="occurrences">{{ $t('events') }}</v-tab>
+              <v-tab value="history">{{ $t('history') }}</v-tab>
             </v-tabs>
 
             <v-tabs-window v-model="tab" class="pt-1">
@@ -59,7 +59,7 @@
                   />
                 </PreviewList>
                 <div v-else>
-                  <p class="mt-5">Na tomto checkpointe nie sú žiadne udalosti</p>
+                  <p class="mt-5">{{ $t('noEventsOnCheckpoint') }}</p>
                 </div>
               </v-tabs-window-item>
 
@@ -84,7 +84,7 @@
                   </SmallPreviewItem>
                 </SmallPreviewList>
                 <div v-else>
-                  <p class="mt-5">Na tomto checkpointe nie sú žiadne úkony</p>
+                  <p class="mt-5">{{ $t('noActionsOnCheckpoint') }}</p>
                 </div>
               </v-tabs-window-item>
             </v-tabs-window>
@@ -145,11 +145,16 @@ watch(
   }
 )
 
-watch(occurrences, () => {
-  occurrencesLoading.value = false
-  getHistory()
-})
-
+watch(
+  () => occurrences.value,
+  () => {
+    if (occurrences.value) {
+      // console.log(JSON.parse(JSON.stringify(occurrences.value)))
+      occurrencesLoading.value = false
+      getHistory()
+    }
+  }
+)
 // Functions
 const selectOccurrence = (occurrence: any) => {
   selectedAction.value = null

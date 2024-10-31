@@ -27,7 +27,7 @@ watch(searchTypedText, () => {
   <v-text-field
     v-model="searchTypedText"
     class="ml-16 search-field"
-    label="Vyhľadávanie"
+    :label="$t('search')"
     style="max-width: 500px"
     @keydown.enter="startSearch"
     rounded

@@ -6,6 +6,7 @@
 
 // Plugins
 import vuetify from './vuetify'
+import i18n from './i18n'
 import pinia from '../stores'
 import router from '../router'
 import { VueFire, VueFireAuth } from 'vuefire'
@@ -25,6 +26,7 @@ export function registerPlugins(app: App) {
         VueFireAuth(),
       ],
     })
+    .use(i18n)
     .use(pinia)
     .use(vuetify)
     .use(router)

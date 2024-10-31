@@ -22,6 +22,8 @@ const { drawer } = storeToRefs(useAppStore())
     <SearchBar />
     <v-spacer />
     <div id="app-bar" />
+    <ButtonLocale />
+
     <ButtonUser />
   </v-app-bar>
 </template>

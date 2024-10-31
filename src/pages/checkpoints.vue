@@ -6,7 +6,7 @@
 definePage({
   meta: {
     icon: 'mdi-map-marker',
-    title: 'Checkpointy',
+    title: 'checkpoints',
     drawerIndex: 2,
   },
 })

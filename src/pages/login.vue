@@ -14,15 +14,15 @@
               :readonly="loading"
               :rules="[required]"
               class="mb-2"
-              label="Email"
+              :label="$t('email')"
             ></v-text-field>
 
             <v-text-field
               v-model="password"
               :readonly="loading"
               :rules="[required]"
-              label="Heslo"
-              placeholder="Zadajte vaše heslo"
+              :label="$t('password')"
+              :placeholder="$t('typeYourPassword')"
               :type="showPassword ? 'text' : 'password'"
               :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
               @click:append-inner="togglePasswordVisibility"
@@ -39,7 +39,7 @@
               variant="elevated"
               block
             >
-              Prihlásiť sa
+              {{ $t('login') }}
             </v-btn>
           </v-form>
         </v-card>

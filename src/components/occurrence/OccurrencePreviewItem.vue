@@ -23,7 +23,7 @@
                   {{ occurrence.assignedTo?.username }}
                 </v-chip>
                 <ChipState
-                  :serviceType="occurrence.service.type"
+                  :serviceType="occurrence.service?.type"
                   :entityState="occurrence.state"
                 ></ChipState>
               </div>

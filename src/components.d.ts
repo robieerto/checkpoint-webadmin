@@ -14,6 +14,7 @@ declare module 'vue' {
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']
     AppDrawerItem: typeof import('./components/layout/AppDrawerItem.vue')['default']
     Avatar: typeof import('./components/Avatar.vue')['default']
+    ButtonLocale: typeof import('./components/layout/ButtonLocale.vue')['default']
     ButtonUser: typeof import('./components/layout/ButtonUser.vue')['default']
     CleaningRequestForm: typeof import('./components/forms/CleaningRequestForm.vue')['default']
     Detail: typeof import('./components/detail/Detail.vue')['default']

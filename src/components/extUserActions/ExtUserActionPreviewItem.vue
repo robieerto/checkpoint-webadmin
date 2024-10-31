@@ -9,9 +9,9 @@
           <v-row>
             <v-col class="py-1 pl-1 pr-0">
               <div v-if="extUserAction.type === 'occurrence'">
-                <v-list-item-title class="list text-h6"
-                  >Upratovanie na žiadosť hosťa</v-list-item-title
-                >
+                <v-list-item-title class="list text-h6">{{
+                  $t('guestCleaningRequest')
+                }}</v-list-item-title>
                 <v-list-item-subtitle class="my-1">{{
                   formatTimestamp(extUserAction?.dateTime.seconds)
                 }}</v-list-item-subtitle>
@@ -29,7 +29,9 @@
               </div>
 
               <div v-if="extUserAction.type === 'order'">
-                <v-list-item-title class="list text-h6">Raňajky na zajtra</v-list-item-title>
+                <v-list-item-title class="list text-h6">{{
+                  $t('tomorrowBreakfast')
+                }}</v-list-item-title>
                 <v-list-item-subtitle class="my-1">{{
                   extUserAction?.text
                     ?.replace('$1', extUserAction?.inputs?.[0])
@@ -47,7 +49,7 @@
               </div>
 
               <div v-if="extUserAction.type === 'question'">
-                <v-list-item-title class="list text-h6">Otázka</v-list-item-title>
+                <v-list-item-title class="list text-h6">{{ $t('question') }}</v-list-item-title>
                 <v-list-item-subtitle class="my-1">{{ extUserAction?.text }}</v-list-item-subtitle>
                 <div class="d-flex justify-space-between align-center">
                   <v-list-item-subtitle class="my-1">{{
@@ -61,7 +63,7 @@
               </div>
 
               <div v-if="extUserAction.type === 'review'">
-                <v-list-item-title class="list text-h6">Spätná väzba</v-list-item-title>
+                <v-list-item-title class="list text-h6">{{ $t('review') }}</v-list-item-title>
                 <v-rating v-model="extUserAction.score" density="compact" readonly></v-rating>
                 <div class="d-flex justify-space-between align-center">
                   <v-list-item-subtitle class="my-1">{{

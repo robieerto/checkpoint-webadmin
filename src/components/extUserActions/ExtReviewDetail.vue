@@ -7,7 +7,7 @@
       <v-col cols="5">
         <v-row>
           <v-col class="py-1 pl-1">
-            <v-list-item-title class="text-h6">Spätná väzba</v-list-item-title>
+            <v-list-item-title class="text-h6">{{ $t('review') }}</v-list-item-title>
             <v-rating v-model="extUserAction.score" density="compact" readonly></v-rating>
             <div class="d-flex justify-space-between align-center">
               <v-list-item-subtitle class="my-1">{{
@@ -23,7 +23,7 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="py-1">
-        <h3>Popis</h3>
+        <h3>{{ $t('description') }}</h3>
         <div>
           <p class="mt-1">
             {{ extUserAction?.note }}

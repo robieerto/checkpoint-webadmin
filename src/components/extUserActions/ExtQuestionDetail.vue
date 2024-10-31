@@ -7,7 +7,7 @@
       <v-col cols="5">
         <v-row>
           <v-col class="py-1 pl-1">
-            <v-list-item-title class="text-h6">Spätná väzba</v-list-item-title>
+            <v-list-item-title class="text-h6">{{ $t('question') }}</v-list-item-title>
             <div class="d-flex justify-space-between align-center">
               <v-list-item-subtitle class="my-1">{{
                 formatTimestamp(extUserAction.dateTime.seconds)
@@ -22,7 +22,7 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="py-1">
-        <h3>Telefónne číslo</h3>
+        <h3>{{ $t('phone') }}</h3>
         <div>
           <p class="mt-1">
             {{ extUserAction?.phone }}
@@ -32,7 +32,7 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="py-1">
-        <h3>Email</h3>
+        <h3>{{ $t('email') }}</h3>
         <div>
           <p class="mt-1">
             {{ extUserAction?.email }}
@@ -42,7 +42,7 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="py-1">
-        <h3>Popis</h3>
+        <h3>{{ $t('description') }}</h3>
         <div>
           <p class="mt-1">
             {{ extUserAction?.text }}

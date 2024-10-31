@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineEmits, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
 const emit = defineEmits(['close'])

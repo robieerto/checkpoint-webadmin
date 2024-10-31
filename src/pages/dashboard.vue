@@ -19,7 +19,7 @@
 definePage({
   meta: {
     icon: 'mdi-monitor-dashboard',
-    title: 'Dashboard',
+    title: 'dashboard',
     drawerIndex: 1,
   },
 })

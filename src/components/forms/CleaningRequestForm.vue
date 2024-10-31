@@ -6,7 +6,7 @@
         class="mx-auto h-100 d-flex flex-column"
         elevation="16"
         rounded="xl"
-        title="Žiadosť o upratanie"
+        :title="$t('cleaningRequest')"
       >
         <template v-slot:append>
           <!-- <v-card-title class="text-h6 mr-9"></v-card-title> -->
@@ -21,7 +21,7 @@
                 :items="checkpoints"
                 item-title="name"
                 item-value="id"
-                label="Vyberte Checkpoint"
+                :label="$t('selectCheckpoint')"
               >
               </v-select>
             </v-col>
@@ -42,7 +42,7 @@
             <v-col class="w-100 d-flex align-end justify-start">
               <v-textarea
                 v-model="note"
-                :label="noteFocused || note.length ? 'Poznámka' : noteText"
+                :label="noteFocused || note.length ? $t('note') : noteText"
                 :hint="noteText"
                 rows="8"
                 no-resize
@@ -61,7 +61,7 @@
             rounded
             @click="closeForm"
           >
-            Zrušiť
+            {{ $t('cancel') }}
           </v-btn>
           <v-btn
             :loading="sending"
@@ -72,7 +72,7 @@
             rounded
             @click="saveForm"
           >
-            Uložiť
+            {{ $t('save') }}
           </v-btn>
         </div>
       </v-card>
@@ -85,13 +85,15 @@
 import { useCurrentUser } from 'vuefire'
 import { functions } from '@/firebase'
 import { httpsCallable } from 'firebase/functions'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const emit = defineEmits<{
   close: []
 }>()
 
-const noteText =
-  'Tu môžeš pridať poznámku. Napríklad počet hostí, špeciálne požiadavky pre upratanie, ...'
+const noteText = t('noteText')
 
 const user = useCurrentUser()
 const { checkpoints, selectedCheckpoint, selectedBuilding, selectedBuildingServices, snackbar } =
@@ -129,7 +131,7 @@ const saveForm = () => {
     description: note.value,
   })
     .then(() => {
-      snackbar.value = { value: true, text: 'Žiadosť bola vytvorená', color: 'success' }
+      snackbar.value = { value: true, text: t('requestWasCreated'), color: 'success' }
       closeForm()
     })
     .catch((error) => {

@@ -67,7 +67,7 @@
           </SmallPreviewItem>
         </SmallPreviewList>
         <div v-else>
-          <p class="mt-5">Užívateľ nemá žiadne úkony</p>
+          <p class="mt-5">{{ $t('noActionsUser') }}</p>
         </div>
       </v-col>
     </v-row>

@@ -28,6 +28,10 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 const props = defineProps<{
   isCheckpoint?: boolean
   serviceType?: string
@@ -45,49 +49,49 @@ const stateToLabel = () => {
     switch (props.entityState) {
       case 'done':
         if (props.isCheckpoint) {
-          return 'V poriadku'
+          return t('allright')
         } else {
-          return 'Upratané'
+          return t('cleaningDone')
         }
       case 'todo':
-        return 'Na upratanie'
+        return t('cleaningTodo')
       case 'toCheck':
-        return 'Na kontrolu'
+        return t('toCheck')
       case 'workInProgress':
-        return 'Upratuje sa'
+        return t('cleaningInProgress')
       case 'checkInProgress':
-        return 'Kontroluje sa'
+        return t('checkInProgress')
       case 'event':
-        return 'Udalosť'
+        return t('event')
       default:
-        return 'Nedefinovaný'
+        return t('undefined')
     }
   } else {
     switch (props.entityState) {
       case 'done':
         if (props.isCheckpoint) {
-          return 'V poriadku'
+          return t('allright')
         } else {
-          return 'Opravené'
+          return t('maintenanceDone')
         }
       case 'todo':
-        return 'Chyba'
+        return t('maintenanceTodo')
       case 'toCheck':
-        return 'Na kontrolu'
+        return t('toCheck')
       case 'workInProgress':
-        return 'Opravuje sa'
+        return t('maintenanceInProgress')
       case 'checkInProgress':
-        return 'Kontroluje sa'
+        return t('checkInProgress')
       case 'event':
-        return 'Udalosť'
+        return t('event')
       default:
-        return 'Nedefinovaný'
+        return t('undefined')
     }
   }
 }
 
 watch(
-  () => props.entityState,
+  () => [props.entityState, t('allright')],
   () => {
     state.label = stateToLabel()
 

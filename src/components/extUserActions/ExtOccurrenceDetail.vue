@@ -9,7 +9,9 @@
           <v-col>
             <v-row>
               <v-col class="py-1 pl-1">
-                <v-list-item-title class="text-h6">Upratovanie na žiadosť hosťa</v-list-item-title>
+                <v-list-item-title class="text-h6">{{
+                  $t('guestCleaningRequest')
+                }}</v-list-item-title>
                 <v-list-item-subtitle class="my-1">{{
                   formatTimestamp(extUserAction?.dateTime.seconds)
                 }}</v-list-item-subtitle>
@@ -28,7 +30,7 @@
         </v-row>
         <v-row>
           <v-col class="py-1">
-            <h3>Priebeh</h3>
+            <h3>{{ $t('process') }}</h3>
             <SmallPreviewList :secondaryColor="false" height="60vh">
               <SmallPreviewItem
                 v-for="action in occurrenceActions"

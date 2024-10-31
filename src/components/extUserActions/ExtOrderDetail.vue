@@ -7,7 +7,7 @@
       <v-col cols="5">
         <v-row>
           <v-col class="py-1 pl-1">
-            <v-list-item-title class="text-h6">Raňajky na zajtra</v-list-item-title>
+            <v-list-item-title class="text-h6">{{ $t('tomorrowBreakfast') }}</v-list-item-title>
             <div class="d-flex justify-space-between align-center">
               <v-list-item-subtitle class="my-1">{{
                 formatTimestamp(extUserAction?.dateTime.seconds)
@@ -22,10 +22,11 @@
     </v-row>
     <v-row>
       <v-col cols="6" class="py-1">
-        <h3>Hosť si praje</h3>
+        <h3>{{ $t('guestWants') }}</h3>
         <div>
           <p class="mt-1">
-            {{ extUserAction?.inputs?.[0] }}x raňajky na {{ extUserAction?.inputs?.[1] }}
+            {{ extUserAction?.inputs?.[0] }}x {{ $t('breakfastOn') }}
+            {{ extUserAction?.inputs?.[1] }}
           </p>
         </div>
       </v-col>

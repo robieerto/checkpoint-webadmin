@@ -23,7 +23,7 @@
         @click="isErrorReportFormOpen = true"
       ></v-btn> -->
 
-      <v-tooltip class="v-button-fab" left text="Žiadosť o upratanie">
+      <v-tooltip class="v-button-fab" left :text="$t('cleaningRequest')">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"

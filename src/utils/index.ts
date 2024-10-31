@@ -1,3 +1,5 @@
+import { useI18n } from 'vue-i18n'
+
 export function formatTimestamp(timestampInSeconds: number): string {
   const date = new Date(timestampInSeconds * 1000) // Convert seconds to milliseconds
   return date
@@ -17,19 +19,21 @@ export const getInitial = (username: string) => {
 }
 
 export function translateActionState(actionState: string): string {
+  const { t } = useI18n()
+
   switch (actionState) {
     case 'created':
-      return 'žiadosť'
+      return t('stateRequest')
     case 'workStarted':
-      return 'začatá práca'
+      return t('stateWorkStarted')
     case 'completelyFixed':
-      return 'dokončené'
+      return t('stateWorkDone')
     case 'partiallyFixed':
-      return 'nedokončené'
+      return t('stateWorkPartiallyDone')
     case 'checkOk':
-      return 'kontrola v poriadku'
+      return t('stateCheckOk')
     case 'checkFailed':
-      return 'nedostatok pri kontrole'
+      return t('stateCheckFailed')
     default:
       return actionState
   }

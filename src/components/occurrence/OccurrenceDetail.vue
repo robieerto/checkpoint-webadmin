@@ -3,7 +3,7 @@
     <v-card-text>
       <v-container class="py-0">
         <v-row>
-          <v-list-item-title class="text-h6 mx-auto mt-3 mb-1">Udalosť</v-list-item-title>
+          <v-list-item-title class="text-h6 mx-auto mt-3 mb-1">{{ $t('event') }}</v-list-item-title>
         </v-row>
         <v-row>
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
@@ -28,7 +28,7 @@
         </v-row>
         <v-row>
           <v-col class="py-1">
-            <h3>Zodpovedná osoba</h3>
+            <h3>{{ $t('responsiblePerson') }}</h3>
             <v-chip
               v-if="occurrence.assignedTo?.username"
               variant="flat"
@@ -46,12 +46,12 @@
                 </v-list-item-subtitle>
               </div>
             </v-chip>
-            <p v-else class="mt-1">nepriradená</p>
+            <p v-else class="mt-1">{{ $t('notAssigned') }}</p>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="py-1">
-            <h3>Priebeh</h3>
+            <h3>{{ $t('process') }}</h3>
             <SmallPreviewList :secondaryColor="true" height="40vh">
               <SmallPreviewItem
                 v-for="historyAction in actions"

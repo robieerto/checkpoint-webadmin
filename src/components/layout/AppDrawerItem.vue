@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { RouteRecordRaw } from 'vue-router/auto'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const { level = 0, item } = defineProps<{
   level?: number
@@ -12,7 +15,7 @@ const visibleChildren = computed(() =>
 )
 const visibleChildrenNum = computed(() => visibleChildren.value?.length || 0)
 const isItem = computed(() => !item.children || visibleChildrenNum.value <= 1)
-const title = toRef(() => item.meta?.title) as Ref<string>
+const title = toRef(() => t(item.meta?.title!)) as Ref<string>
 const icon = toRef(() => item.meta?.icon)
 // @ts-expect-error unknown type miss match
 const to = computed<RouteRecordRaw>(() => ({

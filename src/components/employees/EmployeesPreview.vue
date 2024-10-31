@@ -2,7 +2,7 @@
   <v-container class="pr-10" fluid>
     <v-row>
       <v-col class="pb-0 ml-5">
-        <h2>Zamestnanci</h2>
+        <h2>{{ $t('employees') }}</h2>
       </v-col>
     </v-row>
     <v-row>
