@@ -159,3 +159,7 @@ h2 {
 .v-list-item--one-line .v-list-item-subtitle {
   -webkit-line-clamp: unset !important;
 }
+
+.v-avatar.v-avatar--size-default {
+  --v-avatar-height: 20px !important;
+}

@@ -10,7 +10,7 @@
             <v-row>
               <v-col class="py-1 pl-1 pr-0">
                 <v-list-item-title class="text-h6">{{ employee.username }}</v-list-item-title>
-                <v-chip
+                <!-- <v-chip
                   v-for="serviceType in serviceTypes"
                   variant="flat"
                   rounded="lg"
@@ -18,7 +18,7 @@
                   class="mr-1"
                 >
                   {{ serviceType }}
-                </v-chip>
+                </v-chip> -->
                 <v-chip
                   v-if="employee.phone"
                   variant="flat"
@@ -46,7 +46,7 @@
           <v-col class="py-1">
             <h3>Úkony</h3>
             <v-infinite-scroll
-              v-if="isLoadingBuildingActions || userActions.length"
+              v-if="isLoadingBuildingActions || userActionsVirtual.length"
               height="65vh"
               @load="load"
             >
@@ -105,12 +105,20 @@ const userActionsVirtual = ref(null as any)
 
 const selectedAction = ref(null as any)
 
-const serviceTypes = computed(
-  () => new Set(props.employee.services.map((service: any) => service.type))
-)
+// const serviceTypes = computed(
+//   () => new Set(props.employee.services.map((service: any) => service.type))
+// )
 
 const selectAction = (action: any) => {
   selectedAction.value = action
+}
+
+const getUser = (user: any) => {
+  if (typeof user === 'string' || user instanceof String) {
+    const userId = user.split('/')[1]
+    return appStore.employees.find((e: any) => e.id === userId)
+  }
+  return user
 }
 
 const findCheckpoint = (checkpointId: string) => {
@@ -137,11 +145,12 @@ watch(
   () => {
     page.value = 1
     selectAction(null)
+
     const actions = !buildingActions.value?.length
       ? ([] as any[])
       : buildingActions.value
+          .filter((action: any) => getUser(action.createdBy)?.id === props.employee.id)
           .slice(0, pageSize)
-          .filter((action: any) => action.createdBy?.id === props.employee.id)
           .map((action: any) => {
             return {
               action,
@@ -149,22 +158,10 @@ watch(
               occurrence: findOccurrence(action.occurrenceId, action.checkpointId),
             }
           })
+
     userActionsVirtual.value = actions
   },
   { immediate: true, deep: true }
-)
-
-const userActions = computed(() =>
-  buildingActions.value
-    .slice(0, pageSize)
-    .filter((action: any) => action.createdBy?.id === props.employee.id)
-    .map((action: any) => {
-      return {
-        action,
-        checkpoint: findCheckpoint(action.checkpointId),
-        occurrence: findOccurrence(action.occurrenceId, action.checkpointId),
-      }
-    })
 )
 
 async function api(): Promise<any[]> {
@@ -172,8 +169,8 @@ async function api(): Promise<any[]> {
     setTimeout(() => {
       resolve(
         buildingActions.value
-          ?.slice(page.value * pageSize, (page.value + 1) * pageSize)
           .filter((action: any) => action.createdBy?.id === props.employee.id)
+          .slice(page.value * pageSize, (page.value + 1) * pageSize)
           .map((action: any) => {
             return {
               action,

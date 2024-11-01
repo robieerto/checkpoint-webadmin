@@ -96,7 +96,7 @@ defineProps<{
   position: absolute;
   height: 100%;
   top: 0px;
-  left: 17.2px;
+  left: 7.2px;
   border-left: 6px solid #efe2bb;
 }
 

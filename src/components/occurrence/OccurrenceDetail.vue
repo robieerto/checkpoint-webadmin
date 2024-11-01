@@ -65,7 +65,7 @@
                 :user="historyAction?.createdBy?.username"
                 @click="selectItem(historyAction)"
               >
-                <Avatar />
+                <Avatar :secondaryColor="true" />
               </SmallPreviewItem>
             </SmallPreviewList>
           </v-col>

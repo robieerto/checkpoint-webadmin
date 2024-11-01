@@ -1,5 +1,5 @@
 <template>
-  <v-card height="80vh" rounded="xl">
+  <v-card :height="height ?? '80vh'" rounded="xl">
     <v-card-title class="pb-0 d-flex justify-end">
       <v-btn color="secondary" density="compact" @click="closeDetail" icon flat slim>
         <v-icon color="text">mdi-close</v-icon>
@@ -12,6 +12,10 @@
 </template>
 
 <script setup lang="ts">
+defineProps<{
+  height?: string
+}>()
+
 const emit = defineEmits<{
   close: []
 }>()

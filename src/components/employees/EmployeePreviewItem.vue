@@ -9,14 +9,24 @@
           <v-row>
             <v-col class="py-1 pl-1 pr-0">
               <v-list-item-title class="text-h6">{{ employee.username }}</v-list-item-title>
-              <v-chip
+              <!-- <v-chip
                 v-for="serviceType in serviceTypes"
                 variant="flat"
                 rounded="lg"
                 color="primary"
                 class="mr-1 mb-1"
                 >{{ serviceType }}</v-chip
+              > -->
+              <v-chip
+                v-if="employee.phone"
+                variant="flat"
+                rounded="lg"
+                color="yellow"
+                prepend-icon="mdi-phone-outline"
+                class="mr-1"
               >
+                {{ employee.phone }}
+              </v-chip>
             </v-col>
           </v-row>
         </v-col>
@@ -26,14 +36,14 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   employee?: any
   secondaryColor?: boolean
 }>()
 
-const serviceTypes = computed(
-  () => new Set(props.employee.services.map((service: any) => service.type))
-)
+// const serviceTypes = computed(
+//   () => new Set(props.employee.services.map((service: any) => service.type))
+// )
 </script>
 
 <style scoped>
