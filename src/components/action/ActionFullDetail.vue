@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-0">
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12">
         <v-row class="ml-0 cursor-pointer" @click="openModalCheckpointDetail">
           <v-col style="max-width: 50px" class="pl-0 py-3" align-self="center">
             <img src="@/assets/checkpoint-logo.png" style="width: 38px" />
@@ -36,13 +36,13 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="6">
+      <!-- <v-col cols="6">
         <ActionDetail :actionRef="actionRef" />
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-container>
   <!-- <v-dialog v-model="isModalCheckpointDetailOpen" max-width="1000px" :scrollable="true"> -->
-  <Modal v-if="isModalCheckpointDetailOpen" @close="closeModalCheckpointDetail">
+  <Modal v-if="isModalCheckpointDetailOpen" :maxWidth="1000" @close="closeModalCheckpointDetail">
     <Detail v-if="selectedCheckpoint !== null" @close="closeModalCheckpointDetail">
       <CheckpointDetail :checkpoint="selectedCheckpoint" />
     </Detail>

@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
 
+withDefaults(
+  defineProps<{
+    maxWidth: number
+  }>(),
+  {
+    maxWidth: 1000,
+  }
+)
+
 const emit = defineEmits(['close'])
 
 const target = ref(null)
@@ -12,7 +21,7 @@ onClickOutside(target, () => emit('close'))
     <v-container class="fill-height popup" fluid>
       <v-row class="fill-height" align="center" @click.self="emit('close')">
         <v-col @click.self="emit('close')">
-          <div class="modal-container mx-auto" style="max-width: 1000px">
+          <div class="modal-container mx-auto" :style="'max-width: ' + maxWidth + 'px'">
             <slot></slot>
           </div>
         </v-col>

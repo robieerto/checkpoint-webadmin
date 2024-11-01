@@ -37,7 +37,7 @@
         </v-infinite-scroll>
       </v-col>
     </v-row>
-    <Modal v-if="isModalActionDetailOpen" @close="closeDetail">
+    <Modal v-if="isModalActionDetailOpen" :maxWidth="600" @close="closeDetail">
       <Detail v-if="selectedAction !== null" @close="closeDetail">
         <ActionFullDetail :historyAction="selectedAction" />
       </Detail>
