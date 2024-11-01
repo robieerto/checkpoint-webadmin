@@ -3,7 +3,7 @@ import router from '@/router'
 import { routes } from 'vue-router/auto-routes'
 
 const appStore = useAppStore()
-const { drawer: drawerStored, selectedBuilding, buildings } = storeToRefs(appStore)
+const { drawer: drawerStored, selectedBuilding, buildings, user } = storeToRefs(appStore)
 const notSelectedBuildings = computed({
   get() {
     return buildings.value?.filter((b: any) => b.id !== selectedBuilding.value?.id)
@@ -26,6 +26,15 @@ const drawer = computed({
 const rail = computed(() => !drawerStored.value && !mobile.value)
 const hideTitle = ref(true)
 routes.sort((a, b) => Number(a.meta?.drawerIndex ?? 99) - Number(b.meta?.drawerIndex ?? 98))
+
+const managerPagesNums = [4]
+
+const filteredRoutes = computed(() =>
+  routes.filter(
+    (route) =>
+      !managerPagesNums.includes(route.meta?.drawerIndex!) || user.value?.roles?.includes('manager')
+  )
+)
 
 drawerStored.value = lgAndUp.value && width.value !== 1280
 
@@ -89,7 +98,7 @@ function updateDrawerHover(railChanged: boolean) {
       </v-list>
     </template>
     <v-list nav density="compact">
-      <AppDrawerItem v-for="route in routes" :key="route.name" :item="route" />
+      <AppDrawerItem v-for="route in filteredRoutes" :key="route.name" :item="route" />
     </v-list>
     <v-spacer />
     <template #append>

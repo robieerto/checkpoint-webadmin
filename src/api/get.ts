@@ -71,5 +71,7 @@ export const getSelectedBuildingEmployees = async () => {
   )
   // await for the data to be fetched
   await selectedBuildingEmployees.promise.value
-  appStore.employees = selectedBuildingEmployees.value
+  appStore.employees = selectedBuildingEmployees.value.filter(
+    (employee: any) => !employee.superadmin
+  )
 }

@@ -7,7 +7,7 @@ definePage({
   meta: {
     icon: 'mdi-hot-tub',
     title: 'guests',
-    drawerIndex: 4,
+    drawerIndex: 3,
   },
 })
 </script>
