@@ -1,17 +1,18 @@
 <script setup lang="ts">
-const { drawer } = storeToRefs(useAppStore())
-// const route = useRoute()
+const { drawer, currentPage } = storeToRefs(useAppStore())
+const route = useRoute()
 
-// const breadcrumbs = computed<any>(() => {
-//   return route!.matched
-//     .slice(1)
-//     .filter((item) => item.meta && item.meta.title && !(item.meta?.breadcrumb === 'hidden'))
-//     .map((r) => ({
-//       title: r.meta.title!,
-//       disabled: r.meta?.breadcrumb === 'disabled' || r.path === route.path || false,
-//       to: r.path,
-//     }))
-// })
+const breadcrumbs = computed<any>(() => {
+  return route!.matched
+    .slice(1)
+    .filter((item) => item.meta && item.meta.title && !(item.meta?.breadcrumb === 'hidden'))
+    .map((r) => ({
+      title: r.meta.title!,
+      disabled: r.meta?.breadcrumb === 'disabled' || r.path === route.path || false,
+      to: r.path,
+    }))
+})
+currentPage.value = computed(() => breadcrumbs.value[breadcrumbs.value.length - 1]?.title)
 </script>
 
 <template>

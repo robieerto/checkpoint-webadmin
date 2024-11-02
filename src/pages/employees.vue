@@ -6,7 +6,7 @@
 definePage({
   meta: {
     icon: 'mdi-account-multiple',
-    title: 'Zamestnanci',
+    title: 'employees',
     drawerIndex: 4,
   },
 })

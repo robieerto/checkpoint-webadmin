@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const { searchText } = storeToRefs(useAppStore())
+const { searchText, currentPage } = storeToRefs(useAppStore())
 
+const isBarVisible = ref(false)
 const searchTypedText = ref('')
 const debounceTimeout = ref(null as number | null)
 
@@ -12,6 +13,19 @@ const clearSearch = () => {
   searchTypedText.value = ''
   searchText.value = ''
 }
+
+watch(
+  () => currentPage.value,
+  (page) => {
+    clearSearch()
+    if (page == 'guests') {
+      isBarVisible.value = false
+    } else {
+      isBarVisible.value = true
+    }
+  },
+  { immediate: true }
+)
 
 watch(searchTypedText, () => {
   if (debounceTimeout.value) {
@@ -25,6 +39,7 @@ watch(searchTypedText, () => {
 
 <template>
   <v-text-field
+    v-if="isBarVisible"
     v-model="searchTypedText"
     class="ml-16 search-field"
     :label="$t('search')"

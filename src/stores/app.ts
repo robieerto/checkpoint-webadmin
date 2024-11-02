@@ -3,6 +3,7 @@ export const useAppStore = defineStore('app', {
     // app
     drawer: true,
     snackbar: { value: false, text: '', color: '' },
+    currentPage: null as any,
     isLoadingBuildingActions: true,
     isModalCheckpointDetailOpen: false,
     isModalActionDetailOpen: false,
@@ -24,6 +25,7 @@ export const useAppStore = defineStore('app', {
     selectedCheckpoint: null as any,
     occurrences: null as any,
     employees: null as any,
+    filteredEmployees: null as any,
     buildingActions: null as any,
     extUserActions: null as any,
   }),

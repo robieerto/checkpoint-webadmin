@@ -9,7 +9,7 @@
       <v-col style="max-width: 360px">
         <v-list height="80vh" class="py-0" :border="false" :rounded="true">
           <EmployeePreviewItem
-            v-for="employee in employees"
+            v-for="employee in filteredEmployees"
             :id="employee.id"
             :key="employee.id"
             :employee="employee"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-const { employees } = storeToRefs(useAppStore())
+const { filteredEmployees } = storeToRefs(useAppStore())
 
 const selectedItem = ref(null)
 const detailVisible = ref(false)

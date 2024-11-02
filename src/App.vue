@@ -37,6 +37,8 @@ const {
   checkpoints,
   sortedCheckpoints,
   sortedAndFilteredCheckpoints,
+  employees,
+  filteredEmployees,
   buildingActions,
   occurrences,
   searchText,
@@ -138,6 +140,8 @@ watch(selectedBuilding, async (currentBuilding) => {
 
     // Get employees for selected building
     await getSelectedBuildingEmployees()
+
+    filterEmployees()
   }
 })
 
@@ -157,6 +161,7 @@ const sortAndAssignActions = async (buildingHistory: any) => {
 }
 
 watch(searchText, () => {
+  filterEmployees()
   filterCheckpoints()
 })
 
@@ -187,5 +192,16 @@ function filterCheckpoints() {
     {}
   )
   sortedAndFilteredCheckpoints.value = { tasks: filteredTasks, okByFloors: filteredOkByFloors }
+}
+
+function filterEmployees() {
+  if (searchText.value === '') {
+    filteredEmployees.value = employees.value
+    return
+  }
+
+  filteredEmployees.value = employees.value.filter((employee: any) =>
+    employee.username.toLowerCase().includes(searchText.value.toLowerCase())
+  )
 }
 </script>

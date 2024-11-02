@@ -7,7 +7,17 @@
       location-strategy="connected"
     >
       <template v-slot:activator="{ props: activatorProps }">
-        <v-fab v-bind="activatorProps" size="large" icon="mdi-square-rounded-badge-outline"></v-fab>
+        <v-tooltip class="v-button-fab" left :text="$t('newAction')">
+          <template v-slot:activator="{ props }">
+            <div v-bind="props">
+              <v-fab
+                v-bind="activatorProps"
+                size="large"
+                icon="mdi-square-rounded-badge-outline"
+              ></v-fab>
+            </div>
+          </template>
+        </v-tooltip>
       </template>
 
       <!-- <v-btn

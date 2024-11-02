@@ -41,7 +41,7 @@
                 :note="action.description"
                 :secondaryColor="false"
                 :checkpoint="extUserAction.checkpoint.name"
-                :user="extUserAction.action?.createdBy?.username"
+                :user="action?.createdBy?.username"
                 @click="selectAction(action)"
               >
                 <Avatar />

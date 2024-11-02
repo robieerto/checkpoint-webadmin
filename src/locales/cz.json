@@ -61,5 +61,6 @@
     "stateWorkDone": "práce dokončena",
     "stateWorkPartiallyDone": "práce nedokončena",
     "stateCheckOk": "kontrola v pořádku",
-    "stateCheckFailed": "nedostatek při kontrole"
+    "stateCheckFailed": "nedostatek při kontrole",
+    "newAction": "Nový úkon"
 }
