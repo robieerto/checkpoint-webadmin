@@ -12,7 +12,10 @@ const breadcrumbs = computed<any>(() => {
       to: r.path,
     }))
 })
-currentPage.value = computed(() => breadcrumbs.value[breadcrumbs.value.length - 1]?.title)
+
+watchEffect(() => {
+  currentPage.value = breadcrumbs.value?.[breadcrumbs.value?.length - 1]?.title
+})
 </script>
 
 <template>
