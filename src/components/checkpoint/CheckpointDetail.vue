@@ -196,6 +196,8 @@ const selectOccurrence = (occurrence: any) => {
   const occurrenceActions = actions.value.filter(
     (action: any) => action.occurrenceId === occurrence.id
   )
+  occurrenceActions.sort((a: any, b: any) => a.dateTime.seconds - b.dateTime.seconds)
+
   selectedOccurrence.value = { occurrence, actions: occurrenceActions }
 }
 
