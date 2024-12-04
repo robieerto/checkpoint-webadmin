@@ -4,7 +4,10 @@
     <AppBar />
     <v-main style="overflow-x: auto; overflow-y: hidden">
       <router-view style="min-width: 900px" />
-      <FAB v-if="!isModalCheckpointDetailOpen || isCleaningRequestFormOpen" />
+      <FAB
+        v-show="!isModalCheckpointDetailOpen || isCleaningRequestFormOpen"
+        v-if="selectedBuilding && !selectedBuilding?.onlyExternalView"
+      />
       <v-snackbar v-model="snackbar.value" :timeout="3000" :color="snackbar.color">{{
         snackbar.text
       }}</v-snackbar>
@@ -13,6 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-const { isModalCheckpointDetailOpen, isCleaningRequestFormOpen, snackbar } =
+const { isModalCheckpointDetailOpen, isCleaningRequestFormOpen, snackbar, selectedBuilding } =
   storeToRefs(useAppStore())
 </script>

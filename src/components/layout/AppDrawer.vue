@@ -30,10 +30,15 @@ routes.sort((a, b) => Number(a.meta?.drawerIndex ?? 99) - Number(b.meta?.drawerI
 const managerPagesNums = [4]
 
 const filteredRoutes = computed(() =>
-  routes.filter(
-    (route) =>
-      !managerPagesNums.includes(route.meta?.drawerIndex!) || user.value?.roles?.includes('manager')
-  )
+  !selectedBuilding.value
+    ? []
+    : selectedBuilding.value?.onlyExternalView
+      ? [routes[0]]
+      : routes.filter(
+          (route) =>
+            !managerPagesNums.includes(route.meta?.drawerIndex!) ||
+            user.value?.roles?.includes('manager')
+        )
 )
 
 drawerStored.value = lgAndUp.value && width.value !== 1280

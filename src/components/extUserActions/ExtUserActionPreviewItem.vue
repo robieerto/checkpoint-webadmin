@@ -29,14 +29,8 @@
               </div>
 
               <div v-if="extUserAction.type === 'order'">
-                <v-list-item-title class="list text-h6">{{
-                  $t('tomorrowBreakfast')
-                }}</v-list-item-title>
-                <v-list-item-subtitle class="my-1">{{
-                  extUserAction?.text
-                    ?.replace('$1', extUserAction?.inputs?.[0])
-                    ?.replace('$2', extUserAction?.inputs?.[1])
-                }}</v-list-item-subtitle>
+                <v-list-item-title class="list text-h6">{{ texts?.title }}</v-list-item-title>
+                <v-list-item-subtitle class="my-1">{{ reservationText }}</v-list-item-subtitle>
                 <div class="d-flex justify-space-between align-center">
                   <v-list-item-subtitle class="my-1">{{
                     formatTimestamp(extUserAction?.dateTime.seconds)
@@ -85,6 +79,8 @@
 
 <script setup lang="ts">
 import { formatTimestamp } from '@/utils'
+import { useI18n } from 'vue-i18n'
+
 import OccurrenceLogo from '@/assets/occurrence-logo.png'
 import OrderLogo from '@/assets/order-logo.png'
 import QuestionLogo from '@/assets/question-logo.png'
@@ -94,6 +90,16 @@ const props = defineProps<{
   extUserAction?: any
   secondaryColor?: boolean
 }>()
+
+const { locale } = useI18n()
+const texts = computed(() => props.extUserAction?.template?.appTexts?.[locale.value])
+const reservationText = computed(() => {
+  let text = texts.value?.text ?? ''
+  props.extUserAction?.inputs?.forEach((input: string, index: number) => {
+    text = text.replace(`$${index + 1}`, input ?? '')
+  })
+  return text
+})
 
 const logo = computed(() => {
   if (props.extUserAction.type === 'occurrence') {

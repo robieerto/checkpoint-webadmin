@@ -26,11 +26,13 @@ import {
   getUserBuildings,
   getUserServices,
 } from '@/api/get'
+import { useI18n } from 'vue-i18n'
 
-const user = useCurrentUser()
+const currentUser = useCurrentUser()
 const appStore = useAppStore()
 const {
   buildings,
+  user,
   userServices,
   selectedBuilding,
   userServicesForSelectedBuilding,
@@ -43,6 +45,7 @@ const {
   occurrences,
   searchText,
 } = storeToRefs(appStore)
+const { locale } = useI18n()
 
 const buildingPath = computed(() => `Buildings/${selectedBuilding.value?.id}`)
 const checkpointsPath = computed(() => `${buildingPath.value}/checkpoints`)
@@ -101,10 +104,13 @@ watch(
   { deep: true }
 )
 
-watch(user, async (currentUser) => {
+watch(currentUser, async (currentUser) => {
   if (currentUser) {
     // Get logged in user
     if (await getUser(currentUser.uid)) {
+      const userLanguage = user.value?.language
+      locale.value = userLanguage ?? 'sk'
+
       // Get user's services
       await getUserServices()
       // Get user's buildings

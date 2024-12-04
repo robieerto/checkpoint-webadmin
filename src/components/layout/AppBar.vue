@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { drawer, currentPage } = storeToRefs(useAppStore())
+const { drawer, currentPage, selectedBuilding } = storeToRefs(useAppStore())
 const route = useRoute()
 
 const breadcrumbs = computed<any>(() => {
@@ -23,7 +23,7 @@ watchEffect(() => {
     <v-app-bar-nav-icon @click="drawer = !drawer" />
     <!-- <v-breadcrumbs :items="breadcrumbs" />
     <v-spacer /> -->
-    <SearchBar />
+    <SearchBar v-if="selectedBuilding && !selectedBuilding?.onlyExternalView" />
     <v-spacer />
     <div id="app-bar" />
     <ButtonLocale />

@@ -51,7 +51,7 @@
     "noteText": "Zde můžete přidat poznámku. Například počet hostů, speciální požadavky na úklid, ...",
     "guestCleaningRequest": "Úklid na žádost hosta",
     "tomorrowBreakfast": "Snídaně na zítra",
-    "guestWants": "Host si přeje",
+    "reservation": "Rezervace",
     "breakfastOn": "snídani na",
     "noEventsOnCheckpoint": "Na tomto checkpointu nejsou žádné události",
     "noActionsOnCheckpoint": "Na tom checkpointu nejsou žádné úkony",

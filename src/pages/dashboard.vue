@@ -1,18 +1,21 @@
 <template>
-  <v-container fluid>
-    <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
-    <v-row>
-      <v-col v-if="!searchText" cols="auto">
-        <ActionsPreview />
-      </v-col>
-      <v-col cols="auto">
-        <CheckpointsBasicPreview />
-      </v-col>
-      <!-- <v-col cols="4">
+  <div v-if="selectedBuilding">
+    <v-container v-if="!selectedBuilding.onlyExternalView" fluid>
+      <!-- style="min-width: 900px; white-space: nowrap; overflow-x: auto; overflow-y: hidden" -->
+      <v-row>
+        <v-col v-if="!searchText" cols="auto">
+          <ActionsPreview />
+        </v-col>
+        <v-col cols="auto">
+          <CheckpointsBasicPreview />
+        </v-col>
+        <!-- <v-col cols="4">
         <EmployeesBasicPreview />
       </v-col> -->
-    </v-row>
-  </v-container>
+      </v-row>
+    </v-container>
+    <ExtUserActionsPreview v-else />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -25,5 +28,5 @@ definePage({
 })
 
 const appStore = useAppStore()
-const { searchText } = storeToRefs(appStore)
+const { searchText, selectedBuilding } = storeToRefs(appStore)
 </script>
