@@ -44,8 +44,29 @@ const {
   buildingActions,
   occurrences,
   searchText,
+  selectedId,
 } = storeToRefs(appStore)
 const { locale } = useI18n()
+
+const route = useRoute()
+
+watch(
+  () => route.query.itemId,
+  (id) => {
+    if (id) {
+      selectedId.value = id
+    }
+  }
+)
+
+watch(
+  () => route.query.buildingId,
+  (id) => {
+    if (id) {
+      localStorage.setItem('selectedBuildingId', id.toString())
+    }
+  }
+)
 
 const buildingPath = computed(() => `Buildings/${selectedBuilding.value?.id}`)
 const checkpointsPath = computed(() => `${buildingPath.value}/checkpoints`)

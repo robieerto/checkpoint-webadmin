@@ -11,6 +11,7 @@ export const useAppStore = defineStore('app', {
     isErrorReportFormOpen: false,
     isQuickActionFormOpen: false,
     searchText: '',
+    selectedId: null as any,
 
     // data
     user: null as any,

@@ -45,19 +45,25 @@ import { useCollection } from 'vuefire'
 import { collection, query, orderBy } from 'firebase/firestore'
 import { db } from '@/firebase'
 
-const { extUserActions, selectedBuilding } = storeToRefs(useAppStore())
+const { extUserActions, selectedBuilding, selectedId } = storeToRefs(useAppStore())
 
 const extUserActionsPath = computed(
   () => `Buildings/${selectedBuilding.value?.id}/externalUserActions`
 )
 
-const { data, pending } = useCollection(() =>
+const { data, pending, promise } = useCollection(() =>
   query(collection(db, extUserActionsPath.value), orderBy('dateTime', 'desc'))
 )
 
+promise.value.then(() => {
+  if (selectedId.value) {
+    selectItem(extUserActions.value.find((action: any) => action.id === selectedId.value))
+  }
+})
+
 extUserActions.value = data
 
-const selectedItem = ref(null) as any
+const selectedItem = ref(null as any)
 const detailVisible = ref(false)
 
 const selectItem = (item: any) => {

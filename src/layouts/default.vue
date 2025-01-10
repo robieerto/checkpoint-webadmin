@@ -3,7 +3,7 @@
     <AppDrawer />
     <AppBar />
     <v-main style="overflow-x: auto; overflow-y: hidden">
-      <router-view style="min-width: 900px" />
+      <router-view style="min-width: 900px" v-if="selectedBuilding" />
       <FAB
         v-show="!isModalCheckpointDetailOpen || isCleaningRequestFormOpen"
         v-if="selectedBuilding && !selectedBuilding?.onlyExternalView"

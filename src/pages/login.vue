@@ -82,7 +82,10 @@ const onSubmit = async () => {
   loading.value = true
   try {
     await signInWithEmailAndPassword(auth, email.value!, password.value!)
-    router.push('/')
+    // Retrieve the stored path and redirect the user
+    const redirectPath = localStorage.getItem('redirectPath') || '/'
+    localStorage.removeItem('redirectPath')
+    router.push(redirectPath)
   } catch (error) {
     snackbarMessage.value = 'Nesprávne prihlasovacie údaje'
     snackbar.value = true
