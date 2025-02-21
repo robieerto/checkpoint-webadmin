@@ -26,8 +26,8 @@
               </v-select>
             </v-col>
           </v-row>
-          <v-row v-if="selectedItem" class="flex-grow-1">
-            <v-col class="w-100 d-flex align-start justify-center pt-0">
+          <v-row v-if="selectedItem">
+            <v-col class="w-100 d-flex align-start justify-center py-0">
               <v-list class="w-100" :border="false" :rounded="true" style="max-width: 360px">
                 <CheckpointPreviewItem
                   :id="selectedItem.id"
@@ -39,12 +39,12 @@
             </v-col>
           </v-row>
           <v-row class="flex-grow-1">
-            <v-col class="w-100 d-flex align-end justify-start">
+            <v-col class="w-100 d-flex align-start justify-start">
               <v-textarea
                 v-model="note"
                 :label="noteFocused || note.length ? $t('note') : noteText"
                 :hint="noteText"
-                rows="8"
+                rows="3"
                 no-resize
                 maxlength="1000"
                 @update:focused="(e: any) => (noteFocused = e)"
@@ -53,7 +53,7 @@
           </v-row>
         </div>
 
-        <div class="pa-4 text-end mt-auto">
+        <div id="bottom-bar" class="pa-4 text-end mt-auto">
           <v-btn
             class="secondary-btn mr-2"
             color="brown"
@@ -154,5 +154,11 @@ const saveForm = () => {
 
 .v-list-item {
   background-color: rgb(var(--v-theme-background)) !important;
+}
+
+#bottom-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 </style>
