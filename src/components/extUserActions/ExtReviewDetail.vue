@@ -21,12 +21,40 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="extUserAction?.note">
       <v-col cols="6" class="py-1">
         <h3>{{ $t('description') }}</h3>
         <div>
           <p class="mt-1">
             {{ extUserAction?.note }}
+          </p>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row v-if="extUserAction?.questionnaire">
+      <v-col cols="12" class="py-1">
+        <h3 class="pb-1">{{ $t('questionnaire') }}</h3>
+        <div v-for="(question, index) in extUserAction?.questionnaire" class="py-1" :key="index">
+          <p v-if="question?.answers?.length" class="font-weight-bold">
+            {{ question?.question }}
+          </p>
+          <ul class="ml-4">
+            <li v-for="(answer, index) in question?.answers" :key="index" class="mt-1">
+              {{ answer.choice }}
+            </li>
+            <li v-if="question.otherInput" class="mt-1">
+              {{ $t('userAnswer') }}: {{ question.otherInput }}
+            </li>
+          </ul>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row v-if="extUserAction?.email">
+      <v-col cols="6" class="py-1">
+        <h3>{{ $t('email') }}</h3>
+        <div>
+          <p class="mt-1">
+            {{ extUserAction?.email }}
           </p>
         </div>
       </v-col>

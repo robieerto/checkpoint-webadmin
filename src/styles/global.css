@@ -163,3 +163,7 @@ h2 {
 .v-avatar.v-avatar--size-default {
   --v-avatar-height: 20px !important;
 }
+
+#buildingSelection div.v-list-item__append {
+  display: initial !important;
+}

@@ -72,7 +72,7 @@ function updateDrawerHover(railChanged: boolean) {
             </v-col>
           </v-row>
         </v-list-item>
-        <v-list-group v-if="selectedBuilding" prepend-icon="mdi-domain">
+        <v-list-group v-if="selectedBuilding" id="buildingSelection" prepend-icon="mdi-domain">
           <template #activator="{ props: vProps }">
             <v-list-item
               v-bind="vProps"

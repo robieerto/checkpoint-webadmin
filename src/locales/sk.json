@@ -63,5 +63,7 @@
     "stateWorkPartiallyDone": "práca nedokončená",
     "stateCheckOk": "kontrola v poriadku",
     "stateCheckFailed": "nedostatok pri kontrole",
-    "newAction": "Nový úkon"
+    "newAction": "Nový úkon",
+    "questionnaire": "Dotazník",
+    "userAnswer": "Odpoveď užívateľa"
 }
