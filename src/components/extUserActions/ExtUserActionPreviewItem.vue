@@ -122,4 +122,8 @@ const logo = computed(() => {
 .v-list-item.secondary-color {
   background-color: rgb(var(--v-theme-background)) !important;
 }
+
+.v-chip {
+  max-width: 135px;
+}
 </style>

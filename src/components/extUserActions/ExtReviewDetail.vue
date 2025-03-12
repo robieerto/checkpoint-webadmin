@@ -32,18 +32,22 @@
       </v-col>
     </v-row>
     <v-row v-if="extUserAction?.questionnaire">
-      <v-col cols="12" class="py-1">
+      <v-col cols="6" class="py-1">
         <h3 class="pb-1">{{ $t('questionnaire') }}</h3>
-        <div v-for="(question, index) in extUserAction?.questionnaire" class="py-1" :key="index">
-          <p v-if="question?.answers?.length" class="font-weight-bold">
+        <div v-for="(question, index) in extUserAction?.questionnaire" class="py-2" :key="index">
+          <h3 v-if="question?.answers?.length" class="font-weight-bold">
             {{ question?.question }}
-          </p>
+          </h3>
           <ul class="ml-4">
             <li v-for="(answer, index) in question?.answers" :key="index" class="mt-1">
-              {{ answer.choice }}
+              <h3>
+                {{ answer.choice }}{{ answer.input ? ':' : '' }} <i>{{ answer.input }}</i>
+              </h3>
             </li>
             <li v-if="question.otherInput" class="mt-1">
-              {{ $t('userAnswer') }}: {{ question.otherInput }}
+              <h3>
+                {{ $t('userAnswer') }}: <i>{{ question.otherInput }}</i>
+              </h3>
             </li>
           </ul>
         </div>
