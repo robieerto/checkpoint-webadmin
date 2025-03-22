@@ -20,7 +20,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="extUserAction?.phone">
       <v-col cols="6" class="py-1">
         <h3>{{ $t('phone') }}</h3>
         <div>
@@ -30,7 +30,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="extUserAction?.email">
       <v-col cols="6" class="py-1">
         <h3>{{ $t('email') }}</h3>
         <div>

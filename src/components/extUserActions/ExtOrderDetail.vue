@@ -30,6 +30,26 @@
         </div>
       </v-col>
     </v-row>
+    <v-row v-if="extUserAction?.note">
+      <v-col cols="6" class="py-1">
+        <h3>{{ $t('note') }}</h3>
+        <div>
+          <p class="mt-1">
+            {{ extUserAction?.note }}
+          </p>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row v-if="extUserAction?.phone">
+      <v-col cols="6" class="py-1">
+        <h3>{{ $t('phone') }}</h3>
+        <div>
+          <p class="mt-1">
+            {{ extUserAction?.phone }}
+          </p>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
