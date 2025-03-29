@@ -9,7 +9,6 @@
         :title="$t('cleaningRequest')"
       >
         <template v-slot:append>
-          <!-- <v-card-title class="text-h6 mr-9"></v-card-title> -->
           <v-btn icon="$close" variant="text" @click="closeForm"></v-btn>
         </template>
 

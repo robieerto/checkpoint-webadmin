@@ -48,7 +48,7 @@
     </Detail>
   </Modal>
   <!-- </v-dialog> -->
-  <FAB v-if="!appStore.isCleaningRequestFormOpen" />
+  <FAB v-if="!appStore.forms.isCleaningRequestOpen" />
 </template>
 
 <script setup lang="ts">

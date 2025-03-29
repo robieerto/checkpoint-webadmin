@@ -7,11 +7,16 @@ export const useAppStore = defineStore('app', {
     isLoadingBuildingActions: true,
     isModalCheckpointDetailOpen: false,
     isModalActionDetailOpen: false,
-    isCleaningRequestFormOpen: false,
-    isErrorReportFormOpen: false,
-    isQuickActionFormOpen: false,
     searchText: '',
     selectedId: null as any,
+
+    // forms
+    forms: {
+      isCleaningRequestOpen: false,
+      isErrorReportOpen: false,
+      isQuickActionOpen: false,
+      isReservationOpen: false,
+    },
 
     // data
     user: null as any,

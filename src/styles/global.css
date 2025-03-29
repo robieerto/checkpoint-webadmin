@@ -133,12 +133,9 @@ h2 {
   box-shadow: none !important;
 }
 
-/* .v-button-fab {
-  position: relative !important;
-  --v-btn-height: initial !important;
-  min-width: initial !important;
-  padding: 13px 12px !important;
-} */
+.v-button-fab {
+  margin-left: 58px;
+}
 
 .v-field-label {
   white-space: normal !important;
@@ -166,4 +163,8 @@ h2 {
 
 #buildingSelection div.v-list-item__append {
   display: initial !important;
+}
+
+.radio-select .v-label {
+  opacity: initial !important;
 }

@@ -62,7 +62,11 @@
     "stateWorkPartiallyDone": "práce nedokončena",
     "stateCheckOk": "kontrola v pořádku",
     "stateCheckFailed": "nedostatek při kontrole",
-    "newAction": "Nový úkon",
+    "newAction": "Nová akce",
     "questionnaire": "Dotazník",
-    "userAnswer": "Odpověd uživatele"
+    "userAnswer": "Odpověd uživatele",
+    "service": "Služba",
+    "services": "Služby",
+    "reservationWasCreated": "Rezervace byla vytvořena",
+    "reservationTime": "Čas rezervace",
 }

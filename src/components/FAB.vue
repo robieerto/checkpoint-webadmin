@@ -33,13 +33,27 @@
         @click="isErrorReportFormOpen = true"
       ></v-btn> -->
 
-      <v-tooltip class="v-button-fab" left :text="$t('cleaningRequest')">
+      <v-tooltip v-if="selectedBuilding.reservations" left :text="$t('reservation')">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            key="reservation"
+            size="default"
+            class="v-button-fab"
+            icon="mdi-calendar-clock"
+            @click="forms.isReservationOpen = true"
+          >
+          </v-btn>
+        </template>
+      </v-tooltip>
+
+      <v-tooltip v-if="!selectedBuilding.onlyExternalView" left :text="$t('cleaningRequest')">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
             key="cleaning"
             class="v-button-fab"
-            @click="isCleaningRequestFormOpen = true"
+            @click="forms.isCleaningRequestOpen = true"
           >
             <img src="@/assets/concierge-icon.png" width="25" />
           </v-btn>
@@ -48,34 +62,16 @@
     </v-speed-dial>
   </div>
   <CleaningRequestForm
-    v-if="isCleaningRequestFormOpen"
-    @close="isCleaningRequestFormOpen = false"
+    v-if="forms.isCleaningRequestOpen"
+    @close="forms.isCleaningRequestOpen = false"
   />
-  <ErrorReportForm v-if="isErrorReportFormOpen" @close="isErrorReportFormOpen = false" />
-  <QuickActionForm v-if="isQuickActionFormOpen" @close="isQuickActionFormOpen = false" />
+  <ErrorReportForm v-if="forms.isErrorReportOpen" @close="forms.isErrorReportOpen = false" />
+  <QuickActionForm v-if="forms.isQuickActionOpen" @close="forms.isQuickActionOpen = false" />
+  <ReservationForm v-if="forms.isReservationOpen" @close="forms.isReservationOpen = false" />
 </template>
 
 <script setup lang="ts">
-const {
-  isCleaningRequestFormOpen,
-  isErrorReportFormOpen,
-  isQuickActionFormOpen,
-  // isModalCheckpointDetailOpen,
-  // isModalActionDetailOpen,
-} = storeToRefs(useAppStore())
+const { forms, selectedBuilding } = storeToRefs(useAppStore())
 
-const isFormOpen = computed(
-  () =>
-    isCleaningRequestFormOpen.value || isErrorReportFormOpen.value || isQuickActionFormOpen.value
-)
-
-// watch(
-//   () => isFormOpen.value,
-//   () => {
-//     if (isFormOpen.value) {
-//       isModalCheckpointDetailOpen.value = false
-//       isModalActionDetailOpen.value = false
-//     }
-//   }
-// )
+const isFormOpen = computed(() => Object.values(forms.value).some((form) => form === true))
 </script>

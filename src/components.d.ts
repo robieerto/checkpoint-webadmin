@@ -41,6 +41,7 @@ declare module 'vue' {
     OccurrencePreviewItem: typeof import('./components/occurrence/OccurrencePreviewItem.vue')['default']
     PreviewList: typeof import('./components/preview/PreviewList.vue')['default']
     QuickActionForm: typeof import('./components/forms/QuickActionForm.vue')['default']
+    ReservationForm: typeof import('./components/forms/ReservationForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBar: typeof import('./components/layout/SearchBar.vue')['default']

@@ -45,6 +45,7 @@ const {
   occurrences,
   searchText,
   selectedId,
+  forms,
 } = storeToRefs(appStore)
 const { locale } = useI18n()
 
@@ -152,6 +153,11 @@ watch(selectedBuilding, async (currentBuilding) => {
 
   buildingActions.value = []
   occurrences.value = []
+
+  // close all forms
+  Object.keys(forms.value).forEach((key) => {
+    forms.value[key as keyof typeof forms.value] = false
+  })
 
   if (currentBuilding) {
     // Save selected building to local storage

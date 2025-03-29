@@ -97,7 +97,7 @@
       </v-col>
     </v-row>
   </v-container>
-  <FAB v-if="!appStore.isCleaningRequestFormOpen" />
+  <FAB v-if="!appStore.forms.isCleaningRequestOpen" />
 </template>
 
 <script setup lang="ts">
